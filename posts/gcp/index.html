@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GCP &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>GCP</h1>
+  <time datetime=2020-05-08T11:54:05Z class="post-date">Fri, May 8, 2020</time>
+  <h1 id="gcp">GCP</h1>
+<h1 id="google-cloud远程ssh登录方法">Google Cloud远程ssh登录方法</h1>
+<ol>
+<li>
+<p>使用Google Cloud网页版ssh，切换到root</p>
+<pre><code>sudo -i
+</code></pre></li>
+<li>
+<p>编辑ssh配置文件</p>
+<pre><code>vi /etc/ssh/sshd_config
+</code></pre></li>
+<li>
+<p>修改以下的内容</p>
+<pre><code>PermitRootLogin yes
+PasswordAuthentication yes
+</code></pre><p><a href="https://streamelody.github.io//assets/blogImg/2018/google_cloud_ssh/google_cloud_ssh_01.png"><img src="https://streamelody.github.io//assets/blogImg/2018/google_cloud_ssh/google_cloud_ssh_01.png" alt=""></a></p>
+</li>
+<li>
+<p>重启ssh</p>
+<pre><code>service sshd restart
+
+</code></pre></li>
+</ol>
+<h1 id="修改当前账户和root账户的密码">修改当前账户和root账户的密码</h1>
+<ol>
+<li>
+<p>设置当前账户新密码</p>
+<pre><code>sudo passwd ${whoami}
+
+</code></pre></li>
+<li>
+<p>设置root账户新密码</p>
+<pre><code>sudo passwd root
+
+</code></pre><p><img src="https://streamelody.github.io//assets/blogImg/2018/google_cloud_ssh/google_cloud_ssh_02.png" alt=""></p>
+</li>
+</ol>
+<h1 id="使用mac自带的ssh进行连接">使用Mac自带的SSH进行连接</h1>
+<ol>
+<li>
+<p>打开终端，<code>新建远程连接</code>，填写ip地址以及账户名 <a href="https://streamelody.github.io//assets/blogImg/2018/google_cloud_ssh/google_cloud_ssh_03.png"><img src="https://streamelody.github.io//assets/blogImg/2018/google_cloud_ssh/google_cloud_ssh_03.png" alt=""></a></p>
+</li>
+<li>
+<p>使用刚才修改的密码进行登录 <a href="https://streamelody.github.io//assets/blogImg/2018/google_cloud_ssh/google_cloud_ssh_04.png"><img src="https://streamelody.github.io//assets/blogImg/2018/google_cloud_ssh/google_cloud_ssh_04.png" alt=""></a></p>
+</li>
+</ol>
+<h1 id="参考文章">参考文章</h1>
+<ol>
+<li><a href="https://blog.csdn.net/c__chao/article/details/79785601">Google Cloud远程ssh登录方法</a></li>
+<li><a href="https://www.jianshu.com/p/57e85cf3e50b">Google Cloud Platform SSH 连接配置</a></li>
+</ol>
+<h2 id="方法二">②方法二</h2>
+<h3 id="centos和debian通用输入以下两条命令">CentOS和Debian通用，输入以下两条命令</h3>
+<pre><code>sed \-i 's/PermitRootLogin no/PermitRootLogin yes/g' /etc/ssh/sshd\_config
+</code></pre><pre><code>sed \-i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd\_config
+</code></pre><h3 id="ubuntu系统输入以下两条命令">Ubuntu系统，输入以下两条命令</h3>
+<pre><code>sed \-i 's/#PermitRootLogin prohibit\-password/PermitRootLogin yes/g' /etc/ssh/sshd\_config
+</code></pre><pre><code>sed \-i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd\_config
+</code></pre><h3 id="重启服务器">重启服务器</h3>
+<p>reboot</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

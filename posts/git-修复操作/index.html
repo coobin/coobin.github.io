@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Git 修复操作 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Git 修复操作</h1>
+  <time datetime=2020-04-20T06:57:52Z class="post-date">Mon, Apr 20, 2020</time>
+  <h1 id="git-修复操作">Git 修复操作</h1>
+<h4 id="1-修复未提交文件中的错误重置">1. 修复未提交文件中的错误（重置）</h4>
+<p>如果你现在的 <code>工作目录</code>（work tree）里搞的一团乱麻，但是你现在还没有把它们提交。你可以通过下面的命令，让工作目录回到上次提交时的状态（last committed state）:</p>
+<pre><code>$ git reset --hard HEAD^
+</code></pre><p>这条命令会把你工作目录中所有未提交的内容清空（当然这不包括未置于版控制下的文件 untracked files）。从另一种角度来说， 这会让 <code>git diff</code> 和 <code>git diff --cached</code> 命令的显示法都变为空。</p>
+<p>如果你只是要恢复一个文件，如 <code>hello.rb</code> ，你就要使用 <code>git checkout</code>：</p>
+<pre><code>$ git checkout -- hello.rb
+</code></pre><p>这条命令把 <code>hello.rb</code> 从 <code>HEAD</code> 中 checkout 并且把它恢复成未修改时的样子。</p>
+<h4 id="2-修复已提交文件中的错误">2. 修复已提交文件中的错误</h4>
+<p>如果你已经做了一个 <code>提交</code>（commit），但是你马上后悔了，这里有两种截然不同的方法去处理这个问题。</p>
+<p>创建一个 <code>新的提交</code>（commit），在新的提交里撤消老的提交所作的修改。这种作法在你已经把代码发布的情况下十分正确.</p>
+<p>你也可以去修改你的 <code>老提交</code>（old commit）。但是如果你已经把代码发布了，那么千万别这么做，git 不会处理项目历史会改变的情况，如果一个分支的历史被改变了那以后就不能正常的合并。</p>
+<h5 id="创建新提交来修复错误">创建新提交来修复错误</h5>
+<p>创建一个新的， <code>撤销</code>（revert）了前期修改的 <code>提交</code>（commit）是很容易的。只要把出错的提交（commit）的名字（reference）做为参数传给命令 <code>git revert</code> 就可以了，下面这条命令就演示了如何撤消最近的一个提交：</p>
+<pre><code>$ git revert HEAD
+</code></pre><p>这样就创建了一个撤消了上次提交（HEAD）的新提交， 你就有机会来修改新提交（new commit）里的提交注释信息。</p>
+<p>你也可撤消更早期的修改， 下面这条命令就是撤销 <code>上上次</code>（next-to-last）的提交:</p>
+<pre><code>$ git revert HEAD^
+</code></pre><p>在这种情况下，Git 尝试去撤销老的提交，然后留下完整的老提交前的版本.　如果你最近的修改和要撤销的修改有 <code>重叠</code>（overlap），那么就会被要求手工解决 <code>冲突</code>（conflicts），就像解决 <code>合并</code>（merge）时出现的冲突一样。</p>
+<p>译者注：<code>git revert</code> 其实不会直接创建一个 <code>提交</code>（commit），只会把撤销后的文件内容放到 <code>索引</code>（index）里，你需要再执行 <code>git commit</code> 命令，它们才会成为真正的提交（commit）。</p>
+<h5 id="修改提交来修复错误">修改提交来修复错误</h5>
+<p>如果你刚刚做了某个提交（commit）， 但是你又想马上修改这个提交，<code>git commit</code> 现在支持一个叫<code>--amend</code> 的参数，它能让你修改刚才的这个提交（<code>HEAD commit</code>）。这项机制能让你在代码发布前，添加一些新的文件或是修改你的提交 <code>注释</code>（commit message）。</p>
+<p>如果你在 <code>老提交</code>（older commit）里发现一个错误，但是现在还没有发布到代码服务器上，你可以使用 <code>git rebase</code> 命令的交互模式，<code>git rebase -i</code> 会提示你在编辑中做相关的修改。这样其实就是让你在 <code>rebase</code> 的过程来修改提交。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

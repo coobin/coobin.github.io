@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>IP Address &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>IP Address</h1>
+  <time datetime=2020-04-17T19:25:41Z class="post-date">Fri, Apr 17, 2020</time>
+  <h1 id="ip-address">IP Address</h1>
+<h2 id="进制转换">进制转换</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/ups2Xq.png" alt="ups2Xq">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/mvdXNd.png" alt="mvdXNd"></p>
+<ul>
+<li>有n个1就有多少2的n次幂个子网</li>
+<li>有n个0就有多少2的n次幂个主机</li>
+</ul>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/t4U7y8.png" alt="t4U7y8"></p>
+<ul>
+<li>求快=求块（block）=2^n 主机数位=256-感兴趣掩码数</li>
+</ul>
+<blockquote>
+<p>192.168.1.0 /27
+主机数为2的5次方32个</p>
+</blockquote>
+<blockquote>
+<p>192.168.1.0 255.255.255.224
+主机数为256-224=32</p>
+</blockquote>
+<h2 id="ip结构">IP结构</h2>
+<ul>
+<li>由32位二进制组成，用点分十进制表示</li>
+<li>结构上分为网络位和主机位两部分：
+<ul>
+<li>网络位，代表IP地址所属的网断</li>
+<li>主机位，代表网段上的某个节点</li>
+<li>由子网掩码决定分界点
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/VZmENO.png" alt="VZmENO">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/40ipoM.jpg" alt="40ipoM"></li>
+</ul>
+</li>
+</ul>
+<h3 id="子网掩码及前缀subnet-mask--prefiex">子网掩码及前缀：Subnet Mask &amp; Prefiex</h3>
+<ul>
+<li>用于区分网络位和主机位</li>
+<li>1表示网络位，0表示主机位（连续的1和0）</li>
+<li>前缀表示法（/数字），用来代表多少位网络位（1）</li>
+</ul>
+<h3 id="网络地址主机地址广播地址">网络地址、主机地址、广播地址</h3>
+<table>
+<thead>
+<tr>
+<th align="center">地址类型</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">网络地址</td>
+<td align="center">主机位全为0，代表一个网段（头）</td>
+</tr>
+<tr>
+<td align="center">主机地址</td>
+<td align="center">主机位不全为0也不全为1，代表一个网段内的一个节点（身体）</td>
+</tr>
+<tr>
+<td align="center">广播地址</td>
+<td align="center">主机位全为1，代表一个网段内的所有节点（尾）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>IP地址201.161.20.18/24的网络地址是201.161.20.0，主机地址是0.0.0.18，直接广播地址为201.161.20.255。</p>
+</blockquote>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/5DYu39.png" alt="5DYu39">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/QQSv0j.png" alt="QQSv0j"></p>
+<h2 id="分类网络">分类网络</h2>
+<table>
+<thead>
+<tr>
+<th align="center">Class</th>
+<th align="center">前缀位	网络地址位数</th>
+<th align="center">剩余的位数</th>
+<th align="center">网络数</th>
+<th align="center">每个网络的主机数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">A类地址</td>
+<td align="center">0</td>
+<td align="center">8</td>
+<td align="center">24</td>
+<td align="center">128</td>
+</tr>
+<tr>
+<td align="center">B类地址</td>
+<td align="center">10</td>
+<td align="center">16</td>
+<td align="center">16</td>
+<td align="center">16,384	65,534</td>
+</tr>
+<tr>
+<td align="center">C类地址</td>
+<td align="center">110</td>
+<td align="center">24</td>
+<td align="center">8</td>
+<td align="center">2,097,152</td>
+</tr>
+<tr>
+<td align="center">D类地址（群播）</td>
+<td align="center">1110</td>
+<td align="center">未定义</td>
+<td align="center">未定义</td>
+<td align="center">未定义</td>
+</tr>
+<tr>
+<td align="center">E类地址（保留）</td>
+<td align="center">1111</td>
+<td align="center">未定义</td>
+<td align="center">未定义</td>
+<td align="center">未定义</td>
+</tr>
+</tbody>
+</table>
+<h3 id="各个类别的范围">各个类别的范围</h3>
+<table>
+<thead>
+<tr>
+<th align="center">分类</th>
+<th align="center">前缀码</th>
+<th align="center">开始地址</th>
+<th align="center">结束地址</th>
+<th align="center">对应CIDR修饰</th>
+<th align="center">默认子网掩码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">A类地址</td>
+<td align="center">0</td>
+<td align="center">0.0.0.0</td>
+<td align="center">127.255.255.255</td>
+<td align="center">/8</td>
+<td align="center">255.0.0.0</td>
+</tr>
+<tr>
+<td align="center">B类地址</td>
+<td align="center">10</td>
+<td align="center">128.0.0.0</td>
+<td align="center">191.255.255.255</td>
+<td align="center">/16</td>
+<td align="center">255.255.0.0</td>
+</tr>
+<tr>
+<td align="center">C类地址</td>
+<td align="center">110</td>
+<td align="center">192.0.0.0</td>
+<td align="center">223.255.255.255</td>
+<td align="center">/24</td>
+<td align="center">255.255.255.0</td>
+</tr>
+<tr>
+<td align="center">D类地址 （群播）</td>
+<td align="center">1110</td>
+<td align="center">224.0.0.0</td>
+<td align="center">239.255.255.255</td>
+<td align="center">/4</td>
+<td align="center">未定义</td>
+</tr>
+<tr>
+<td align="center">E类地址 （保留）</td>
+<td align="center">1111</td>
+<td align="center">240.0.0.0</td>
+<td align="center">255.255.255.255</td>
+<td align="center">/4</td>
+<td align="center">未定义</td>
+</tr>
+</tbody>
+</table>
+<h3 id="私有ip">私有IP</h3>
+<p>A类地址中：10.0.0.0到10.255.255.255</p>
+<p>B类地址中：172.16.0.0到172.31.255.255</p>
+<p>C类地址中：192.168.0.0到192.168.255.255</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

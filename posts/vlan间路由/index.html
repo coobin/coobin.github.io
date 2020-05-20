@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VLAN间路由 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>VLAN间路由</h1>
+  <time datetime=2020-04-13T09:52:01Z class="post-date">Mon, Apr 13, 2020</time>
+  <h1 id="vlan间路由">VLAN间路由</h1>
+<p>1
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/1RWJKk.png" alt="1RWJKk"></p>
+<ul>
+<li>在二层交换机上配置VLAN，每一个VLAN使用一条独占的无力链路连接到路由器的一个接口上。
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/Elwpdh.png" alt="Elwpdh"></li>
+</ul>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/qS7HiW.png" alt="qS7HiW"></p>
+<ul>
+<li>将交换机和路由器之间的链路配置为Trunk链路，并且在路由器上创建子接口以支持VLAN路由
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/Clipboard_2020-04-07-22-18-43.png" alt="Clipboard_2020-04-07-22-18-43"></li>
+</ul>
+<p>单臂路由配置
+命令|备注
+:&mdash;:|:&mdash;:
+dot1q termination vid &ldquo;VLAN&quot;|关联子接口和VLAN
+arp broadcast enable|开启子接口的ARP广播功能</p>
+<p>配置单臂路由实例
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/yLBicV.png" alt="yLBicV">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/hZwkAC.png" alt="hZwkAC">
+上例中PC1 ping PC2一次能抓到几个包？标签是什么？
+4个
+第一次 10
+第二次 20
+第三次 20
+第四次 10
+第一次发送过去路由接收到10标签的帧后剥离，然后重新打上20的标签从0.20接口发送出来，回来则是相反。</p>
+<p>三层交换
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/5aXRvq.png" alt="5aXRvq">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/oW2dbh.png" alt="oW2dbh">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/S6eQrJ.png" alt="S6eQrJ"></p>
+<p>三层交换配置：
+命令|备注
+:&mdash;:|:&mdash;:
+interface vlanif “vlan接口”|创建VLANIF接口
+PS|VLAN接口的编号必须对应一个已创建的VLAN
+portswich|配置接口为二层
+undo portswitch|配置接口为三层</p>
+<p>交换机三层互联方案:</p>
+<ol>
+<li>二层物理口+三层虚拟口</li>
+<li>三层物理口(不够灵活)</li>
+</ol>
+<p>实例:
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/gQ0jNp.png" alt="gQ0jNp"></p>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/mv57Yp.png" alt="mv57Yp"></p>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/vlEKvP.png" alt="vlEKvP"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

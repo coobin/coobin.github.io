@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>数据流重定向 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>数据流重定向</h1>
+  <time datetime=2020-05-12T08:43:29Z class="post-date">Tue, May 12, 2020</time>
+  <h1 id="数据流重定向">数据流重定向</h1>
+<h2 id="简单重定向">简单重定向</h2>
+<p>在更多了解 Linux 的重定向之前，我们需要先知道一些基本的东西，前面我们已经提到过 Linux 默认提供了三个特殊设备，用于终端的显示和输出，分别为<code>stdin</code>（标准输入,对应于你在终端的输入），<code>stdout</code>（标准输出，对应于终端的输出），<code>stderr</code>（标准错误输出，对应于终端的输出）。</p>
+<table>
+<thead>
+<tr>
+<th>文件描述符</th>
+<th>设备文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td><code>/dev/stdin</code></td>
+<td>标准输入</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td><code>/dev/stdout</code></td>
+<td>标准输出</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><code>/dev/stderr</code></td>
+<td>标准错误</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>文件描述符：文件描述符在形式上是一个非负整数。实际上，它是一个索引值，指向内核为每一个进程所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。在程序设计中，一些涉及底层的程序编写往往会围绕着文件描述符展开。但是文件描述符这一概念往往只适用于 UNIX、Linux 这样的操作系统。</p>
+</blockquote>
+<p>我们可以这样使用这些文件描述符：</p>
+<p>默认使用终端的标准输入作为命令的输入和标准输出作为命令的输出</p>
+<pre><code>$ cat
+（按Ctrl+C退出）
+</code></pre><p>将 cat 的连续输出（heredoc 方式）重定向到一个文件</p>
+<pre><code>$ mkdir Documents
+$ cat &gt; Documents/test.c &lt;&lt;EOF
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf(&quot;hello world\n&quot;);
+    return 0;
+}
+
+EOF
+</code></pre><p>将一个文件作为命令的输入，标准输出作为命令的输出</p>
+<pre><code>$ cat Documents/test.c
+</code></pre><p>将 echo 命令通过管道传过来的数据作为 cat 命令的输入，将标准输出作为命令的输出</p>
+<pre><code>$ echo 'hi' | cat
+</code></pre><p>将 echo 命令的输出从默认的标准输出重定向到一个普通文件</p>
+<pre><code>$ echo 'hello shiyanlou' &gt; redirect
+$ cat redirect
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid346timestamp1532415296335.png/wm" alt="此处输入图片的描述"></p>
+<p>初学者这里要注意不要将管道和重定向混淆，<strong>管道默认是连接前一个命令的输出到下一个命令的输入</strong>，而重定向通常是需要一个文件来建立两个命令的连接，你可以仔细体会一下上述第三个操作和最后两个操作的异同点。</p>
+<h2 id="标准错误重定向">标准错误重定向</h2>
+<p>重定向标准输出到文件，这是一个很实用的操作，另一个很实用的操作是将标准错误重定向，标准输出和标准错误都被指向伪终端的屏幕显示，所以我们经常看到的一个命令的输出通常是同时包含了标准输出和标准错误的结果的。比如下面的操作：</p>
+<pre><code># 使用cat 命令同时读取两个文件，其中一个存在，另一个不存在
+$ cat Documents/test.c hello.c
+# 你可以看到除了正确输出了前一个文件的内容，还在末尾出现了一条错误信息
+# 下面我们将输出重定向到一个文件
+$ cat Documents/test.c hello.c &gt; somefile
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid600404labid6127timestamp1523951670892.png/wm" alt="此处输入图片的描述"></p>
+<p>遗憾的是，这里依然出现了那条错误信息，这正是因为如我上面说的那样，标准输出和标准错误虽然都指向终端屏幕，实际它们并不一样。那有的时候我们就是要隐藏某些错误或者警告，那又该怎么做呢。这就需要用到我们前面讲的文件描述符了：</p>
+<pre><code># 将标准错误重定向到标准输出，再将标准输出重定向到文件，注意要将重定向到文件写到前面
+$ cat Documents/test.c hello.c &gt;somefile  2&gt;&amp;1
+# 或者只用bash提供的特殊的重定向符号&quot;&amp;&quot;将标准错误和标准输出同时重定向到文件
+$ cat Documents/test.c hello.c &amp;&gt;somefilehell
+</code></pre><p><strong>注意你应该在输出重定向文件描述符前加上<code>&amp;</code>,否则 shell 会当做重定向到一个文件名为 1 的文件中</strong></p>
+<p><img src="https://doc.shiyanlou.com/document-uid600404labid6127timestamp1523951876075.png/wm" alt="此处输入图片的描述"></p>
+<h2 id="使用tee命令同时重定向到多个文件">使用tee命令同时重定向到多个文件</h2>
+<p>你可能还有这样的需求，除了需要将输出重定向到文件,也需要将信息打印在终端。那么你可以使用<code>tee</code>命令来实现：</p>
+<pre><code>$ echo 'hello shiyanlou' | tee hello
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid346timestamp1532415315324.png/wm" alt="此处输入图片的描述"></p>
+<h2 id="永久重定向">永久重定向</h2>
+<p><code>exec</code>命令的作用是使用指定的命令替换当前的 Shell，即使用一个进程替换当前进程，或者指定新的重定向：</p>
+<pre><code># 先开启一个子 Shell
+$ zsh
+# 使用exec替换当前进程的重定向，将标准输出重定向到一个文件
+$ exec 1&gt;somefile
+# 后面你执行的命令的输出都将被重定向到文件中,直到你退出当前子shell，或取消exec的重定向（后面将告诉你怎么做）
+$ ls
+$ exit
+$ cat somefile
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid600404labid6127timestamp1523952144929.png/wm" alt="此处输入图片的描述"></p>
+<h2 id="文件描述符">文件描述符</h2>
+<p>在 Shell 中有 9 个文件描述符。上面我们使用了也是它默认提供的 0,1,2 号文件描述符。另外我们还可以使用 3-8 的文件描述符，只是它们默认没有打开而已。你可以使用下面命令查看当前 Shell 进程中打开的文件描述符：</p>
+<pre><code>$ cd /dev/fd/;ls -Al
+</code></pre><p>同样使用<code>exec</code>命令可以创建新的文件描述符：</p>
+<pre><code>$ zsh
+$ exec 3&gt;somefile
+# 先进入目录，再查看，否则你可能不能得到正确的结果，然后再回到上一次的目录
+$ cd /dev/fd/;ls -Al;cd -
+# 注意下面的命令&gt;与&amp;之间不应该有空格，如果有空格则会出错
+$ echo &quot;this is test&quot; &gt;&amp;3
+$ cat somefile
+$ exit
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid346timestamp1532415336263.png/wm" alt="此处输入图片的描述"></p>
+<h4 id="上面我们打开的-3-号文件描述符可以使用如下操作将它关闭">上面我们打开的 3 号文件描述符，可以使用如下操作将它关闭：</h4>
+<pre><code>$ exec 3&gt;&amp;-
+$ cd /dev/fd;ls -Al;cd -
+</code></pre><h2 id="完全屏蔽命令的输出">完全屏蔽命令的输出</h2>
+<p>在 Linux 中有一个被称为“黑洞”的设备文件,所有导入它的数据都将被“吞噬”。</p>
+<blockquote>
+<p>在类 UNIX 系统中，/dev/null，或称空设备，是一个特殊的设备文件，它通常被用于丢弃不需要的输出流，或作为用于输入流的空文件，这些操作通常由重定向完成。读取它则会立即得到一个 EOF。</p>
+</blockquote>
+<p>我们可以利用<code>/dev/null</code>屏蔽命令的输出：</p>
+<pre><code>$ cat Documents/test.c 1&gt;/dev/null 2&gt;&amp;1
+</code></pre><p>上面这样的操作将使你得不到任何输出结果。</p>
+<h2 id="xargs-分割参数列表">xargs 分割参数列表</h2>
+<blockquote>
+<p>xargs 是一条 UNIX 和类 UNIX 操作系统的常用命令。它的作用是将参数列表转换成小块分段传递给其他命令，以避免参数列表过长的问题。</p>
+</blockquote>
+<p>这个命令在有些时候十分有用，特别是当用来处理产生大量输出结果的命令如 find，locate 和 grep 的结果，详细用法请参看 man 文档。</p>
+<pre><code>$ cut -d: -f1 &lt; /etc/passwd | sort | xargs echo
+</code></pre><p>上面这个命令用于将<code>/etc/passwd</code>文件按<code>:</code>分割取第一个字段排序后，使用<code>echo</code>命令生成一个列表。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

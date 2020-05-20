@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>grep &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>grep</h1>
+  <time datetime=2020-04-28T14:00:05Z class="post-date">Tue, Apr 28, 2020</time>
+  <h1 id="grep">grep</h1>
+<h2 id="基本操作">基本操作</h2>
+<p><code>grep</code>命令用于打印输出文本中匹配的模式串，它使用正则表达式作为模式匹配的条件。<code>grep</code>支持三种正则表达式引擎，分别用三个参数指定：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-E</code></td>
+<td>POSIX 扩展正则表达式，ERE</td>
+</tr>
+<tr>
+<td><code>-G</code></td>
+<td>POSIX 基本正则表达式，BRE</td>
+</tr>
+<tr>
+<td><code>-P</code></td>
+<td>Perl 正则表达式，PCRE</td>
+</tr>
+</tbody>
+</table>
+<p>不过在你没学过 perl 语言的大多数情况下你将只会使用到<code>ERE</code>和<code>BRE</code>,所以我们接下来的内容都不会讨论到 PCRE 中特有的一些正则表达式语法（它们之间大部分内容是存在交集的，所以你不用担心会遗漏多少重要内容）</p>
+<p>在通过<code>grep</code>命令使用正则表达式之前，先介绍一下它的常用参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-b</code></td>
+<td>将二进制文件作为文本来进行匹配</td>
+</tr>
+<tr>
+<td><code>-c</code></td>
+<td>统计以模式匹配的数目</td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>忽略大小写</td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td>显示匹配文本所在行的行号</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>反选，输出不匹配行的内容</td>
+</tr>
+<tr>
+<td><code>-r</code></td>
+<td>递归匹配查找</td>
+</tr>
+<tr>
+<td><code>-A n</code></td>
+<td>n 为正整数，表示 after 的意思，除了列出匹配行之外，还列出后面的 n 行</td>
+</tr>
+<tr>
+<td><code>-B n</code></td>
+<td>n 为正整数，表示 before 的意思，除了列出匹配行之外，还列出前面的 n 行</td>
+</tr>
+<tr>
+<td><code>--color=auto</code></td>
+<td>将输出中的匹配项设置为自动颜色显示</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注：在大多数发行版中是默认设置了 grep 的颜色的，你可以通过参数指定或修改<code>GREP_COLOR</code>环境变量。</p>
+</blockquote>
+<p><img src="https://doc.shiyanlou.com/document-uid735639labid354timestamp1532415381859.png/wm" alt="此处输入图片的描述"></p>
+<h2 id="基本正则表达式">基本正则表达式</h2>
+<h3 id="bre">BRE</h3>
+<h4 id="位置">位置</h4>
+<p>查找<code>/etc/group</code>文件中以&quot;shiyanlou&quot;为开头的行</p>
+<pre><code>$ grep 'shiyanlou' /etc/group
+$ grep '^shiyanlou' /etc/group
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid600404labid6128timestamp1523954676432.png/wm" alt="此处输入图片的描述"></p>
+<h4 id="数量">数量</h4>
+<pre><code># 将匹配以'z'开头以'o'结尾的所有字符串
+$ echo 'zero\nzo\nzoo' | grep 'z.*o'
+# 将匹配以'z'开头以'o'结尾，中间包含一个任意字符的字符串
+$ echo 'zero\nzo\nzoo' | grep 'z.o'
+# 将匹配以'z'开头,以任意多个'o'结尾的字符串
+$ echo 'zero\nzo\nzoo' | grep 'zo*'
+</code></pre><p>注意：其中<code>\n</code>为换行符</p>
+<p><img src="https://doc.shiyanlou.com/document-uid735639labid354timestamp1532415422642.png/wm" alt="此处输入图片的描述"></p>
+<h4 id="选择">选择</h4>
+<pre><code># grep默认是区分大小写的，这里将匹配所有的小写字母
+$ echo '1234\nabcd' | grep '[a-z]'
+# 将匹配所有的数字
+$ echo '1234\nabcd' | grep '[0-9]'
+# 将匹配所有的数字
+$ echo '1234\nabcd' | grep '[[:digit:]]'
+# 将匹配所有的小写字母
+$ echo '1234\nabcd' | grep '[[:lower:]]'
+# 将匹配所有的大写字母
+$ echo '1234\nabcd' | grep '[[:upper:]]'
+# 将匹配所有的字母和数字，包括0-9,a-z,A-Z
+$ echo '1234\nabcd' | grep '[[:alnum:]]'
+# 将匹配所有的字母
+$ echo '1234\nabcd' | grep '[[:alpha:]]'
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid354timestamp1532415449222.png/wm" alt="此处输入图片的描述"></p>
+<p>下面包含完整的特殊符号及说明：</p>
+<table>
+<thead>
+<tr>
+<th>特殊符号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[:alnum:]</code></td>
+<td>代表英文大小写字母及数字，亦即 0-9, A-Z, a-z</td>
+</tr>
+<tr>
+<td><code>[:alpha:]</code></td>
+<td>代表任何英文大小写字母，亦即 A-Z, a-z</td>
+</tr>
+<tr>
+<td><code>[:blank:]</code></td>
+<td>代表空白键与 [Tab] 按键两者</td>
+</tr>
+<tr>
+<td><code>[:cntrl:]</code></td>
+<td>代表键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等</td>
+</tr>
+<tr>
+<td><code>[:digit:]</code></td>
+<td>代表数字而已，亦即 0-9</td>
+</tr>
+<tr>
+<td><code>[:graph:]</code></td>
+<td>除了空白字节 (空白键与 [Tab] 按键) 外的其他所有按键</td>
+</tr>
+<tr>
+<td><code>[:lower:]</code></td>
+<td>代表小写字母，亦即 a-z</td>
+</tr>
+<tr>
+<td><code>[:print:]</code></td>
+<td>代表任何可以被列印出来的字符</td>
+</tr>
+<tr>
+<td><code>[:punct:]</code></td>
+<td>代表标点符号 (punctuation symbol)，亦即：&rdquo; ' ? ! ; : # $&hellip;</td>
+</tr>
+<tr>
+<td><code>[:upper:]</code></td>
+<td>代表大写字母，亦即 A-Z</td>
+</tr>
+<tr>
+<td><code>[:space:]</code></td>
+<td>任何会产生空白的字符，包括空白键, [Tab], CR 等等</td>
+</tr>
+<tr>
+<td><code>[:xdigit:]</code></td>
+<td>代表 16 进位的数字类型，因此包括： 0-9, A-F, a-f 的数字与字节</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意</strong>：之所以要使用特殊符号，是因为上面的[a-z]不是在所有情况下都管用，这还与主机当前的语系有关，即设置在<code>LANG</code>环境变量的值，zh_CN.UTF-8 的话[a-z]，即为所有小写字母，其它语系可能是大小写交替的如，&ldquo;a A b B&hellip;z Z&rdquo;，[a-z]中就可能包含大写字母。所以在使用[a-z]时请确保当前语系的影响，使用[:lower:]则不会有这个问题。</p>
+</blockquote>
+<pre><code># 排除字符
+$ $ echo 'geek\ngood' | grep '[^o]'
+</code></pre><blockquote>
+<p>**注意:**当<code>^</code>放到中括号内为排除字符，否则表示行首。</p>
+</blockquote>
+<p><img src="https://doc.shiyanlou.com/document-uid735639labid354timestamp1532415467268.png/wm" alt="此处输入图片的描述"></p>
+<h3 id="ere">ERE</h3>
+<p>要通过<code>grep</code>使用扩展正则表达式需要加上<code>-E</code>参数，或使用<code>egrep</code>。</p>
+<h4 id="数量-1">数量</h4>
+<pre><code># 只匹配&quot;zo&quot;
+$ echo 'zero\nzo\nzoo' | grep -E 'zo{1}'
+# 匹配以&quot;zo&quot;开头的所有单词
+$ echo 'zero\nzo\nzoo' | grep -E 'zo{1,}'
+</code></pre><blockquote>
+<p>**注意：**推荐掌握<code>{n,m}</code>即可，<code>+</code>,<code>?</code>,<code>*</code>，这几个不太直观，且容易弄混淆。</p>
+</blockquote>
+<h4 id="选择-1">选择</h4>
+<pre><code># 匹配&quot;www.shiyanlou.com&quot;和&quot;www.google.com&quot;
+$ echo 'www.shiyanlou.com\nwww.baidu.com\nwww.google.com' | grep -E 'www\.(shiyanlou|google)\.com'
+# 或者匹配不包含&quot;baidu&quot;的内容
+$ echo 'www.shiyanlou.com\nwww.baidu.com\nwww.google.com' | grep -Ev 'www\.baidu\.com'
+</code></pre><blockquote>
+<p>**注意：**因为<code>.</code>号有特殊含义，所以需要转义。</p>
+</blockquote>
+<p><img src="https://doc.shiyanlou.com/document-uid735639labid354timestamp1532415579510.png/wm" alt="此处输入图片的描述"></p>
+<p>关于正则表达式和<code>grep</code>命令的内容就介绍这么多，下面会介绍两个更强大的工具<code>sed</code>和<code>awk</code>，但同样也正是因为这两个工具的强大，我们的内容无法包含它们的全部，这里将只对基本内容作介绍。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux/Commad on 梦还在吗</title>
+    <link>http://example.org/tags/linux/commad/</link>
+    <description>Recent content in Linux/Commad on 梦还在吗</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="http://example.org/tags/linux/commad/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>expr</title>
+      <link>http://example.org/posts/expr/</link>
+      <pubDate>Mon, 11 May 2020 05:49:10 +0000</pubDate>
+      
+      <guid>http://example.org/posts/expr/</guid>
+      <description>expr Linux 命令大全
+expr命令是一个手工命令行计数器，用于在UNIX/LINUX下求表达式变量的值，一般用于整数值，也可用于字符串。
+语法 expr 表达式
+表达式说明:
+ 用空格隔开每个项； 用 / (反斜杠) 放在 shell 特定的字符前面； 对包含空格和其他特殊字符的字符串要用引号括起来  实例 1、计算字串长度
+&amp;gt; expr length “this is a test” 14 2、抓取字串
+&amp;gt; expr substr “this is a test” 3 5 is is 3、抓取第一个字符数字串出现的位置
+&amp;gt; expr index &amp;quot;sarasara&amp;quot; a 2 4、整数运算
+ &amp;gt; expr 14 % 9 5 &amp;gt; expr 10 + 10 20 &amp;gt; expr 1000 + 900 1900 &amp;gt; expr 30 / 3 / 2 5 &amp;gt; expr 30 \* 3 (使用乘号时，必须用反斜线屏蔽其特定含义。因为shell可能会误解显示星号的意义) 90 &amp;gt; expr 30 * 3 expr: Syntax error Shell expr命令：进行整数计算 expr 是 evaluate expressions 的缩写，译为“表达式求值”。Shell expr 是一个功能强大，并且比较复杂的命令，它除了可以实现整数计算，还可以结合一些选项对字符串进行处理，例如计算字符串长度、字符串比较、字符串匹配、字符串提取等。</description>
+    </item>
+    
+    <item>
+      <title>who</title>
+      <link>http://example.org/posts/who/</link>
+      <pubDate>Mon, 11 May 2020 05:41:32 +0000</pubDate>
+      
+      <guid>http://example.org/posts/who/</guid>
+      <description>who who命令是显示目前登录系统的用户信息。执行who命令可得知目前有那些用户登入系统，单独执行who命令会列出登入帐号，使用的终端机，登入时间以及从何处登入或正在使用哪个X显示器。
+语法 who(选项)(参数) 选项 -H或--heading：显示各栏位的标题信息列； -i或-u或--idle：显示闲置时间，若该用户在前一分钟之内有进行任何动作，将标示成&amp;quot;.&amp;quot;号，如果该用户已超过24小时没有任何动作，则标示出&amp;quot;old&amp;quot;字符串； -m：此参数的效果和指定&amp;quot;am i&amp;quot;字符串相同； -q或--count：只显示登入系统的帐号名称和总人数； -s：此参数将忽略不予处理，仅负责解决who指令其他版本的兼容性问题； -w或-T或--mesg或--message或--writable：显示用户的信息状态栏； --help：在线帮助； --version：显示版本信息。 参数 文件：指定查询文件。
+实例 [root@localhost ~]# who root pts/0 2013-08-19 15:04 (192.168.0.134) root pts/1 2013-12-20 10:37 (180.111.155.40) [root@localhost ~]# who -q root root # users=2 [root@localhost ~]# who -H NAME LINE time COMMENT root pts/0 2013-08-19 15:04 (192.168.0.134) root pts/1 2013-12-20 10:37 (180.111.155.40) [root@localhost ~]# who -w root + pts/0 2013-08-19 15:04 (192.168.0.134) root + pts/1 2013-12-20 10:37 (180.</description>
+    </item>
+    
+    <item>
+      <title>stat</title>
+      <link>http://example.org/posts/stat/</link>
+      <pubDate>Mon, 11 May 2020 05:41:30 +0000</pubDate>
+      
+      <guid>http://example.org/posts/stat/</guid>
+      <description>stat stat命令用于显示文件的状态信息。stat命令的输出信息比ls命令的输出信息要更详细。
+语法 stat(选项)(参数) 选项 -L：支持符号连接； -f：显示文件系统状态而非文件状态； -t：以简洁方式输出信息； --help：显示指令的帮助信息； --version：显示指令的版本信息。 参数 文件：指定要显示信息的普通文件或者文件系统对应的设备文件名。
+实例 [root@localhost ~]# ls -l myfile -rw-r--r-- 1 root root 0 2010-10-09 myfile [root@localhost ~]# stat myfile file: “myfile” Size: 0 Blocks: 8 IO Block: 4096 一般空文件 Device: fd00h/64768d Inode: 194805815 Links: 1 Access: (0644/-rw-r--r--) Uid: ( 0/ root) Gid: ( 0/ root) Access: 2010-12-12 12:22:35.000000000 +0800 Modify: 2010-10-09 20:44:21.000000000 +0800 Change: 2010-10-09 20:44:21.000000000 +0800 [root@localhost ~]# stat -f myfile File: &amp;quot;myfile&amp;quot; id: 0 Namelen: 255 type: ext2/ext3 Block size: 4096 Fundamental block size: 4096 Blocks: Total: 241555461 free: 232910771 Available: 220442547 Inodes: Total: 249364480 Free: 249139691 [root@localhost ~]# stat -t myfile myfile 0 8 81a4 0 0 fd00 194805815 1 0 0 1292127755 1286628261 1286628261 4096 </description>
+    </item>
+    
+    <item>
+      <title>diff</title>
+      <link>http://example.org/posts/diff/</link>
+      <pubDate>Mon, 11 May 2020 05:41:26 +0000</pubDate>
+      
+      <guid>http://example.org/posts/diff/</guid>
+      <description>diff diff命令在最简单的情况下，比较给定的两个文件的不同。如果使用“-”代替“文件”参数，则要比较的内容将来自标准输入。diff命令是以逐行的方式，比较文本文件的异同处。如果该命令指定进行目录的比较，则将会比较该目录中具有相同文件名的文件，而不会对其子目录文件进行任何比较操作。
+语法 diff(选项)(参数) 选项 -&amp;lt;行数&amp;gt;：指定要显示多少行的文本。此参数必须与-c或-u参数一并使用； -a或——text：diff预设只会逐行比较文本文件； -b或--ignore-space-change：不检查空格字符的不同； -B或--ignore-blank-lines：不检查空白行； -c：显示全部内容，并标出不同之处； -C&amp;lt;行数&amp;gt;或--context&amp;lt;行数&amp;gt;：与执行“-c-&amp;lt;行数&amp;gt;”指令相同； -d或——minimal：使用不同的演算法，以小的单位来做比较； -D&amp;lt;巨集名称&amp;gt;或ifdef&amp;lt;巨集名称&amp;gt;：此参数的输出格式可用于前置处理器巨集； -e或——ed：此参数的输出格式可用于ed的script文件； -f或-forward-ed：输出的格式类似ed的script文件，但按照原来文件的顺序来显示不同处； -H或--speed-large-files：比较大文件时，可加快速度； -l&amp;lt;字符或字符串&amp;gt;或--ignore-matching-lines&amp;lt;字符或字符串&amp;gt;：若两个文件在某几行有所不同，而之际航同时都包含了选项中指定的字符或字符串，则不显示这两个文件的差异； -i或--ignore-case：不检查大小写的不同； -l或——paginate：将结果交由pr程序来分页； -n或——rcs：将比较结果以RCS的格式来显示； -N或--new-file：在比较目录时，若文件A仅出现在某个目录中，预设会显示：Only in目录，文件A 若使用-N参数，则diff会将文件A 与一个空白的文件比较； -p：若比较的文件为C语言的程序码文件时，显示差异所在的函数名称； -P或--unidirectional-new-file：与-N类似，但只有当第二个目录包含了第一个目录所没有的文件时，才会将这个文件与空白的文件做比较； -q或--brief：仅显示有无差异，不显示详细的信息； -r或——recursive：比较子目录中的文件； -s或--report-identical-files：若没有发现任何差异，仍然显示信息； -S&amp;lt;文件&amp;gt;或--starting-file&amp;lt;文件&amp;gt;：在比较目录时，从指定的文件开始比较； -t或--expand-tabs：在输出时，将tab字符展开； -T或--initial-tab：在每行前面加上tab字符以便对齐； -u，-U&amp;lt;列数&amp;gt;或--unified=&amp;lt;列数&amp;gt;：以合并的方式来显示文件内容的不同； -v或——version：显示版本信息； -w或--ignore-all-space：忽略全部的空格字符； -W&amp;lt;宽度&amp;gt;或--width&amp;lt;宽度&amp;gt;：在使用-y参数时，指定栏宽； -x&amp;lt;文件名或目录&amp;gt;或--exclude&amp;lt;文件名或目录&amp;gt;：不比较选项中所指定的文件或目录； -X&amp;lt;文件&amp;gt;或--exclude-from&amp;lt;文件&amp;gt;；您可以将文件或目录类型存成文本文件，然后在=&amp;lt;文件&amp;gt;中指定此文本文件； -y或--side-by-side：以并列的方式显示文件的异同之处； --help：显示帮助； --left-column：在使用-y参数时，若两个文件某一行内容相同，则仅在左侧的栏位显示该行内容； --suppress-common-lines：在使用-y参数时，仅显示不同之处。 参数  文件1：指定要比较的第一个文件； 文件2：指定要比较的第二个文件。  实例 将目录/usr/li下的文件&amp;quot;test.txt&amp;quot;与当前目录下的文件&amp;quot;test.txt&amp;quot;进行比较，输入如下命令：
+diff /usr/li test.txt #使用diff指令对文件进行比较 上面的命令执行后，会将比较后的不同之处以指定的形式列出，如下所示：
+n1 a n3,n4 n1,n2 d n3 n1,n2 c n3,n4 其中，字母&amp;quot;a&amp;rdquo;、&amp;ldquo;d&amp;rdquo;、&amp;ldquo;c&amp;quot;分别表示添加、删除及修改操作。而&amp;quot;n1&amp;rdquo;、&amp;ldquo;n2&amp;quot;表示在文件1中的行号，&amp;ldquo;n3&amp;rdquo;、&amp;ldquo;n4&amp;quot;表示在文件2中的行号。
+注意：以上说明指定了两个文件中不同处的行号及其相应的操作。在输出形式中，每一行后面将跟随受到影响的若干行。其中，以&amp;lt;开始的行属于文件1，以&amp;gt;开始的行属于文件2。</description>
+    </item>
+    
+    <item>
+      <title>echo</title>
+      <link>http://example.org/posts/echo/</link>
+      <pubDate>Sat, 09 May 2020 13:25:11 +0000</pubDate>
+      
+      <guid>http://example.org/posts/echo/</guid>
+      <description>echo Shell内建命令
+echo命令用于在shell中打印shell变量的值，或者直接输出指定的字符串。linux的echo命令，在shell编程中极为常用, 在终端下打印变量value的时候也是常常用到的，因此有必要了解下echo的用法echo命令的功能是在显示器上显示一段文字，一般起到一个提示的作用。
+语法 echo(选项)(参数)
+选项 -e：激活转义字符。
+使用-e选项时，若字符串中出现以下字符，则特别加以处理，而不会将它当成一般文字输出：
+ \a 发出警告声； \b 删除前一个字符； \c 最后不加上换行符号； \f 换行但光标仍旧停留在原来的位置； \n 换行且光标移至行首； \r 光标移至行首，但不换行； \t 插入tab； \v 与\f相同； \\ 插入\字符； \nnn 插入nnn（八进制）所代表的ASCII字符；  参数 变量：指定要打印的变量。
+实例 用echo命令打印带有色彩的文字：
+文字色：
+echo -e &amp;quot;\e[1;31mThis is red text\e[0m&amp;quot; This is red text  \e[1;31m 将颜色设置为红色 \e[0m 将颜色重新置回  颜色码：重置=0，黑色=30，红色=31，绿色=32，黄色=33，蓝色=34，洋红=35，青色=36，白色=37
+背景色：
+echo \-e &amp;quot;\\e\[1;42mGreed Background\\e\[0m&amp;quot; Greed Background 颜色码：重置=0，黑色=40，红色=41，绿色=42，黄色=43，蓝色=44，洋红=45，青色=46，白色=47
+文字闪动：
+echo \-e &amp;quot;\\033\[37;31;5mMySQL Server Stop...\\033\[39;49;0m&amp;quot; 红色数字处还有其他数字参数：0 关闭所有属性、1 设置高亮度（加粗）、4 下划线、5 闪烁、7 反显、8 消隐</description>
+    </item>
+    
+    <item>
+      <title>date</title>
+      <link>http://example.org/posts/date/</link>
+      <pubDate>Sat, 09 May 2020 11:35:36 +0000</pubDate>
+      
+      <guid>http://example.org/posts/date/</guid>
+      <description>date 常用工具命令
+date命令是显示或设置系统时间与日期。
+很多shell脚本里面需要打印不同格式的时间或日期，以及要根据时间和日期执行操作。延时通常用于脚本执行过程中提供一段等待的时间。日期可以以多种格式去打印，也可以使用命令设置固定的格式。在类UNIX系统中，日期被存储为一个整数，其大小为自世界标准时间（UTC）1970年1月1日0时0分0秒起流逝的秒数。
+语法 date(选项)(参数) 选项 -d&amp;lt;字符串&amp;gt;：显示字符串所指的日期与时间。字符串前后必须加上双引号； -s&amp;lt;字符串&amp;gt;：根据字符串来设置日期与时间。字符串前后必须加上双引号； -u：显示GMT； --[help](http://man.linuxde.net/help &amp;quot;help命令&amp;quot;)：在线帮助； --version：显示版本信息。 参数 &amp;lt;+时间日期格式&amp;gt;：指定显示时使用的日期时间格式。 日期格式字符串列表 %H 小时，24小时制（00~23） %I 小时，12小时制（01~12） %k 小时，24小时制（0~23） %l 小时，12小时制（1~12） %M 分钟（00~59） %p 显示出AM或PM %r 显示时间，12小时制（hh:mm:ss %p） %s 从1970年1月1日00:00:00到目前经历的秒数 %S 显示秒（00~59） %T 显示时间，24小时制（hh:mm:ss） %X 显示时间的格式（%H:%M:%S） %Z 显示时区，日期域（CST） %a 星期的简称（Sun~Sat） %A 星期的全称（Sunday~Saturday） %h,%b 月的简称（Jan~Dec） %B 月的全称（January~December） %c 日期和时间（Tue Nov 20 14:12:58 2012） %d 一个月的第几天（01~31） %x,%D 日期（mm/dd/yy） %j 一年的第几天（001~366） %m 月份（01~12） %w 一个星期的第几天（0代表星期天） %W 一年的第几个星期（00~53，星期一为第一天） %y 年的最后两个数字（1999则是99） 实例 格式化输出：</description>
+    </item>
+    
+    <item>
+      <title>cat</title>
+      <link>http://example.org/posts/cat/</link>
+      <pubDate>Mon, 04 May 2020 03:43:21 +0000</pubDate>
+      
+      <guid>http://example.org/posts/cat/</guid>
+      <description>cat cat命令的用途是连接文件或标准输入并打印。这个命令常用来显示文件内容，或者将几个文件连接起来显示，或者从标准输入读取内容并显示，它常与重定向符号配合使用。 命令格式： cat [选项] [文件]... 命令功能： cat主要有三大功能：
+  一次显示整个文件:cat filename
+  从键盘创建一个文件:cat &amp;gt; filename 只能创建新文件,不能编辑已有文件.
+  将几个文件合并为一个文件:cat file1 file2 &amp;gt; file
+  命令参数：    参数 含义     -A, &amp;ndash;show-all 等价于 -vET   -b, &amp;ndash;number-nonblank 对非空输出行编号   -e 等价于 -vE   -E, &amp;ndash;show-ends 在每行结束处显示 $   -n, &amp;ndash;number 对输出的所有行编号,由1开始对所有输出的行数编号   -s, &amp;ndash;squeeze-blank 有连续两行以上的空白行，就代换为一行的空白行    -t 与 -vT 等价   -T, &amp;ndash;show-tabs 将跳格字符显示为 ^I   -u (被忽略)   -v, &amp;ndash;show-nonprinting 使用 ^ 和 M- 引用，除了 LFD 和 TAB 之外    使用实例： 查看系统版本：</description>
+    </item>
+    
+    <item>
+      <title>System Control</title>
+      <link>http://example.org/posts/system-control/</link>
+      <pubDate>Mon, 04 May 2020 03:42:42 +0000</pubDate>
+      
+      <guid>http://example.org/posts/system-control/</guid>
+      <description>System Control reboot命令 reboot命令用来重新启动正在运行的Linux操作系统。
+语法 reboot(选项) 选项 -d：重新开机时不把数据写入记录文件/var/tmp/wtmp。本参数具有“-n”参数效果； -f：强制重新开机，不调用shutdown指令的功能； -i：在重开机之前，先关闭所有网络界面； -n：重开机之前不检查是否有未结束的程序； -w：仅做测试，并不真正将系统重新开机，只会把重开机的数据写入/var/log目录下的wtmp记录文件。 实例 reboot //重开机。 reboot -w //做个重开机的模拟（只有纪录并不会真的重开机）。 poweroff命令 poweroff命令用来关闭计算机操作系统并且切断系统电源。
+语法 poweroff(选项) 选项 -n：关闭操作系统时不执行sync操作； -w：不真正关闭操作系统，仅在日志文件“/var/log/wtmp”中； -d：关闭操作系统时，不将操作写入日志文件“/var/log/wtmp”中添加相应的记录； -f：强制关闭操作系统； -i：关闭操作系统之前关闭所有的网络接口； -h：关闭操作系统之前将系统中所有的硬件设置为备用模式。 实例 如果确认系统中已经没有用户存在且所有数据都已保存，需要立即关闭系统，可以使用poweroff命令。
+使用poweroff立即关闭系统：
+poweroff ps命令 ps命令用于报告当前系统的进程状态。可以搭配kill指令随时中断、删除不必要的程序。ps命令是最基本同时也是非常强大的进程查看命令，使用该命令可以确定有哪些进程正在运行和运行的状态、进程是否结束、进程有没有僵死、哪些进程占用了过多的资源等等，总之大部分信息都是可以通过执行该命令得到的。
+语法 ps(选项) 选项 查看所有进程
+ps -ef 指定进程查询
+ps -ef | grep python -a：显示所有终端机下执行的程序，除了阶段作业领导者之外。 a：显示现行终端机下的所有程序，包括其他用户的程序。 -A：显示所有程序。 -c：显示CLS和PRI栏位。 c：列出程序时，显示每个程序真正的指令名称，而不包含路径，选项或常驻服务的标示。 -C&amp;lt;指令名称&amp;gt;：指定执行指令的名称，并列出该指令的程序的状况。 -d：显示所有程序，但不包括阶段作业领导者的程序。 -e：此选项的效果和指定&amp;quot;A&amp;quot;选项相同。 e：列出程序时，显示每个程序所使用的环境变量。 -f：显示UID,PPIP,C与STIME栏位。 f：用ASCII字符显示树状结构，表达程序间的相互关系。 -g&amp;lt;群组名称&amp;gt;：此选项的效果和指定&amp;quot;-G&amp;quot;选项相同，当亦能使用阶段作业领导者的名称来指定。 g：显示现行终端机下的所有程序，包括群组领导者的程序。 -G&amp;lt;群组识别码&amp;gt;：列出属于该群组的程序的状况，也可使用群组名称来指定。 h：不显示标题列。 -H：显示树状结构，表示程序间的相互关系。 -j或j：采用工作控制的格式显示程序状况。 -l或l：采用详细的格式来显示程序状况。 L：列出栏位的相关信息。 -m或m：显示所有的执行绪。 n：以数字来表示USER和WCHAN栏位。 -N：显示所有的程序，除了执行ps指令终端机下的程序之外。 -p&amp;lt;程序识别码&amp;gt;：指定程序识别码，并列出该程序的状况。 p&amp;lt;程序识别码&amp;gt;：此选项的效果和指定&amp;quot;-p&amp;quot;选项相同，只在列表格式方面稍有差异。 r：只列出现行终端机正在执行中的程序。 -s&amp;lt;阶段作业&amp;gt;：指定阶段作业的程序识别码，并列出隶属该阶段作业的程序的状况。 s：采用程序信号的格式显示程序状况。 S：列出程序时，包括已中断的子程序资料。 -t&amp;lt;终端机编号&amp;gt;：指定终端机编号，并列出属于该终端机的程序的状况。 t&amp;lt;终端机编号&amp;gt;：此选项的效果和指定&amp;quot;-t&amp;quot;选项相同，只在列表格式方面稍有差异。 -T：显示现行终端机下的所有程序。 -u&amp;lt;用户识别码&amp;gt;：此选项的效果和指定&amp;quot;-U&amp;quot;选项相同。 u：以用户为主的格式来显示程序状况。 -U&amp;lt;用户识别码&amp;gt;：列出属于该用户的程序的状况，也可使用用户名称来指定。 U&amp;lt;用户名称&amp;gt;：列出属于该用户的程序的状况。 v：采用虚拟内存的格式显示程序状况。 -V或V：显示版本信息。 -w或w：采用宽阔的格式来显示程序状况。　x：显示所有程序，不以终端机来区分。 X：采用旧式的Linux i386登陆格式显示程序状况。 -y：配合选项&amp;quot;-l&amp;quot;使用时，不显示F(flag)栏位，并以RSS栏位取代ADDR栏位　。 -&amp;lt;程序识别码&amp;gt;：此选项的效果和指定&amp;quot;p&amp;quot;选项相同。 --cols&amp;lt;每列字符数&amp;gt;：设置每列的最大字符数。 --columns&amp;lt;每列字符数&amp;gt;：此选项的效果和指定&amp;quot;--cols&amp;quot;选项相同。 --cumulative：此选项的效果和指定&amp;quot;S&amp;quot;选项相同。 --deselect：此选项的效果和指定&amp;quot;-N&amp;quot;选项相同。 --forest：此选项的效果和指定&amp;quot;f&amp;quot;选项相同。 --headers：重复显示标题列。 --help：在线帮助。 --info：显示排错信息。 --lines&amp;lt;显示列数&amp;gt;：设置显示画面的列数。 --no-headers：此选项的效果和指定&amp;quot;h&amp;quot;选项相同，只在列表格式方面稍有差异。 --group&amp;lt;群组名称&amp;gt;：此选项的效果和指定&amp;quot;-G&amp;quot;选项相同。 --Group&amp;lt;群组识别码&amp;gt;：此选项的效果和指定&amp;quot;-G&amp;quot;选项相同。 --pid&amp;lt;程序识别码&amp;gt;：此选项的效果和指定&amp;quot;-p&amp;quot;选项相同。 --rows&amp;lt;显示列数&amp;gt;：此选项的效果和指定&amp;quot;--lines&amp;quot;选项相同。 --sid&amp;lt;阶段作业&amp;gt;：此选项的效果和指定&amp;quot;-s&amp;quot;选项相同。 --tty&amp;lt;终端机编号&amp;gt;：此选项的效果和指定&amp;quot;-t&amp;quot;选项相同。 --user&amp;lt;用户名称&amp;gt;：此选项的效果和指定&amp;quot;-U&amp;quot;选项相同。 --User&amp;lt;用户识别码&amp;gt;：此选项的效果和指定&amp;quot;-U&amp;quot;选项相同。 --version：此选项的效果和指定&amp;quot;-V&amp;quot;选项相同。 --widty&amp;lt;每列字符数&amp;gt;：此选项的效果和指定&amp;quot;-cols&amp;quot;选项相同。 由于ps命令能够支持的系统类型相当的多，所以选项多的离谱！</description>
+    </item>
+    
+    <item>
+      <title>cp</title>
+      <link>http://example.org/posts/cp/</link>
+      <pubDate>Thu, 30 Apr 2020 12:17:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/cp/</guid>
+      <description>cp cp命令 用来将一个或多个源文件或者目录复制到指定的目的文件或目录。它可以将单个源文件复制成一个指定文件名的具体的文件或一个已经存在的目录下。cp命令还支持同时复制多个文件，当一次复制多个文件时，目标文件参数必须是一个已经存在的目录，否则将出现错误。
+语法 cp(选项)(参数) 选项
+-a：此参数的效果和同时指定”-dpR”参数相同； -d：当复制符号连接时，把目标文件或目录也建立为符号连接，并指向与源文件或目录连接的原始文件或目录； -f：强行复制文件或目录，不论目标文件或目录是否已存在； -i：覆盖既有文件之前先询问用户； -l：对源文件建立硬连接，而非复制文件； -p：保留源文件或目录的属性； -R/r：递归处理，将指定目录下的所有文件与子目录一并处理； -s：对源文件建立符号连接，而非复制文件； -u：使用这项参数后只会在源文件的更改时间较目标文件更新时或是名称相互对应的目标文件并不存在时，才复制文件； -S：在备份文件时，用指定的后缀“SUFFIX”代替文件的默认后缀； -b：覆盖已存在的文件目标前将目标文件备份； -v：详细显示命令执行的操作。 参数
+ 源文件：制定源文件列表。默认情况下，cp命令不能复制目录，如果要复制目录，则必须使用-R选项； 目标文件：指定目标文件。当“源文件”为多个文件时，要求“目标文件”为指定的目录。  实例 如果把一个文件复制到一个目标文件中，而目标文件已经存在，那么，该目标文件的内容将被破坏。此命令中所有参数既可以是绝对路径名，也可以是相对路径名。通常会用到点.或点点..的形式。例如，下面的命令将指定文件复制到当前目录下：
+cp ../mary/homework/assign . 所有目标文件指定的目录必须是己经存在的，cp命令不能创建目录。如果没有文件复制的权限，则系统会显示出错信息。
+将文件file复制到目录/usr/men/tmp下，并改名为file1
+cp file /usr/men/tmp/file1 将目录/usr/men下的所有文件及其子目录复制到目录/usr/zh中
+cp -r /usr/men /usr/zh 交互式地将目录/usr/men中的以m打头的所有.c文件复制到目录/usr/zh中
+cp -i /usr/men m*.c /usr/zh 我们在Linux下使用cp命令复制文件时候，有时候会需要覆盖一些同名文件，覆盖文件的时候都会有提示：需要不停的按Y来确定执行覆盖。文件数量不多还好，但是要是几百个估计按Y都要吐血了，于是折腾来半天总结了一个方法：
+cp aaa/* /bbb 复制目录aaa下所有到/bbb目录下，这时如果/bbb目录下有和aaa同名的文件，需要按Y来确认并且会略过aaa目录下的子目录。 cp -r aaa/* /bbb 这次依然需要按Y来确认操作，但是没有忽略子目录。 cp -r -a aaa/* /bbb 依然需要按Y来确认操作，并且把aaa目录以及子目录和文件属性也传递到了/bbb。 \cp -r -a aaa/* /bbb 成功，没有提示按Y、传递了目录属性、没有略过目录。 </description>
+    </item>
+    
+    <item>
+      <title>tr</title>
+      <link>http://example.org/posts/tr/</link>
+      <pubDate>Thu, 30 Apr 2020 12:06:26 +0000</pubDate>
+      
+      <guid>http://example.org/posts/tr/</guid>
+      <description>tr tr命令可以对来自标准输入的字符进行替换、压缩和删除。它可以将一组字符变成另一组字符，经常用来编写优美的单行命令，作用很强大。
+语法 tr(选项)(参数) 选项 -c或——complerment：取代所有不属于第一字符集的字符； -d或——delete：删除所有属于第一字符集的字符； -s或--squeeze-repeats：把连续重复的字符以单独一个字符表示； -t或--truncate-set1：先删除第一字符集较第二字符集多出的字符。 参数  字符集1：指定要转换或删除的原字符集。当执行转换操作时，必须使用参数“字符集2”指定转换的目标字符集。但执行删除操作时，不需要参数“字符集2”； 字符集2：指定要转换成的目标字符集。  实例 将输入字符由大写转换为小写：
+echo &amp;quot;HELLO WORLD&amp;quot; | tr &#39;A-Z&#39; &#39;a-z&#39; hello world &amp;lsquo;A-Z&amp;rsquo; 和 &amp;lsquo;a-z&amp;rsquo;都是集合，集合是可以自己制定的，例如：&amp;lsquo;ABD-}&#39;、&amp;lsquo;bB.,&#39;、&amp;lsquo;a-de-h&amp;rsquo;、&amp;lsquo;a-c0-9&amp;rsquo;都属于集合，集合里可以使用&amp;rsquo;\n&amp;rsquo;、&#39;\t&amp;rsquo;，可以可以使用其他ASCII字符。
+使用tr删除字符：
+echo &amp;quot;hello 123 world 456&amp;quot; | tr -d &#39;0-9&#39; hello world 将制表符转换为空格：
+cat text | tr &#39;\t&#39; &#39; &#39; 字符集补集，从输入文本中将不在补集中的所有字符删除：
+echo aa.,a 1 b#$bb 2 c*/cc 3 ddd 4 | tr -d -c &#39;0-9 \n&#39; 1 2 3 4 此例中，补集中包含了数字0~9、空格和换行符\n，所以没有被删除，其他字符全部被删除了。
+用tr压缩字符，可以压缩输入中重复的字符：</description>
+    </item>
+    
+    <item>
+      <title>ifconfig</title>
+      <link>http://example.org/posts/ifconfig/</link>
+      <pubDate>Thu, 30 Apr 2020 11:59:35 +0000</pubDate>
+      
+      <guid>http://example.org/posts/ifconfig/</guid>
+      <description>ifconfig ifconfig命令被用于配置和显示Linux内核中网络接口的网络参数。用ifconfig命令配置的网卡信息，在网卡重启后机器重启后，配置就不存在。要想将上述的配置信息永远的存的电脑里，那就要修改网卡的配置文件了。
+语法 ifconfig(参数) 参数 add&amp;lt;地址&amp;gt;：设置网络设备IPv6的ip地址； del&amp;lt;地址&amp;gt;：删除网络设备IPv6的IP地址； down：关闭指定的网络设备； &amp;lt;hw&amp;lt;网络设备类型&amp;gt;&amp;lt;硬件地址&amp;gt;：设置网络设备的类型与硬件地址； io_addr&amp;lt;I/O地址&amp;gt;：设置网络设备的I/O地址； irq&amp;lt;IRQ地址&amp;gt;：设置网络设备的IRQ； media&amp;lt;网络媒介类型&amp;gt;：设置网络设备的媒介类型； mem_start&amp;lt;内存地址&amp;gt;：设置网络设备在主内存所占用的起始地址； metric&amp;lt;数目&amp;gt;：指定在计算数据包的转送次数时，所要加上的数目； mtu&amp;lt;字节&amp;gt;：设置网络设备的MTU； netmask&amp;lt;子网掩码&amp;gt;：设置网络设备的子网掩码； tunnel&amp;lt;地址&amp;gt;：建立IPv4与IPv6之间的隧道通信地址； up：启动指定的网络设备； -broadcast&amp;lt;地址&amp;gt;：将要送往指定地址的数据包当成广播数据包来处理； -pointopoint&amp;lt;地址&amp;gt;：与指定地址的网络设备建立直接连线，此模式具有保密功能； -promisc：关闭或启动指定网络设备的promiscuous模式； IP地址：指定网络设备的IP地址； 网络设备：指定网络设备的名称。 实例 显示网络设备信息（激活状态的）：
+[root@localhost ~]# ifconfig eth0 Link encap:Ethernet HWaddr 00:16:3E:00:1E:51 inet addr:10.160.7.81 Bcast:10.160.15.255 Mask:255.255.240.0 UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1 RX packets:61430830 errors:0 dropped:0 overruns:0 frame:0 TX packets:88534 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:3607197869 (3.3 GiB) TX bytes:6115042 (5.8 MiB) lo Link encap:Local Loopback inet addr:127.</description>
+    </item>
+    
+    <item>
+      <title>kill</title>
+      <link>http://example.org/posts/kill/</link>
+      <pubDate>Thu, 30 Apr 2020 11:50:48 +0000</pubDate>
+      
+      <guid>http://example.org/posts/kill/</guid>
+      <description>kill kill命令用来删除执行中的程序或工作。kill可将指定的信息送至程序。预设的信息为SIGTERM(15),可将指定程序终止。若仍无法终止该程序，可使用SIGKILL(9)信息尝试强制删除程序。程序或工作的编号可利用ps指令或job指令查看。
+语法 kill(选项)(参数) 选项 -a：当处理当前进程时，不限制命令名和进程号的对应关系； -l &amp;lt;信息编号&amp;gt;：若不加&amp;lt;信息编号&amp;gt;选项，则-l参数会列出全部的信息名称； -p：指定kill 命令只打印相关进程的进程号，而不发送任何信号； -s &amp;lt;信息名称或编号&amp;gt;：指定要送出的信息； -u：指定用户。 参数 进程或作业识别号：指定要删除的进程或作业。
+实例 列出所有信号名称：
+kill -l 1) SIGHUP 2) SIGINT 3) SIGQUIT 4) SIGILL 5) SIGTRAP 6) SIGABRT 7) SIGBUS 8) SIGFPE 9) SIGKILL 10) SIGUSR1 11) SIGSEGV 12) SIGUSR2 13) SIGPIPE 14) SIGALRM 15) SIGTERM 16) SIGSTKFLT 17) SIGCHLD 18) SIGCONT 19) SIGSTOP 20) SIGTSTP 21) SIGTTIN 22) SIGTTOU 23) SIGURG 24) SIGXCPU 25) SIGXFSZ 26) SIGVTALRM 27) SIGPROF 28) SIGWINCH 29) SIGIO 30) SIGPWR 31) SIGSYS 34) SIGRTMIN 35) SIGRTMIN+1 36) SIGRTMIN+2 37) SIGRTMIN+3 38) SIGRTMIN+4 39) SIGRTMIN+5 40) SIGRTMIN+6 41) SIGRTMIN+7 42) SIGRTMIN+8 43) SIGRTMIN+9 44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12 47) SIGRTMIN+13 48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14 51) SIGRTMAX-13 52) SIGRTMAX-12 53) SIGRTMAX-11 54) SIGRTMAX-10 55) SIGRTMAX-9 56) SIGRTMAX-8 57) SIGRTMAX-7 58) SIGRTMAX-6 59) SIGRTMAX-5 60) SIGRTMAX-4 61) SIGRTMAX-3 62) SIGRTMAX-2 63) SIGRTMAX-1 64) SIGRTMAX 只有第9种信号(SIGKILL)才可以无条件终止进程，其他信号进程都有权利忽略，下面是常用的信号：</description>
+    </item>
+    
+    <item>
+      <title>Shell内建命令</title>
+      <link>http://example.org/posts/shell%E5%86%85%E5%BB%BA%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Thu, 30 Apr 2020 11:48:06 +0000</pubDate>
+      
+      <guid>http://example.org/posts/shell%E5%86%85%E5%BB%BA%E5%91%BD%E4%BB%A4/</guid>
+      <description>Shell内建命令</description>
+    </item>
+    
+    <item>
+      <title>wget</title>
+      <link>http://example.org/posts/wget/</link>
+      <pubDate>Thu, 30 Apr 2020 11:37:23 +0000</pubDate>
+      
+      <guid>http://example.org/posts/wget/</guid>
+      <description>wget 网络应用
+wget命令用来从指定的URL下载文件。wget非常稳定，它在带宽很窄的情况下和不稳定网络中有很强的适应性，如果是由于网络的原因下载失败，wget会不断的尝试，直到整个文件下载完毕。如果是服务器打断下载过程，它会再次联到服务器上从停止的地方继续下载。这对从那些限定了链接时间的服务器上下载大文件非常有用。
+语法 wget(选项)(参数) 选项 -a&amp;lt;日志文件&amp;gt;：在指定的日志文件中记录资料的执行过程； -A&amp;lt;后缀名&amp;gt;：指定要下载文件的后缀名，多个后缀名之间使用逗号进行分隔； -b：进行后台的方式运行wget； -B&amp;lt;连接地址&amp;gt;：设置参考的连接地址的基地地址； -c：继续执行上次终端的任务； -C&amp;lt;标志&amp;gt;：设置服务器数据块功能标志on为激活，off为关闭，默认值为on； -d：调试模式运行指令； -D&amp;lt;域名列表&amp;gt;：设置顺着的域名列表，域名之间用“，”分隔； -e&amp;lt;指令&amp;gt;：作为文件“.wgetrc”中的一部分执行指定的指令； -h：显示指令帮助信息； -i&amp;lt;文件&amp;gt;：从指定文件获取要下载的URL地址； -l&amp;lt;目录列表&amp;gt;：设置顺着的目录列表，多个目录用“，”分隔； -L：仅顺着关联的连接； -r：递归下载方式； -nc：文件存在时，下载文件不覆盖原有文件； -nv：下载时只显示更新和出错信息，不显示指令的详细执行过程； -q：不显示指令执行过程； -nh：不查询主机名称； -v：显示详细执行过程； -V：显示版本信息； --passive-ftp：使用被动模式PASV连接FTP服务器； --follow-ftp：从HTML文件中下载FTP连接文件。 参数 URL：下载指定的URL地址。
+实例 使用wget下载单个文件
+wget http://www.linuxde.net/testfile.zip 以下的例子是从网络下载一个文件并保存在当前目录，在下载的过程中会显示进度条，包含（下载完成百分比，已经下载的字节，当前下载速度，剩余下载时间）。
+下载并以不同的文件名保存
+wget -O wordpress.zip http://www.linuxde.net/download.aspx?id=1080 wget默认会以最后一个符合/的后面的字符来命令，对于动态链接的下载通常文件名会不正确。
+错误：下面的例子会下载一个文件并以名称download.aspx?id=1080保存:
+wget http://www.linuxde.net/download?id=1 即使下载的文件是zip格式，它仍然以download.php?id=1080命令。
+正确：为了解决这个问题，我们可以使用参数-O来指定一个文件名：
+wget -O wordpress.zip http://www.linuxde.net/download.aspx?id=1080 wget限速下载
+wget --limit-rate=300k http://www.linuxde.net/testfile.zip 当你执行wget的时候，它默认会占用全部可能的宽带下载。但是当你准备下载一个大文件，而你还需要下载其它文件时就有必要限速了。
+使用wget断点续传
+wget -c http://www.linuxde.net/testfile.zip 使用wget -c重新启动下载中断的文件，对于我们下载大文件时突然由于网络等原因中断非常有帮助，我们可以继续接着下载而不是重新下载一个文件。需要继续中断的下载时可以使用-c参数。
+使用wget后台下载
+wget -b http://www.linuxde.net/testfile.zip Continuing in background, pid 1840. Output will be written to `wget-log&#39;.</description>
+    </item>
+    
+    <item>
+      <title>seq</title>
+      <link>http://example.org/posts/seq/</link>
+      <pubDate>Wed, 29 Apr 2020 13:01:39 +0000</pubDate>
+      
+      <guid>http://example.org/posts/seq/</guid>
+      <description>seq Shell内建命令
+seq命令用于产生从某个数到另外一个数之间的所有整数。
+语法 seq \[选项\]... 尾数 seq \[选项\]... 首数 尾数 seq \[选项\]... 首数 增量 尾数 选项 \-f, \-\-format=格式 使用 printf 样式的浮点格式 \-s, \-\-separator=字符串 使用指定字符串分隔数字（默认使用：\\n） \-w \-\-equal\-width 在列前添加0 使得宽度相同 实例 -f选项：指定格式
+#seq \-f&amp;quot;%3g&amp;quot; 9 11 9 10 11 %后面指定数字的位数 默认是%g，%3g那么数字位数不足部分是空格。
+#[sed](http://man.linuxde.net/sed &amp;quot;sed命令&amp;quot;) \-f&amp;quot;%03g&amp;quot; 9 11 #seq \-f&amp;quot;str%03g&amp;quot; 9 11 str009 str010 str011 这样的话数字位数不足部分是0，%前面制定字符串。
+-w选项：指定输出数字同宽
+seq \-w 98 101 098 099 100 101 不能和-f一起用，输出是同宽的。
+-s选项：指定分隔符（默认是回车）
+seq \-s&amp;quot; &amp;quot; \-f&amp;quot;str%03g&amp;quot; 9 11 str009 str010 str011 要指定/t做为分隔符号：</description>
+    </item>
+    
+    <item>
+      <title>bc</title>
+      <link>http://example.org/posts/bc/</link>
+      <pubDate>Tue, 28 Apr 2020 14:00:05 +0000</pubDate>
+      
+      <guid>http://example.org/posts/bc/</guid>
+      <description>bc Linux 命令大全
+bc 命令是任意精度计算器语言，通常在linux下当计算器用。
+它类似基本的计算器, 使用这个计算器可以做基本的数学运算。
+常用的运算：
+ + 加法 - 减法 * 乘法 / 除法 ^ 指数 % 余数  语法 bc(选项)(参数)
+选项值
+ -i：强制进入交互式模式； -l：定义使用的标准数学库 ； -w：对POSIX bc的扩展给出警告信息； -q：不打印正常的GNU bc环境信息； -v：显示指令版本信息； -h：显示指令的帮助信息。  参数
+文件：指定包含计算任务的文件。
+实例 $ bc bc 1.06.95 Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006 Free Software Foundation, Inc. This is free software with ABSOLUTELY NO WARRANTY. For details type `warranty&#39;. 2+3 5 5-2 3 2+3*1 5 输入 quit 退出。</description>
+    </item>
+    
+    <item>
+      <title>grep</title>
+      <link>http://example.org/posts/grep/</link>
+      <pubDate>Tue, 28 Apr 2020 14:00:05 +0000</pubDate>
+      
+      <guid>http://example.org/posts/grep/</guid>
+      <description>grep 基本操作 grep命令用于打印输出文本中匹配的模式串，它使用正则表达式作为模式匹配的条件。grep支持三种正则表达式引擎，分别用三个参数指定：
+   参数 说明     -E POSIX 扩展正则表达式，ERE   -G POSIX 基本正则表达式，BRE   -P Perl 正则表达式，PCRE    不过在你没学过 perl 语言的大多数情况下你将只会使用到ERE和BRE,所以我们接下来的内容都不会讨论到 PCRE 中特有的一些正则表达式语法（它们之间大部分内容是存在交集的，所以你不用担心会遗漏多少重要内容）
+在通过grep命令使用正则表达式之前，先介绍一下它的常用参数：
+   参数 说明     -b 将二进制文件作为文本来进行匹配   -c 统计以模式匹配的数目   -i 忽略大小写   -n 显示匹配文本所在行的行号   -v 反选，输出不匹配行的内容   -r 递归匹配查找   -A n n 为正整数，表示 after 的意思，除了列出匹配行之外，还列出后面的 n 行   -B n n 为正整数，表示 before 的意思，除了列出匹配行之外，还列出前面的 n 行   --color=auto 将输出中的匹配项设置为自动颜色显示     注：在大多数发行版中是默认设置了 grep 的颜色的，你可以通过参数指定或修改GREP_COLOR环境变量。</description>
+    </item>
+    
+    <item>
+      <title>Linux 命令大全</title>
+      <link>http://example.org/posts/linux-%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/</link>
+      <pubDate>Tue, 28 Apr 2020 14:00:05 +0000</pubDate>
+      
+      <guid>http://example.org/posts/linux-%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/</guid>
+      <description>Linux 命令大全 Linux 命令大全
+1、文件管理
+| cat | chattr | chgrp | chmod | chown | cksum | cmp | diff | | diffstat | file | find | git | | gitview | indent | cut | ln | | less | locate | lsattr | mattrib | | mc | mdel | mdir | mktemp | | more | mmove | mread | mren | | mtools | mtoolstest | mv | od | | paste | patch | rcp | rm | | slocate | split | tee | tmpwatch | | touch | umask | which | cp | | whereis | mcopy | mshowfat | rhmask | | scp | awk | read | updatedb | | 2、文档编辑 | | col | colrm | comm | csplit | | ed | egrep | ex | fgrep | | fmt | fold | grep | ispell | | jed | joe | join | look | | mtype | pico | rgrep | sed | | sort | spell | tr | expr | | uniq | wc | let | | | 3、文件传输 | | lprm | lpr | lpq | lpd | | bye | ftp | uuto | uupick | | uucp | uucico | tftp | ncftp | | ftpshut | ftpwho | ftpcount | | | 4、磁盘管理 | | cd | df | dirs | du | | edquota | eject | mcd | mdeltree | | mdu | mkdir | mlabel | mmd | | mrd | mzip | pwd | quota | | mount | mmount | rmdir | rmt | | stat | tree | umount | ls | | quotacheck | quotaoff | lndir | repquota | | quotaon | | | | | 5、磁盘维护 | | badblocks | cfdisk | dd | e2fsck | | ext2ed | fsck | fsck.</description>
+    </item>
+    
+    <item>
+      <title>文本处理命令</title>
+      <link>http://example.org/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Tue, 28 Apr 2020 14:00:05 +0000</pubDate>
+      
+      <guid>http://example.org/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4/</guid>
+      <description>文本处理命令 tr tr 命令可以用来删除一段文本信息中的某些文字。或者将其进行转换。
+使用方式： tr [option] ‘[SET1]’ [‘[SET2]’] 常用的选项有：    选项 说明     -d 删除和 set1 匹配的字符，注意不是全词匹配也不是按字符顺序匹配   -s 去除 set1 指定的在输入文本中连续并重复的字符    操作举例： # 删除 &amp;quot;hello shiyanlou&amp;quot; 中所有的&#39;o&#39;,&#39;l&#39;,&#39;h&#39; $ echo &#39;hello shiyanlou&#39; | tr -d &#39;olh&#39; # 将&amp;quot;hello&amp;quot; 中的ll,去重为一个l $ echo &#39;hello&#39; | tr -s &#39;l&#39; # 将输入文本，全部转换为大写或小写输出 $ echo &#39;input some text here&#39; | tr &#39;[:lower:]&#39; &#39;[:upper:]&#39; # 上面的&#39;[:lower:]&#39; &#39;[:upper:]&#39;你也可以简单的写作&#39;[a-z]&#39; &#39;[A-Z]&#39;,当然反过来将大写变小写也是可以的 更多 tr 的使用，你可以使用--help或者man tr获得。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>使用 Git Grep 进行搜索 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>使用 Git Grep 进行搜索</h1>
+  <time datetime=2020-04-20T06:57:12Z class="post-date">Mon, Apr 20, 2020</time>
+  <h1 id="使用-git-grep-进行搜索">使用 Git Grep 进行搜索</h1>
+<p>用 <code>git grep</code> 命令查找 Git 库里面的某段文字是很方便的。当然，你也可以用 Linux 下的 <code>grep</code> 命令进行搜索，但是 <code>git grep</code> 命令能让你不用 <code>签出</code>（checkout）历史文件，就能查找它们。</p>
+<p>例如，你要看仓库里每个使用 <code>xmmap</code> 函数的地方，你可以运行下面的命令:</p>
+<pre><code>$ git grep xmmap
+</code></pre><p>如果你要显示行号，你可以添加 <code>-n</code>选项:</p>
+<pre><code>$ git grep -n xmmap
+</code></pre><p>如果我们想只显示文件名，我们可以使用 <code>--name-only</code> 选项:</p>
+<pre><code>$ git grep --name-only xmmap
+</code></pre><p>我们用 <code>-c</code> 选项可以查看每个文件里有多少行 <code>匹配内容</code>（line matches）:</p>
+<pre><code>$ git grep -c xmmap
+</code></pre><p>现在， 如果我们要查找 git 仓库里某个特定版本里的内容， 我们可以像下面一样在命令行末尾加上标签名（tag reference）:</p>
+<pre><code>$ git grep xmmap v1.5.0
+</code></pre><p>我们也可以组合一些搜索条件，下面的命令就是查找我们在仓库的哪个地方定义了 <code>SORT_DIRENT</code>：</p>
+<pre><code>$ git grep -e '#define' --and -e SORT_DIRENT
+</code></pre><p>我不但可以进行与（both）条件搜索操作，也可以进行或（either）条件搜索操作：</p>
+<pre><code>$ git grep --all-match -e '#define' -e SORT_DIRENT
+</code></pre><p>我们也可以查找出符合一个条件（term）且符合两个条件（terms）之一的文件行，例如我们要找出名字中含有 <code>PATH</code> 或是 <code>MAX</code> 的常量定义:</p>
+<pre><code>$ git grep -e '#define' --and \（ -e PATH -e MAX \）
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

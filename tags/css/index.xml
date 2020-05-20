@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CSS on 梦还在吗</title>
+    <link>http://example.org/tags/css/</link>
+    <description>Recent content in CSS on 梦还在吗</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 05 Apr 2020 07:06:14 +0000</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/css/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CSS属性</title>
+      <link>http://example.org/posts/css%E5%B1%9E%E6%80%A7/</link>
+      <pubDate>Sun, 05 Apr 2020 07:06:14 +0000</pubDate>
+      
+      <guid>http://example.org/posts/css%E5%B1%9E%E6%80%A7/</guid>
+      <description>CSS属性  position  absolute  脱离原来位置进行定位 相对于最近的有定位的父级进行定位，如果没有，那么相对于文档定位   relative  保留原来位置进行定位 相对于自己原来位置进行定位   fixed  实现固定定位      定位参照一般设置为relative
+广告居中
+div{ position: fixed; left:50%; top:50%; width:100px; height:100px; background-color:red; margin-left:-50px; margin-top:-50px; } </description>
+    </item>
+    
+    <item>
+      <title>CSS选择器</title>
+      <link>http://example.org/posts/css%E9%80%89%E6%8B%A9%E5%99%A8/</link>
+      <pubDate>Sun, 05 Apr 2020 07:06:14 +0000</pubDate>
+      
+      <guid>http://example.org/posts/css%E9%80%89%E6%8B%A9%E5%99%A8/</guid>
+      <description>CSS选择器 ID /#ID{}
+class .class{}
+标签选择器 标签{}
+通配符选择器 *{}
+属性选择器 []{}
+优先级 !important&amp;gt;行间样式&amp;gt;ID&amp;gt;class=属性选择器&amp;gt;标签选择器&amp;gt;通配符选择器 !important可以把优先级提到最高
+CSS权重
+!important	Infinity 行间样式	1000 id	100 class｜属性｜伪类	10 标签｜伪元素	1 通配符	0
+PS：权重为256进制
+   选择器 例子 例子描述 CSS     .class .intro 选择class=&amp;quot;intro&amp;rdquo; 的所有元素。 1   #id #firstname 选择 id=&amp;quot;firstname&amp;rdquo; 的所有元素。 1     |*	|选择所有元素。	|2 element	|p	|选择所有 元素。	|1 element,element	|div,p	|选择所有 元素和所有 元素。	|1 element element	|div p	|选择 元素内部的所有 元素。	|1 element&amp;gt;element	|div&amp;gt;p	|选择父元素为 元素的所有 元素。	|2 element+element	|div+p	|选择紧接在 元素之后的所有 元素。	|2 [attribute]	|[target]	|选择带有 target 属性所有元素。	|2 [attribute=value]	|[target=_blank]	|选择 target=&amp;rdquo;_blank&amp;rdquo; 的所有元素。	|2 [attribute~=value]	|[title~=flower]	|选择 title 属性包含单词 &amp;ldquo;flower&amp;rdquo; 的所有元素。	|2 [attribute|=value]	|[lang|=en]	|选择 lang 属性值以 &amp;ldquo;en&amp;rdquo; 开头的所有元素。	|2 :link	|a:link	|选择所有未被访问的链接。	|1 :visited	|a:visited	|选择所有已被访问的链接。	|1 :active	|a:active	|选择活动链接。	|1 :hover	|a:hover	|选择鼠标指针位于其上的链接。	|1 :focus	|input:focus	|选择获得焦点的 input 元素。	|2 :first-letter	|p:first-letter	|选择每个 元素的首字母。	|1 :first-line	|p:first-line	|选择每个 元素的首行。	|1 :first-child	|p:first-child	|选择属于父元素的第一个子元素的每个 元素。	|2 :before	|p:before	|在每个 元素的内容之前插入内容。	|2 :after	|p:after	|在每个 元素的内容之后插入内容。	|2 :lang(language)	|p:lang(it)	|选择带有以 &amp;ldquo;it&amp;rdquo; 开头的 lang 属性值的每个 元素。	|2 element1~element2	|p~ul	|选择前面有 元素的每个 元素。	|3 [attribute^=value]	|a[src^=&amp;quot;https&amp;rdquo;]	|选择其 src 属性值以 &amp;ldquo;https&amp;rdquo; 开头的每个 元素。	|3 [attribute$=value]	|a[src$=&amp;rdquo;.</description>
+    </item>
+    
+    <item>
+      <title>常识</title>
+      <link>http://example.org/posts/%E5%B8%B8%E8%AF%86/</link>
+      <pubDate>Sun, 05 Apr 2020 07:06:14 +0000</pubDate>
+      
+      <guid>http://example.org/posts/%E5%B8%B8%E8%AF%86/</guid>
+      <description>常识 margin塌陷： 父子嵌套的元素，垂直方向的margin会去最大值。
+解决方法：
+ 给父级设置边框或内边距(不建议使用) 2.触发bfc(块级格式上下文/block format context),改变父级的渲染规则  改变父级的渲染规则有以下四种方法,给父级盒子添加
+(1)position:absolute/fixed (2)display:inline-block; (3)float:left/right; (4)overflow:hidden; float特性 所有产生了浮动流的元素，块级元素看不到他们 产生了bfc的元素和文本类属性（inline）的元素以及文本都能看到浮动元素
+解决办法：
+ 给伪元素（::before/::after）添加上  content:&amp;quot;&amp;quot;; clear:both; display:block; clear只适用于块级元素，如果不是块级元素，需要添加display:block;
+其他任何不会忽略浮动流的方法  设置了position:absolute;和float:left/right;的属性会把元素从内部变为inline-block属性
+单行文本超出显示 white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 多行只做截断，不做打点。overflow: hidden;
+文字属性的图片处理方式    text-indent: 大于容器宽度的px; white-space: nowrap; overflow: hidden;   将容器的高度改为0px后
+padding: 容器原有的高度px; overflow: hidden; 嵌套原则 行级元素只能嵌套行级元素 块级元素可以嵌套任何元素，p标签除外，q标签里面不能嵌套a标签。</description>
+    </item>
+    
+  </channel>
+</rss>

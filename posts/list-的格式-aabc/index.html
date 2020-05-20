@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>list 的格式 a=[‘a’,’b’,’c’] &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>list 的格式 a=[‘a’,’b’,’c’]</h1>
+  <time datetime=2020-04-05T07:03:18Z class="post-date">Sun, Apr 5, 2020</time>
+  <p>list 的格式  a=[‘a’,’b’,’c’]
+tuple 的格式 a=(‘a’,’b’,’c’)
+dict 的格式  a={a:b}&ndash;b可以省略 a不能为list
+set 的格式   a=set((a))&ndash;a不能为list 
+a=(1,2,3)
+b=(1, [2, 3])
+c={a}
+{(1, 2, 3)}
+这里(1,2,3)应该是一个整体的key值
+d={b}
+Traceback (most recent call last):
+  File “<!-- raw HTML omitted -->”, line 1, in <!-- raw HTML omitted -->
+TypeError: unhashable type: ‘list’
+Dict 的key必须为不可变对象。而 b中的[2,3]可变所以报错。
+e={a:b}
+{(1, 2, 3): (1, [2, 3])}
+e[a]
+(1, [2, 3])
+Dict 的key必须为不可变对象。这里将key变成了不可变对象。value是否可变无影响。
+b[1][0]=3
+e
+{(1, 2, 3): (1, [3, 3])}
+f=set(a) 
+{1, 2, 3}
+这里1,2,3表示有这三个元素，即使是显示结果排序了，也不表示set是有序的。
+g=set(b)
+Traceback (most recent call last):
+  File “<!-- raw HTML omitted -->”, line 1, in <!-- raw HTML omitted -->
+TypeError: unhashable type: ‘list’
+Set 的key必须为不可变对象。而 b中的[2,3]可变所以报错。</p>
+<p>#Python</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

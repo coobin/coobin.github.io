@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Aliyun &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Aliyun</h1>
+  <time datetime=2020-04-17T19:19:44Z class="post-date">Fri, Apr 17, 2020</time>
+  <h1 id="aliyun">Aliyun</h1>
+<h2 id="rds-export">RDS Export</h2>
+<p>需要删除数据库开头和末尾的两个键值
+SET FOREIGN_KEY_CHECKS;</p>
+<h2 id="aliyun-linux-bug-fix">aliyun Linux Bug Fix</h2>
+<ol>
+<li>系统镜像备份，万事都要留一手，方能保证万无一失。在阿里云ECS列表里有创建自定义镜像。</li>
+<li>ubuntu软件漏洞修复
+执行命令：<code>sudo apt-get update</code>
+这个命令，会访问源列表里的每个网址，并读取软件列表，然后保存在本地机器。我们在新立得软件包管理器里看到的软件列表，都是通过update命令更新的。
+执行命令：<code>sudo apt-get upgrade</code>
+这个命令，会把本地已安装的软件，与刚下载的软件列表里对应软件进行对比，如果发现已安装的软件版本太低，就会提示你更新。</li>
+<li>ubuntu内核漏洞修复
+执行命令：<code>sudo apt update</code>
+这个命令，会看到从服务端传送回来的package信息。
+执行命令：<code>sudo apt upgrade</code>
+这个命令直接升级所有package的方法
+还有一个命令直接将两件事一起做了：<code>sudo apt full-upgrade</code>
+如果是centos系统执行：<code>yum -y update || yum -y upgrade</code>
+命令： <code>yum -y update</code>   升级所有包，改变软件设置和系统设置,系统版本内核都升级。
+   命令：<code>yum -y upgrade</code>  升级所有包，不改变软件设置和系统设置，系统版本升级，内核不改变。</li>
+<li>重启机器（很重要）
+执行命令：<code>sudo reboot</code></li>
+<li>在阿里云控制台验证该每个漏洞如图二。</li>
+</ol>
+<p>作者：塚虎<br>
+链接：https://www.jianshu.com/p/f6e67cc8ee6e<br>
+来源：简书<br>
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

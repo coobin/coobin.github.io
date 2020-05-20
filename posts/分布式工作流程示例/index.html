@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>分布式工作流程示例 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>分布式工作流程示例</h1>
+  <time datetime=2020-04-20T06:25:31Z class="post-date">Mon, Apr 20, 2020</time>
+  <h1 id="分布式工作流程示例">分布式工作流程示例</h1>
+<p>你目前的项目在 <code>/home/shiyanlou/gitproject</code> 目录下，这是我们的 Git 仓库（repository），另一个用户也想与你协作开发。他的工作目录在这台机器上，如何让他提交代码到你的 Git 仓库呢？</p>
+<p>首先，我们假设另一个用户也用 shiyanlou 用户登录，只是工作在不同的目录下开发代码，实际工作中不太可能发生，大部分情况都是多个用户，这个假设只是为了让实验简化。</p>
+<p>该用户需要从 Git 仓库进行克隆：</p>
+<pre><code># 进入到临时目录
+$ cd /tmp
+# 克隆git仓库
+$ git clone /home/shiyanlou/gitproject myrepo
+$ ls -l myrepo
+-rw-rw-r-- 1 shiyanlou shiyanlou 31 Dec 22 08:24 README.md
+-rw-rw-r-- 1 shiyanlou shiyanlou  9 Dec 22 08:24 file1
+</code></pre><p>这就建了一个新的 &ldquo;myrepo&rdquo; 的目录，这个目录里包含了一份gitproject仓库的克隆。这份克隆和原始的项目一模一样，并且拥有原始项目的历史记录。</p>
+<p>在 myrepo 做了一些修改并且提交:</p>
+<pre><code>$ cd /tmp/myrepo
+
+# 添加新的文件newfile
+$ echo &quot;newcontent&quot; &gt; newfile
+
+# 提交修改
+$ git add newfile
+$ git commit -m &quot;add newfile&quot;
+</code></pre><p>myrepo 修改完成后，如果我们想合并这份修改到 <code>gitproject</code> 的 git 仓库该如何做呢？</p>
+<p>可以在仓库 <code>/home/shiyanlou/gitproject</code> 中把myrepo的修改给拉 （pull）下来。执行下面几条命令:</p>
+<pre><code>$ cd /home/shiyanlou/gitproject
+$ git pull /tmp/myrepo master
+remote: Counting objects: 5， done.
+remote: Compressing objects: 100% （2/2）， done.
+remote: Total 3 （delta 0）， reused 0 （delta 0）
+Unpacking objects: 100% （3/3）， done.
+From /tmp/myrepo
+ * branch            master     -&gt; FETCH_HEAD
+Updating 8bb57aa..866c452
+Fast-forward
+ newfile | 1 +
+ 1 file changed， 1 insertion（+）
+ create mode 100644 newfile
+
+# 查看当前目录文件
+$ ls
+README.md  file1  newfile
+</code></pre><p>这就把 <code>myrepo</code> 的主分支合并到了 <code>gitproject</code> 的当前分支里了。</p>
+<p>如果 <code>gitproject</code> 在 <code>myrepo</code> 修改文件内容的同时也做了修改的话，可能需要手工去修复冲突。</p>
+<p>如果你要经常操作远程分支（remote branch），你可以定义它们的缩写:</p>
+<pre><code>$ git remote add myrepo /tmp/myrepo
+</code></pre><p>git pull 命令等同于执行两个操作: 先使用 <code>git fetch</code> 从远程分支抓取最新的分支修改信息，然后使用 <code>git merge</code> 把修改合并进当前的分支。</p>
+<p><code>gitproject</code> 里可以用 <code>git fetch</code> 来执行 <code>git pull</code> 前半部分的工作， 但是这条命令并不会把抓下来的修改合并到当前分支里：</p>
+<pre><code>$ git fetch myrepo
+From /tmp/myrepo
+ * [new branch]      master     -&gt; myrepo/master
+</code></pre><p>获取后，我们可以通过 <code>git log</code> 查看远程分支做的所有修改，由于我们已经合并了所有修改，所以不会有任何输出：</p>
+<pre><code>$ git log -p master..myrepo/master
+</code></pre><p>当检查完修改后，<code>gitproject</code> 可以把修改合并到它的主分支中：</p>
+<pre><code>$ git merge myrepo/master
+Already up-to-date.
+</code></pre><p>如果我们在 <code>myrepo</code> 目录下执行 <code>git pull</code> 会发生什么呢？</p>
+<p><code>myrepo</code> 会从克隆的位置拉取代码并更新本地仓库，就是把 <code>gitproject</code> 上的修改同步到本地:</p>
+<pre><code># 进入到gitproject
+$ cd /home/shiyanlou/gitproject
+
+# 添加一行内容到newfile
+$ echo &quot;gitproject: new line&quot; &gt;&gt; newfile
+
+# 提交修改
+$ git commit -a -m 'add newline to newfile'
+[master 8c31532] add newline to newfile
+ 1 file changed， 1 insertion（+）
+
+# 进入myrepo目录
+$ cd /tmp/myrepo
+
+# 同步gitproject的所有修改
+$ git pull
+remote: Counting objects: 6， done.
+remote: Compressing objects: 100% （2/2）， done.
+remote: Total 3 （delta 1）， reused 0 （delta 0）
+Unpacking objects: 100% （3/3）， done.
+From /home/shiyanlou/gitproject
+   8bb57aa..8c31532  master     -&gt; origin/master
+Updating 866c452..8c31532
+Fast-forward
+ newfile | 1 +
+ 1 file changed， 1 insertion（+）
+</code></pre><p>因为 <code>myrepo</code> 是从 <code>gitproject</code> 仓库克隆的，那么他就不需要指定 <code>gitproject</code> 仓库的地 址。因为 Git 把 <code>gitproject</code> 仓库的地址存储到 <code>myrepo</code> 的配置文件中，这个地址就是在 <code>git pull</code> 时默认使用的远程仓库：</p>
+<pre><code>$ git config --get remote.origin.url
+/home/shiyanlou/gitproject
+</code></pre><p>如果 <code>myrepo</code> 和 <code>gitproject</code> 在不同的主机上，可以通过 ssh 协议来执行 <code>clone</code> 和<code>pull</code> 操作：</p>
+<pre><code>$ git clone localhost:/home/shiyanlou/gitproject test
+</code></pre><p>这个命令会提示你输入 shiyanlou 用户的密码，用户密码随机，可以点击实验操作界面右侧工具栏的 <code>SSH直连</code> 按钮查看。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ubuntu 安装Go与beego框架 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Ubuntu 安装Go与beego框架</h1>
+  <time datetime=2020-04-05T07:05:42Z class="post-date">Sun, Apr 5, 2020</time>
+  <h1 id="ubuntu-安装go与beego框架">Ubuntu 安装Go与beego框架</h1>
+<ol>
+<li>安装</li>
+</ol>
+<p><code>apt install golang-go</code></p>
+<ol start="2">
+<li>设置目录结构</li>
+</ol>
+<pre><code>cd $HOME
+mkdir go      //创建工作目录
+cd go       
+mkdir src bin pkg      //src存放源代码,，pkg存放编译后存放的文件，bin存放编译后生成的可执行文件
+</code></pre><ol start="3">
+<li>环境变量的设置</li>
+</ol>
+<pre><code> sudo vim /etc/profile
+ export GOPATH=$HOME/go
+</code></pre><ol start="4">
+<li>查看go环境变量</li>
+</ol>
+<p><code>go env</code></p>
+<p><img src="https://i.loli.net/2020/03/17/jILwaVYXUNR2KSA.png" alt="image.png"></p>
+<p>无法安装beego</p>
+<p>解决方法</p>
+<pre><code>sudo apt-get purge golang*  
+sudo rm -rf /usr/lib/go-1.6/ /usr/lib/go-1.6/src/ /usr/lib/go-1.6/src/runtime/ /usr/lib/go-1.6/src/runtime/race  
+curl -O[https://storage.googleapis.com/golang/go1.11.1.linux-amd64.tar.gz](https://storage.googleapis.com/golang/go1.11.1.linux-amd64.tar.gz)  
+sudo tar -C /usr/local -xzf go1.11.1.linux-amd64.tar.gz  
+mkdir -p ~/go; echo &quot;export GOPATH=$HOME/go&quot; &gt;&gt; ~/.bashrc  
+echo &quot;export PATH=$PATH:$HOME/go/bin:/usr/local/go/bin&quot; &gt;&gt; ~/.bashrc  
+source ~/.bashrc  
+go get github.com/go-sql-driver/mysql  
+</code></pre><p>It&rsquo;s work for me.</p>
+<p>终端下命令： vim  ~/.bashrc 或者 vim ~/profile
+bashrc对系统所有用户有效，profile对当前用户有效</p>
+<pre><code>export GOPATH=/root/go
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/root/go/bin:/root/go/bin:/usr/local/go/bin
+export GOROOT=/usr/local/go
+export GOBIN=/usr/local/go/bin
+</code></pre><h2 id="安装beego及bee工具">安装beego及bee工具</h2>
+<ol>
+<li><code>go get github.com/astaxie/beego</code></li>
+<li><code>go get github.com/beego/bee</code></li>
+</ol>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

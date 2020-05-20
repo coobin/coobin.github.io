@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Shell脚本字体颜色 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Shell脚本字体颜色</h1>
+  <time datetime=2020-05-09T14:23:15Z class="post-date">Sat, May 9, 2020</time>
+  <h1 id="shell脚本字体颜色httpswwwcnblogscomxwupiaomiaop8038061html"><a href="https://www.cnblogs.com/xwupiaomiao/p/8038061.html">Shell脚本字体颜色</a></h1>
+<p><code>echo -e &quot;\033[背景颜色；字体颜色m字符串\033[0m&quot;</code>
+例：<code>echo -e &quot;\033[41;36m something here \033[0m&quot;</code>
+注： 1、背景颜色和字体颜色之间是英文的“;”
+　　 2、文字颜色后面有个m
+　　 3、字符串前后可以没有空格，如果有的话，输出也有空格(<code>echo -e &quot;\033[31mhello\033[0m&quot;</code>)
+<code>echo -e &quot;\033[44;31;5m ME \033[0m COOL&quot;</code>
+以上命令设置背景为蓝色，红色字体，闪烁光标，输出字符“ME”，0\33[0m重新设置屏幕到缺省设置，输出字符 COOL，“-e”是命令 echo 的一个可选项，它用于激活特殊字符的解析器。“\033”引导非常规字符序列。“m”意味着设置属性然后结束非常规字符序列，这个例子里真正有效的字符是 “44;37;5” 和“0&rdquo;，
+修改“44;37;5”可以生成不同颜色的组合，数值和编码的前后顺序没有关系</p>
+<p><strong>下面是相应的字和背景颜色</strong>
+字体颜色范围：30—–37                                 背景颜色范围：40—–47</p>
+<pre><code>echo -e “\033[30m 黑色字 \033[0m”               echo -e “\033[40m 黑底 \033[0m”
+echo -e “\033[31m 红色字 \033[0m”               echo -e “\033[41m 红底 \033[0m”
+echo -e “\033[32m 绿色字 \033[0m”               echo -e “\033[42m 绿底 \033[0m”
+echo -e “\033[33m 黄色字 \033[0m”               echo -e “\033[43m 黄底 \033[0m”
+echo -e “\033[34m 蓝色字 \033[0m”               echo -e “\033[44m 蓝底 \033[0m”
+echo -e “\033[35m 紫色字 \033[0m”               echo -e “\033[45m 紫底 \033[0m”
+echo -e “\033[36m 天蓝字 \033[0m”               echo -e “\033[46m 天蓝底 \033[0m”
+echo -e “\033[37m 白色字 \033[0m”　　           echo -e “\033[47m 白底 \033[0m”
+</code></pre><p><strong>面控制选项说明</strong></p>
+<pre><code>\033[nA         #光标上移n行                          \033[0m    #关闭所有属性
+\033[nB        #光标下移n行                           \033[1m   #设置高亮度
+\033[nC        #光标右移n行                           \033[4m   #下划线
+\033[nD        #光标左移n行                           \033[5m   #闪烁光标
+\033[y;xH     #设置光标位置                           \033[7m   #反显
+\033[2J         #清屏                                \033[8m   #消隐
+\033[K          #清除从光标到行尾的内容
+\033[s          #保存光标位置
+\033[u          #恢复光标位置　　
+\033[?25l     #隐藏光标 　
+\033[?25h    #显示光标
+</code></pre><p>字符串输出颜色，有时候关键地方需要醒目，颜色是最好的方式：
+字体颜色
+30：黑
+31：红
+32：绿
+33：黄
+34：蓝色
+35：紫色
+36：深绿
+37：白色</p>
+<p>字体背景颜色
+40：黑
+41：深红
+42：绿
+43：黄
+44：蓝
+45：紫
+46：深绿
+47：白色</p>
+<p>字体显示方式
+0：终端默认设置
+1：高亮显示
+4：带下划线
+5：字体闪烁
+7：反白显示
+8：隐藏</p>
+<p>格式：
+\033[1;31;40m   # 1 是显示方式，可选；31 是字体颜色；40m 是字体背景颜色。
+\033[0m             # 恢复终端默认颜色，即取消颜色设置。</p>
+<p><strong>示例：</strong></p>
+<pre><code>#!/bin/bash
+# 字体颜色
+for i in {31..37}; do
+echo -e &quot;\033[$i;40mHello world!\033[0m&quot; done
+# 背景颜色
+for i in {41..47}; do
+echo -e &quot;\033[47;${i}mHello world!\033[0m&quot; done
+# 显示方式
+for i in {1..8}; do
+echo -e &quot;\033[$i;31;40mHello world!\033[0m&quot; done
+
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

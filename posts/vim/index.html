@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VIM &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>VIM</h1>
+  <time datetime=2020-04-30T07:17:29Z class="post-date">Thu, Apr 30, 2020</time>
+  <h1 id="vim">VIM</h1>
+<h2 id="基础开始">基础开始</h2>
+<p><code>vi</code> (<code>vim</code>) 是 <code>linux</code> 系统下一个命令行文本编辑器，使用的时候直接 <code>vi</code> 后接文件名</p>
+<pre><code>vi test.txt
+## 编辑 test.txt 文件，文件存在就编辑它，不存在就新建一个文件并编辑
+</code></pre><p>vi 的最常用的两种模式： <code>普通模式</code> | <code>输入模式</code></p>
+<hr>
+<h3 id="普通模式">普通模式</h3>
+<p>是你打开文件时的样子</p>
+<p><img src="https://segmentfault.com/img/bVbfxEy?w=682&amp;h=478" alt="new" title="new"></p>
+<p>这个时候你可以直接使用本文章中提到的指令操作文本，此时你按键盘上的键会被编辑器接收，作为指令来执行，而不是输入到文本中。
+如直接输入 <code>:wq</code> 来保存并退出文件。
+<code>:w</code> 存储文本
+<code>:q</code> 退出文本，如果你对文本做了改动，这个是退不出去的。需要下面：
+<code>:q!</code> 退出不保存文本
+<code>:wq</code> 保存并退出文本</p>
+<p><code>:set nu</code> 显示行号
+<code>:set nonu</code> 不显示行号</p>
+<p><code>:syntax enable</code> 语法高亮 （如果支持的话）
+<code>:set filetype=html</code> 文档格式，配合上面语句</p>
+<hr>
+<h3 id="输入模式">输入模式</h3>
+<p><img src="https://segmentfault.com/img/bVbfxEo?w=682&amp;h=478" alt="insert" title="insert"></p>
+<p>按 指令 <code>i</code> 后会在光标位置开始输入，这时候左下角会有 <code>--- INSERT ---</code> 提示，表示当前正在输入模式。
+此时你键盘的所有按键操作都会写入到文本中。
+要切换到 <code>普通模式</code> 只需要按一下键盘的最左上角 <code>esc</code> 键即可。</p>
+<hr>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004292219ebbSji.jpg" alt="202004292219ebbSji"></p>
+<h2 id="基础编辑移动光标">基础编辑，移动光标</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$</td>
+<td>行尾</td>
+</tr>
+<tr>
+<td>^</td>
+<td>行首</td>
+</tr>
+<tr>
+<td>gg or 0</td>
+<td>光标移动文件开头</td>
+</tr>
+<tr>
+<td>G</td>
+<td>光标移动到文件末尾</td>
+</tr>
+<tr>
+<td>w</td>
+<td>下一个单词 (词首）</td>
+</tr>
+<tr>
+<td>e</td>
+<td>下一个单词（词尾）</td>
+</tr>
+<tr>
+<td>b</td>
+<td>前一个单词</td>
+</tr>
+<tr>
+<td>x</td>
+<td>del 删除后一个字符</td>
+</tr>
+<tr>
+<td>X</td>
+<td>backspace 删除前一个字符</td>
+</tr>
+<tr>
+<td>u</td>
+<td>撤销</td>
+</tr>
+<tr>
+<td>ctrl + r</td>
+<td>重做</td>
+</tr>
+<tr>
+<td>k</td>
+<td>上</td>
+</tr>
+<tr>
+<td>j</td>
+<td>下</td>
+</tr>
+<tr>
+<td>h</td>
+<td>左</td>
+</tr>
+<tr>
+<td>l</td>
+<td>右</td>
+</tr>
+<tr>
+<td>i</td>
+<td>插入，开始写东西</td>
+</tr>
+<tr>
+<td>x</td>
+<td>删除光标所在位置字符</td>
+</tr>
+<tr>
+<td>i</td>
+<td>在光标前插入字符</td>
+</tr>
+<tr>
+<td>a</td>
+<td>在光标后插入字符</td>
+</tr>
+<tr>
+<td>s</td>
+<td>修改光标处字符</td>
+</tr>
+<tr>
+<td>r</td>
+<td>替换当前字符</td>
+</tr>
+<tr>
+<td>R</td>
+<td>替换当前行光标后的字符</td>
+</tr>
+<tr>
+<td>o</td>
+<td>在下一行插入</td>
+</tr>
+<tr>
+<td>esc</td>
+<td>退出输入模式，进入普通模式，可执行各种命令</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004292220HduuY5.jpg" alt="202004292220HduuY5"></p>
+<h2 id="操作和重复操作">操作和重复操作</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>f</td>
+<td>查找字符，按f后再按需要移动到的字符，光标就会移动到那. <code>f;</code> 就会移动到下一个 <code>;</code>的位置</td>
+</tr>
+<tr>
+<td>F</td>
+<td>反向查找字符</td>
+</tr>
+<tr>
+<td>.</td>
+<td>重复上一个操作</td>
+</tr>
+<tr>
+<td>v</td>
+<td>选择模式，用上下左右选择文本，按相应的指令直接执行，<strong>如</strong>：选中后执行 <code>d</code> 就直接删除选中的文本</td>
+</tr>
+<tr>
+<td>ctrl + v</td>
+<td>块状选择模式，可以纵向选择文本块，而非以行的形式</td>
+</tr>
+</tbody>
+</table>
+<h4 id="高级删除指令">高级删除指令：</h4>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>d0</td>
+<td>删除光标前本行所有内容,不包含光标所在字符</td>
+</tr>
+<tr>
+<td>dw</td>
+<td>删除光标开始位置的字,包含光标所在字符</td>
+</tr>
+<tr>
+<td>dw</td>
+<td>删除一个单词</td>
+</tr>
+<tr>
+<td>df</td>
+<td><code>df(</code> 配合 <code>f</code> ，删除从光标处到 <code>(</code> 的字符，单行操作</td>
+</tr>
+<tr>
+<td>dd</td>
+<td>删除当前行</td>
+</tr>
+<tr>
+<td>d2w</td>
+<td><code>d2w</code> 删除两个单词</td>
+</tr>
+<tr>
+<td>d2t</td>
+<td><code>d2t,</code> 删除当前位置到后面第二个 <code>,</code> 之间的内容，不包含 <code>,</code> （t = <code>to</code>）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004292221xKAoXH.jpg" alt="202004292221xKAoXH"></p>
+<h2 id="复制-和-粘贴">复制 和 粘贴</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>y</td>
+<td>复制</td>
+</tr>
+<tr>
+<td>yy</td>
+<td>复制当前行</td>
+</tr>
+<tr>
+<td>p</td>
+<td>粘贴到<code>后面</code></td>
+</tr>
+<tr>
+<td>P</td>
+<td>粘贴到<code>前面</code></td>
+</tr>
+<tr>
+<td>o</td>
+<td>在当前行的<code>下一行</code>添加空行并开始输入</td>
+</tr>
+<tr>
+<td>O</td>
+<td>在当前行的<code>上一行</code>添加空行并开始输入</td>
+</tr>
+</tbody>
+</table>
+<p><strong>所有经过 <code>d</code> <code>x</code> <code>e</code> 处理的字符串都已经复制到了粘贴板上。</strong></p>
+<hr>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004292222d6gbRK.jpg" alt="202004292222d6gbRK"></p>
+<h2 id="搜索">搜索</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/</td>
+<td>从当前位置<code>向后</code>搜索</td>
+</tr>
+<tr>
+<td>？</td>
+<td>从当前位置<code>后前</code>搜索</td>
+</tr>
+<tr>
+<td>n</td>
+<td>搜索完之后，如果有多个结果，跳到 <code>下一个匹</code> 配项</td>
+</tr>
+<tr>
+<td>N</td>
+<td>跳到 <code>上一个</code> 匹配项</td>
+</tr>
+<tr>
+<td>*</td>
+<td>直接匹配当前光标下面的字符串，移到下一个匹配项，跟<code>/</code> <code>?</code> 没有关系</td>
+</tr>
+<tr>
+<td>#</td>
+<td>上一个匹配项</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004292223m89zrI.jpg" alt="202004292223m89zrI"></p>
+<h2 id="标记-和-宏">标记 和 宏</h2>
+<h3 id="标记">标记</h3>
+<p><code>m</code> 后跟 <code>a - z</code> 任意字符来设置一个<code>标记</code>
+<code>`</code> 后跟 字符来跳到这个标记点
+大写 <code>A - Z</code> 是全局的，小写 <code>a - z</code>
+<code>'.</code> 代表最后编辑位置</p>
+<h3 id="宏">宏</h3>
+<p><code>q</code> 后接 <code>a - z</code> 开始录制宏
+<code>q</code> 结束宏的录制
+<code>@</code> 后接 <code>a - z</code> 读取宏
+<code>@@</code> 代表最后一个宏</p>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/2020042922233H4GHN.jpg" alt="2020042922233H4GHN"></p>
+<hr>
+<h2 id="高级移动">高级移动</h2>
+<p><code>%</code> 在配对的 <code>()</code> <code>[]</code> 之间移动
+<code>H</code> <code>M</code> <code>L</code> 移动到编辑器可视范围的头部，中间，尾部
+<code>G</code> 到文件的尾部，前面添加数字再按 <code>G</code> 跳到输入的行，写行号的时候是看不见的
+<code>-</code> <code>+</code> 跳到上一行，下一行
+<code>(</code> <code>)</code> 跳到当前句子的 <code>首 / 尾</code>
+<code>{</code> <code>}</code> 跳到 <code>前一个 / 后一个</code> 空行
+<code>[[</code> jumps to the previous <code>{</code> in column 0
+<code>]]</code> jumps to the next <code>}</code> column 0</p>
+<hr>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004292223MOaDl0.jpg" alt="202004292223MOaDl0"></p>
+<h2 id="高级指令">高级指令</h2>
+<p><code>J</code> 合并当前行与下一行。合并已选中的所有行。
+<code>r</code> 替换当前字符到下一个输入的字符。如： <code>r</code> 后接 <code>4</code> 会把当前字符替换成 <code>4</code>
+<code>C</code> 是 <code>c$</code> 的缩写：修改从光标到结尾
+<code>D</code> 是 <code>d$</code> 的缩写：删除从光标到结尾
+<code>Y</code> 是 <code>yy</code> 的缩写：复制当前行
+<code>s</code> 删除光标下字符，并开始编辑
+<code>S</code> 删除当前行，并开始编辑</p>
+<p><code>&lt;</code> 向前缩进，一行，或多行，范围设置在前面提到了，<code>t</code>等等
+<code>&gt;</code> 向后缩进，一行，或多行
+<code>=</code> 格式化，一行，或多行</p>
+<p><code>~</code> 切换光标下的字符大小写</p>
+<h2 id="查找与替换">查找与替换</h2>
+<h3 id="查找命令">查找命令:</h3>
+<p><code>/: str查找</code><br>
+n: 下一个<br>
+N：上一个</p>
+<h3 id="替换命令">替换命令：</h3>
+<p>把abc全部替换成123
+末行模式下，将光标所在行的abc替换成123<br>
+<code>:%s/abc/123/g</code><br>
+末行模式下，将第一行至第10行之间的abc替换成123<br>
+<code>:1, 10s/abc/123/g</code></p>
+<p><code>:{作用范围}s/{目标}/{替换}/{替换的标志}</code></p>
+<p>作用范围分为当前行、全文、选区等等。
+<code>:s/zempty/handsome/g</code></p>
+<p>将会把当前光标所在行的 zempty 替换成 handsome
+<code>:%s/zempty/handsome/g</code></p>
+<p>将会把全文中的 zempty 替换成 handsome
+<code>:n1,n2s/zempty/handsome/g</code>
+这里的 n1 和 n2 值得是行号，将会替换掉 n1 到 n2 的所有 zempty 为 handsome.</p>
+<p>下面来谈谈替换的标志。</p>
+<p>上文中命令结尾的 <code>g</code> 即是替换标志之一，表示全局 <code>global</code> 替换（即替换目标的所有出现）。 还有很多其他有用的替换标志：</p>
+<p>空替换标志表示只替换从光标位置开始，目标的第一次出现</p>
+<p><code>:s/zempty/handsome</code></p>
+<p>作用于当前行，从光标处开始查找替换，仅仅替换第一次匹配 zempty 的地方为handsome 。</p>
+<p><code>:%s/zempty/handsome</code></p>
+<p>替换掉文件中所有行第一次出现 zempty 的地方为 handsome 。</p>
+<p>i 表示大小写不敏感查找，I 表示大小写敏感：</p>
+<p><code>:%s/zempty/handsome/i</code></p>
+<p>替换掉所有行第一个出现 zempty (不区分大小写) 为 handsome 。</p>
+<p><code>:%s/zempty/handsome/gi</code></p>
+<p>替换掉所有行出现 zempty (不区分大小写) 为 handsome 。</p>
+<p>c 表示需要确认，例如全局查找&quot;zempty&quot;替换为&quot;handsome&quot;并且需要确认：</p>
+<p><code>:%s/zempty/handsome/gc</code></p>
+<h2 id="规则">规则</h2>
+<p>上面 7 张合起来就是这样的
+<img src="https://www.runoob.com/wp-content/uploads/2015/10/vi-vim-cheat-sheet-sch1.gif" alt="">
+<img src="https://segmentfault.com/img/bVckBq" alt="Marge" title="Marge"></p>
+<p>任何指令前输入的数字，都会作为指令的重复值：<code>5d</code>, <code>2u</code>, <code>d2w</code>
+重复指令会在当前行执行： <code>dd</code> 删除当前行，<code>yy</code> 复制当前行
+<code>ZZ</code> 保存并退出
+<code>ZQ</code> 退出不保存</p>
+<p><code>zt</code> 滚动光标到顶部，光标在文件中的位置不变，只是改变光标在屏幕上的位置
+<code>zb</code> 光标滚动到底部</p>
+<p><code>ctrl + F/B</code> PageUp / PageDown</p>
+<hr>
+<hr>
+<hr>
+<h2 id="高级">高级</h2>
+<p><img src="https://segmentfault.com/img/bVkfUg" alt="advanced" title="advanced"></p>
+<h2 id="入门">入门</h2>
+<p><img src="https://segmentfault.com/img/bV2rGa?w=4266&amp;h=3200" alt="entry" title="entry"></p>
+<h2 id="现代">现代</h2>
+<p><img src="https://segmentfault.com/img/bV2rFE?w=1979&amp;h=1346" alt="morden" title="morden"></p>
+<h2 id="文字">文字</h2>
+<p><img src="https://segmentfault.com/img/bV2rFT?w=3507&amp;h=2480" alt="text" title="text"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

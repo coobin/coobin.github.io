@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ssh和scp &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>ssh和scp</h1>
+  <time datetime=2020-05-08T09:15:49Z class="post-date">Fri, May 8, 2020</time>
+  <h1 id="ssh和scp">ssh和scp</h1>
+<h2 id="ssh">ssh</h2>
+<h4 id="ssh介绍">ssh介绍</h4>
+<p>SSH为Secure Shell的缩写，由 IETF 的网络工作小组（Network Working Group）所制定；SSH 为建立在应用层和传输层基础上的安全协议。<br>
+SSH是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。常用于远程登录，以及用户之间进行资料拷贝。<br>
+利用SSH协议可以有效防止远程管理过程中的信息泄露问题。SSH最初是 UNIX 系统上的一个程序，后来又迅速扩展到其他操作平台。SSH 在正确使用时可弥补网络中的漏洞。SSH 客户端适用于多种平台。几乎所有 UNIX 平台—包括 HP-UX、Linux、AIX、Solaris、Digital UNIX、Irix，以及其他平台，都可运行SSH。<br>
+使用SSH服务，需要安装相应的服务器和客户端。客户端和服务器的关系：如果，A机器想被B机器远程控制，那么，A机器需要安装SSH服务器，B机器需要安装SSH客户端。</p>
+<h4 id="安装ssh">安装ssh</h4>
+<p>A.安装ssh服务器<br>
+<code>sudo apt-get install openssh-server</code><br>
+B.远程登陆<br>
+<code>ssh 用户名@IP</code>
+使用ssh访问，如访问出现错误。可查看是否有该文件 ～/.ssh/known_ssh 尝试删除该文件解决。</p>
+<h4 id="使用ssh连接服务器">使用ssh连接服务器</h4>
+<p>被连接的机器：
+<img src="https://s1.ax1x.com/2020/03/24/8LggyR.png" alt="8LggyR.png"></p>
+<p>主动连接的机器：
+<img src="https://s1.ax1x.com/2020/03/24/8LgqOI.png" alt="8LgqOI.png"></p>
+<p>SSH 告知用户，这个主机不能识别，这时键入&quot;yes&rdquo;，SSH 就会将相关信息，写入&rdquo; ~/.ssh/know_hosts&rdquo; 中，再次访问，就不会有这些信息了。然后输入完口令,就可以登录到主机了。</p>
+<p>接着，提示输入登陆密码：
+<img src="https://s1.ax1x.com/2020/03/24/8L2yAf.png" alt="8L2yAf.png">
+登陆成功:
+<img src="https://s1.ax1x.com/2020/03/24/8L2fjs.png" alt="8L2fjs.png"></p>
+<h2 id="scp">scp</h2>
+<p>远程拷贝文件,scp -r 的常用方法：</p>
+<p>1.使用该命令的前提条件要求目标主机已经成功安装openssh-server</p>
+<p>如没有安装使用 <code>sudo apt-get install openssh-server</code> 来安装</p>
+<p>2.使用格式：</p>
+<p>scp -r 目标用户名@目标主机IP地址：/目标文件的绝对路径  /保存到本机的绝对/相对路径</p>
+<p>举例：<br>
+<code>scp -r itcast@192.168.1.100:/home/itcast/QQ_dir/ ./mytest/lisi</code></p>
+<p>在后续会提示输入“yes”此时，只能输“yes”而不能简单输入“Y”
+拷贝单个文件可以不加 -r参数，拷贝目录必须要加。</p>
+<p>本地文件复制到远程：</p>
+<pre><code>scp FileName RemoteUserName@RemoteHostIp:RemoteFile
+scp FileName RemoteHostIp:RemoteFolder
+scp FileName RemoteHostIp:RemoteFile
+</code></pre><p>本地目录复制到远程：</p>
+<pre><code>scp -r FolderName RemoteUserName@RemoteHostIp:RemoteFolder
+scp -r FolderName RemoteHostIp:RemoteFolder
+</code></pre><p>远程文件复制到本地：</p>
+<pre><code>scp RemoteUserName@RemoteHostIp:RemoteFile FileName
+scp RemoteHostIp:RemoteFolder FileName
+scp RemoteHostIp:RemoteFile FileName
+</code></pre><p>远程目录复制到本地：</p>
+<pre><code>scp -r RemoteUserName@RemoteHostIp:RemoteFolder FolderName
+scp -r RemoteHostIp:RemoteFolder FolderName
+</code></pre><p>拷贝远程的文件：
+<img src="https://s1.ax1x.com/2020/03/24/8LRQPS.png" alt="8LRQPS.png"></p>
+<p>拷贝远程的文件可以任意修改其名字：
+<img src="https://s1.ax1x.com/2020/03/24/8LRNV0.png" alt="8LRNV0.png"></p>
+<p>拷贝远程的文件可以指定存放路径：
+<img src="https://s1.ax1x.com/2020/03/24/8LRwPU.png" alt="8LRwPU.png"></p>
+<h2 id="scp-跨机远程拷贝">scp 跨机远程拷贝</h2>
+<p>Scp是secure copy的简写，用于在Linux下进行远程拷贝文件的命令，和它类似的命令有cp，不过cp只是在本机进行拷贝不能跨服务器，而且scp传输是加密的。当你服务器硬盘变为只读 read only system时，用scp可以帮你把文件移出来。
+<em>注解</em>
+类似的工具有rsync；scp消耗资源少，不会提高多少系统负荷，在这一点上，rsync就远远不及它了。rsync比scp会快一点，但当小文件多的情况下，rsync会导致硬盘I/O非常高，而scp基本不影响系统正常使用。</p>
+<ol>
+<li>命令格式：
+Scp [参数] [原路径] [目标路径]</li>
+<li>命令参数：</li>
+</ol>
+<ul>
+<li>-1 强制scp命令使用协议ssh1</li>
+<li>-2 强制scp命令使用协议ssh2</li>
+<li>-4 强制scp命令只使用IPv4寻址</li>
+<li>-6 强制scp命令只使用IPv6寻址</li>
+<li>-B 使用批处理模式（传输过程中不询问传输口令或短语）</li>
+<li>-C 允许压缩。（将-C标志传递给ssh，从而打开压缩功能）</li>
+<li>-p 留原文件的修改时间，访问时间和访问权限。</li>
+<li>-q 不显示传输进度条。</li>
+<li>-r 递归复制整个目录。</li>
+<li>-v 详细方式显示输出。scp和ssh(1)会显示出整个过程的调试信息。这些信息用于调试连接，验证和配置问题。</li>
+<li>-c cipher 以cipher将数据传输进行加密，这个选项将直接传递给ssh。</li>
+<li>-F ssh_config 指定一个替代的ssh配置文件，此参数直接传递给ssh。</li>
+<li>-i identity_file 从指定文件中读取传输时使用的密钥文件，此参数直接传递给ssh。</li>
+<li>-l limit 限定用户所能使用的带宽，以Kbit/s为单位。</li>
+<li>-o ssh_option 如果习惯于使用ssh_config(5)中的参数传递方式，</li>
+<li>-P port 注意是大写的P, port是指定数据传输用到的端口号</li>
+<li>-S program 指定加密传输时所使用的程序。此程序必须能够理解ssh(1)的选项。</li>
+</ul>
+<ol start="3">
+<li>使用说明</li>
+</ol>
+<h2 id="从本地服务器复制到远程服务器">从本地服务器复制到远程服务器</h2>
+<p>复制文件:</p>
+<pre><code class="language-$scp" data-lang="$scp">$scp local_file remote_username@remote_ip:remote_file
+$scp local_file remote_ip:remote_folder
+$scp local_file remote_ip:remote_file
+</code></pre><p>指定了用户名，命令执行后需要输入用户密码；如果不指定用户名，命令执行后需要输入用户名和密码；
+复制目录:</p>
+<pre><code>$scp -r local_folder remote_username@remote_ip:remote_folder
+$scp -r local_folder remote_ip:remote_folder
+</code></pre><p>第1个指定了用户名，命令执行后需要输入用户密码； 第2个没有指定用户名，命令执行后需要输入用户名和密码；
+<em>注解</em>
+从远程复制到本地的scp命令与上面的命令一样，只要将从本地复制到远程的命令后面2个参数互换顺序就行了。
+4. 使用示例</p>
+<p>实例1：从远处复制文件到本地目录</p>
+<p><code>$scp root@10.6.159.147:/opt/soft/demo.tar /opt/soft/</code>
+说明： 从10.6.159.147机器上的/opt/soft/的目录中下载demo.tar 文件到本地/opt/soft/目录中</p>
+<p>实例2：从远处复制到本地</p>
+<p><code>$scp -r root@10.6.159.147:/opt/soft/test /opt/soft/</code>
+说明： 从10.6.159.147机器上的/opt/soft/中下载test目录到本地的/opt/soft/目录来。</p>
+<p>实例3：上传本地文件到远程机器指定目录</p>
+<p><code>$scp /opt/soft/demo.tar root@10.6.159.147:/opt/soft/scptest</code>
+说明： 复制本地opt/soft/目录下的文件demo.tar 到远程机器10.6.159.147的opt/soft/scptest目录</p>
+<p>实例4：上传本地目录到远程机器指定目录</p>
+<p><code>$scp -r /opt/soft/test root@10.6.159.147:/opt/soft/scptest</code>
+说明： 上传本地目录 /opt/soft/test到远程机器10.6.159.147上/opt/soft/scptest的目录中</p>
+<p>#Linux</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>标签 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>标签</h1>
+  <time datetime=2020-04-20T06:38:41Z class="post-date">Mon, Apr 20, 2020</time>
+  <h1 id="标签">标签</h1>
+<p>我们可以用 git tag 不带任何参数创建一个标签（tag）指定某个提交（commit）:</p>
+<pre><code># 进入到gitproject目录
+$ cd /home/shiyanlou/gitproject
+
+# 查看git提交记录
+$ git log
+
+# 选择其中一个记录标志位stable-1的标签，注意需要将后面的8c315325替换成仓库下的真实提交内，commit的名称很长，通常我们只需要写前面8位即可
+$ git tag stable-1 8c315325
+
+# 查看当前所有tag
+$ git tag
+stable-1
+</code></pre><p>这样，我们可以用stable-1 作为提交 <code>8c315325</code> 的代称。</p>
+<p>前面这样创建的是一个“轻量级标签”。</p>
+<p>如果你想为一个tag添加注释，或是为它添加一个签名， 那么我们就需要创建一个 &ldquo;标签对象&rdquo;。</p>
+<h4 id="标签对象">标签对象</h4>
+<p><code>git tag</code> 中使用 <code>-a</code>， <code>-s</code> 或是 <code>-u</code>三个参数中任意一个，都会创建一个标签对象，并且需要一个标签消息（tag message）来为 tag 添加注释。 如果没有 <code>-m</code> 或是 <code>-F</code> 这些参数，命令执行时会启动一个编辑器来让用户输入标签消息。</p>
+<p>当这样的一条命令执行后，一个新的对象被添加到 Git 对象库中，并且标签引用就指向了一个标签对象，而不是指向一个提交，这就是与轻量级标签的区别。</p>
+<p>下面是一个创建标签对象的例子:</p>
+<pre><code>$ git tag -a stable-2 8c315325 -m &quot;stable 2&quot;
+$ git tag
+stable-1
+stable-2
+</code></pre><h2 id="签名的标签">签名的标签</h2>
+<p>签名标签可以让提交和标签更加完整可信。如果你配有<code>GPG key</code>，那么你就很容易创建签名的标签。首先你要在你的 <code>.git/config</code> 或 <code>~/.gitconfig</code> 里配好key。</p>
+<p>下面是示例:</p>
+<pre><code>[user]
+    signingkey = &lt;gpg-key-id&gt;
+</code></pre><p>你也可以用命令行来配置:</p>
+<pre><code>$ git config （--global） user.signingkey &lt;gpg-key-id&gt;
+</code></pre><p>现在你可以在创建标签的时候使用 <code>-s</code> 参数来创建“签名的标签”：</p>
+<pre><code>$ git tag -s stable-1 1b2e1d63ff
+</code></pre><p>如果没有在配置文件中配 GPG key，你可以用 <code>-u</code> 参数直接指定。</p>
+<pre><code>$ git tag -u &lt;gpg-key-id&gt; stable-1 1b2e1d63ff
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

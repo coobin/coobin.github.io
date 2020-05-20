@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MySQL 操作 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>MySQL 操作</h1>
+  <time datetime=2020-05-11T12:28:59Z class="post-date">Mon, May 11, 2020</time>
+  <h1 id="mysql-操作">MySQL 操作</h1>
+<p><a href="https://www.w3cschool.cn/mysql/t9mdhf21.html">MySQL 教程_w3cschool</a></p>
+<h2 id="基本操作">基本操作</h2>
+<h4 id="创建数据库">创建数据库</h4>
+<p><code>mysqladmin -u root -p create W3CSCHOOL</code></p>
+<h4 id="删除数据库">删除数据库</h4>
+<p><code>mysqladmin -u root -p drop W3CSCHOOL</code></p>
+<h4 id="修改密码">修改密码</h4>
+<p><code>mysqladmin -u USER -p password PASSWORD</code>
+该命令之后会提示输入原密码，输入正确后即可修改。
+例如，设置root用户的密码为123456，则
+<code>mysqladmin -u root -p password 123456</code></p>
+<h4 id="选择数据库">选择数据库</h4>
+<pre><code>[root@host]# mysql -u root -p
+Enter password:******
+mysql&gt; use W3CSCHOOL;
+Database changed
+mysql&gt;
+</code></pre><h4 id="创建数据表">创建数据表：</h4>
+<p><code>CREATE TABLE table_name (column_name column_type,column_name2 column_type2);</code></p>
+<h4 id="删除数据表">删除数据表：</h4>
+<p><code>DROP TABLE table_name ;</code></p>
+<h4 id="插入数据">插入数据</h4>
+<pre><code>INSERT INTO table_name ( field1, field2,...fieldN )
+                       VALUES
+                       ( value1, value2,...valueN );
+</code></pre><p>如果数据是字符型，必须使用单引号或者双引号，如：&ldquo;value&rdquo;。</p>
+<p>通过命令提示窗口插入数据
+以下我们将使用 SQL INSERT INTO 语句向 MySQL 数据表 w3cschool_tbl 插入数据</p>
+<p>实例
+以下实例中我们将向 w3cschool_tbl 表插入三条数据:</p>
+<pre><code>root@host# mysql -u root -p password;
+Enter password:*
+mysql&gt; use W3CSCHOOL;
+Database changed
+mysql&gt; INSERT INTO w3cschool_tbl 
+     -&gt;(w3cschool_title, w3cschool_author, submission_date)
+     -&gt;VALUES
+     -&gt;(&quot;Learn PHP&quot;, &quot;John Poul&quot;, NOW());
+Query OK, 1 row affected (0.01 sec)
+mysql&gt; INSERT INTO w3cschool_tbl
+     -&gt;(w3cschool_title, w3cschool_author, submission_date)
+     -&gt;VALUES
+     -&gt;(&quot;Learn MySQL&quot;, &quot;Abdul S&quot;, NOW());
+Query OK, 1 row affected (0.01 sec)
+mysql&gt; INSERT INTO w3cschool_tbl
+     -&gt;(w3cschool_title, w3cschool_author, submission_date)
+     -&gt;VALUES
+     -&gt;(&quot;JAVA Tutorial&quot;, &quot;Sanjay&quot;, '2007-05-06');
+Query OK, 1 row affected (0.01 sec)
+mysql&gt;
+</code></pre><p>注意： 使用箭头标记(-&gt;)不是SQL语句的一部分，它仅仅表示一个新行，如果一条SQL语句太长，我们可以通过回车键来创建一个新行来编写SQL语句，SQL语句的命令结束符为分号（;）。</p>
+<p>在以上实例中，我们并没有提供 w3cschool_id 的数据，因为该字段我们在创建表的时候已经设置它为 AUTO_INCREMENT(自动增加) 属性。 所以，该字段会自动递增而不需要我们去设置。实例中 NOW() 是一个 MySQL 函数，该函数返回日期和时间。</p>
+<h4 id="查询数据-select">查询数据 SELECT</h4>
+<pre><code>SELECT column_name,column_name
+FROM table_name
+[WHERE Clause]
+[OFFSET M ][LIMIT N]
+</code></pre><ul>
+<li>查询语句中你可以使用一个或者多个表，表之间使用逗号(,)分割，并使用WHERE语句来设定查询条件。</li>
+<li>SELECT 命令可以读取一条或者多条记录。</li>
+<li>你可以使用星号（*）来代替其他字段，SELECT语句会返回表的所有字段数据</li>
+<li>你可以使用 WHERE 语句来包含任何条件。</li>
+<li>你可以通过OFFSET指定SELECT语句开始查询的数据偏移量。默认情况下偏移量为0。</li>
+<li>你可以使用 LIMIT 属性来设定返回的记录数。</li>
+</ul>
+<p>实例
+以下实例将返回数据表w3cschool_tbl的所有记录:</p>
+<pre><code>root@host# mysql -u root -p password;
+Enter password:*******
+mysql&gt; use W3CSCHOOL;
+Database changed
+mysql&gt; SELECT * from w3cschool_tbl; 
++-------------+----------------+-----------------+-----------------+
+| w3cschool_id | w3cschool_title | w3cschool_author | submission_date |
++-------------+----------------+-----------------+-----------------+
+|           1 | Learn PHP      | John Poul       | 2007-05-21      |
+|           2 | Learn MySQL    | Abdul S         | 2007-05-21      |
+|           3 | JAVA Tutorial  | Sanjay          | 2007-05-21      |
++-------------+----------------+-----------------+-----------------+
+3 rows in set (0.01 sec)
+
+mysql&gt;
+</code></pre><h4 id="alter-table">alter table</h4>
+<h5 id="添加列">添加列</h5>
+<p>基本形式:</p>
+<p><code>alter table 表名 add 列名 列数据类型 [after 插入位置];</code></p>
+<p>示例:
+在表的最后追加列 address</p>
+<p><code>alter table students add address char(60);</code></p>
+<p>在名为 age 的列后插入列 birthday</p>
+<p><code>alter table students add birthday date after age;</code></p>
+<p>在表第一列插入</p>
+<p><code>ALTER TABLE employee ADD test INT(10) DEFAULT 11 FIRST;</code></p>
+<h5 id="修改列">修改列</h5>
+<p>基本形式: alter table 表名 change 列名称 列新名称 新数据类型;</p>
+<p>示例:
+将表 tel 列改名为 telphone: <code>alter table students change tel telphone char(13) default &quot;-&quot;;</code></p>
+<p>将 name 列的数据类型改为 char(16): <code>alter table students change name name char(16) not null;</code></p>
+<h5 id="删除列">删除列</h5>
+<p>基本形式: alter table 表名 drop 列名称;</p>
+<p>示例:删除 birthday 列: <code>alter table students drop birthday;</code></p>
+<h5 id="重命名表">重命名表</h5>
+<p>基本形式: alter table 表名 rename 新表名;
+示例:重命名 students 表为
+<code>workmates: alter table students rename workmates;</code></p>
+<p><code>RENAME TABLE 原名 TO 新名字;</code></p>
+<p><code>ALTER TABLE 原名 RENAME 新名;</code></p>
+<p><code>ALTER TABLE 原名 RENAME TO 新名;</code></p>
+<h4 id="删除表中的某一行">删除表中的某一行</h4>
+<p>删除表中的一行数据，也必须加上 WHERE 条件，否则整列的数据都会被删除。删除语句：</p>
+<pre><code>DELETE FROM 表名字 WHERE 条件;
+</code></pre><p>我们尝试把 Tom 的数据删除：</p>
+<pre><code>DELETE FROM employee WHERE name='Tom';
+</code></pre><h4 id="修改表中的某个值">修改表中的某个值</h4>
+<p>大多数时候我们需要做修改的不会是整个数据库或整张表，而是表中的某一个或几个数据，这就需要我们用下面这条命令达到精确的修改：</p>
+<pre><code>UPDATE 表名字 SET 列1=值1,列2=值2 WHERE 条件;
+</code></pre><p>比如，我们要把 Tom 的 age 改为 21，salary 改为 3000：</p>
+<pre><code>UPDATE employee SET age=21,salary=3000 WHERE name='Tom';
+</code></pre><h2 id="索引">索引</h2>
+<p>索引是一种与表有关的结构，它的作用相当于书的目录，可以根据目录中的页码快速找到所需的内容。</p>
+<p>当表中有大量记录时，若要对表进行查询，没有索引的情况是全表搜索：将所有记录一一取出，和查询条件进行对比，然后返回满足条件的记录。这样做会执行大量磁盘 I/O 操作，并花费大量数据库系统时间。</p>
+<p>而如果在表中已建立索引，在索引中找到符合查询条件的索引值，通过索引值就可以快速找到表中的数据，可以<strong>大大加快查询速度</strong>。</p>
+<p>对一张表中的某个列建立索引，有以下两种语句格式：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ALTER TABLE 表名字 ADD INDEX 索引名 <span style="color:#f92672">(</span>列名<span style="color:#f92672">)</span>;
+
+CREATE INDEX 索引名 ON 表名字 <span style="color:#f92672">(</span>列名<span style="color:#f92672">)</span>;
+</code></pre></div><p>我们用这两种语句分别建立索引：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ALTER TABLE employee ADD INDEX idx_id <span style="color:#f92672">(</span>id<span style="color:#f92672">)</span>;  <span style="color:#75715e">#在employee表的id列上建立名为idx_id的索引</span>
+
+CREATE INDEX idx_name ON employee <span style="color:#f92672">(</span>name<span style="color:#f92672">)</span>;   <span style="color:#75715e">#在employee表的name列上建立名为idx_name的索引</span>
+</code></pre></div><p>索引的效果是加快查询速度，当表中数据不够多的时候是感受不出它的效果的。这里我们使用命令 <strong>SHOW INDEX FROM 表名字;</strong> 查看刚才新建的索引：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-06-01.png/wm" alt="01"></p>
+<p>在使用 SELECT 语句查询的时候，语句中 WHERE 里面的条件，会<strong>自动判断有没有可用的索引</strong>。</p>
+<p>比如有一个用户表，它拥有用户名(username)和个人签名(note)两个字段。其中用户名具有唯一性，并且格式具有较强的限制，我们给用户名加上一个唯一索引；个性签名格式多变，而且允许不同用户使用重复的签名，不加任何索引。</p>
+<p>这时候，如果你要查找某一用户，使用语句 <code>select * from user where username=?</code> 和 <code>select * from user where note=?</code> 性能是有很大差距的，对<strong>建立了索引的用户名</strong>进行条件查询会比<strong>没有索引的个性签名</strong>条件查询快几倍，在数据量大的时候，这个差距只会更大。</p>
+<p>一些字段不适合创建索引，比如性别，这个字段存在大量的重复记录无法享受索引带来的速度加成，甚至会拖累数据库，导致数据冗余和额外的 CPU 开销。</p>
+<h2 id="视图">视图</h2>
+<p>视图是从一个或多个表中导出来的表，是一种<strong>虚拟存在的表</strong>。它就像一个窗口，通过这个窗口可以看到系统专门提供的数据，这样，用户可以不用看到整个数据库中的数据，而只关心对自己有用的数据。</p>
+<p>注意理解视图是虚拟的表：</p>
+<ul>
+<li>数据库中只存放了视图的定义，而没有存放视图中的数据，这些数据存放在原来的表中；</li>
+<li>使用视图查询数据时，数据库系统会从原来的表中取出对应的数据；</li>
+<li>视图中的数据依赖于原来表中的数据，一旦表中数据发生改变，显示在视图中的数据也会发生改变；</li>
+<li>在使用视图的时候，可以把它当作一张表。</li>
+</ul>
+<p>创建视图的语句格式为：</p>
+<pre><code>CREATE VIEW 视图名(列a,列b,列c) AS SELECT 列1,列2,列3 FROM 表名字;
+</code></pre><p>可见创建视图的语句，后半句是一个 SELECT 查询语句，所以<strong>视图也可以建立在多张表上</strong>，只需在 SELECT 语句中使用<strong>子查询</strong>或<strong>连接查询</strong>，这些在之前的实验已经进行过。</p>
+<p>现在我们创建一个简单的视图，名为 <strong>v_emp</strong>，包含<strong>v_name</strong>，<strong>v_age</strong>，<strong>v_phone</strong>三个列：</p>
+<pre><code>CREATE VIEW v_emp (v_name,v_age,v_phone) AS SELECT name,age,phone FROM employee;
+</code></pre><p><img src="https://doc.shiyanlou.com/MySQL/sql-06-02.png/wm" alt="02"></p>
+<h2 id="导入">导入</h2>
+<p>此处讲解的是导入一个纯数据文件，该文件中将包含与数据表字段相对应的多条数据，这样可以快速导入大量数据，除此之外，还有用 SQL 语句的导入方式，语法为：<code>source *.sql</code> 这是实验中经常用到的。两者之间的不同是：数据文件导入方式只包含数据，导入规则由数据库系统完成；SQL 文件导入相当于执行该文件中包含的 SQL 语句，可以实现多种操作，包括删除，更新，新增，甚至对数据库的重建。</p>
+<p>数据文件导入，可以把一个文件里的数据保存进一张表。导入语句格式为：</p>
+<pre><code>LOAD DATA INFILE '文件路径和文件名' INTO TABLE 表名字;
+</code></pre><p>现在 SQL6 目录下有一个名为 <strong>in.txt</strong> 的文件，我们尝试把这个文件中的数据导入数据库 <strong>mysql_shiyan</strong> 的 <strong>employee</strong> 表中。</p>
+<p>由于导入导出大量数据都属于敏感操作，根据 mysql 的安全策略，导入导出的文件都必须在指定的路径下进行，在 mysql 终端中查看路径变量：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mysql -uroot
+mysql&gt; show variables like <span style="color:#e6db74">&#39;%secure%&#39;</span>;
++--------------------------+-----------------------+
+| Variable_name            | Value                 |
++--------------------------+-----------------------+
+| require_secure_transport | OFF                   |
+| secure_auth              | ON                    |
+| secure_file_priv         | /var/lib/mysql-files/ |
++--------------------------+-----------------------+
+<span style="color:#ae81ff">3</span> rows in set <span style="color:#f92672">(</span>0.00 sec<span style="color:#f92672">)</span>
+</code></pre></div><p>注意到 secure_file_priv 变量指定安全路径为 <code>/var/lib/mysql-files/</code> ，要导入数据文件，需要将该文件移动到安全路径下。</p>
+<p>打开 Xfce 终端，输入命令拷贝 SQL6 文件夹到 <code>/var/lib/mysql-files/</code> 目录：</p>
+<pre><code>sudo cp -a /home/shiyanlou/Desktop/SQL6 /var/lib/mysql-files/
+</code></pre><p>使用命令 <code>sudo vim /var/lib/mysql-files/SQL6/in.txt</code> 查看 <code>in.txt</code> 文件中的内容：</p>
+<p><img src="https://doc.shiyanlou.com/document-uid600404labid76timestamp1531869274599.png/wm" alt="03"></p>
+<p>可以看到其中仅仅包含了数据本身，没有任何的 SQL 语句</p>
+<p>再使用以下命令以 root 用户登录数据库，再连接 <strong>mysql_shiyan</strong> 数据库：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 在Xfce 终端输入命令</span>
+mysql -u root
+
+<span style="color:#75715e"># 在 MySQL 控制台中输入命令</span>
+use mysql_shiyan
+</code></pre></div><p>查看一下没有导入数据之前，employee 表中的数据：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-06-04.png/wm" alt="04"></p>
+<p>现在执行导入语句，文件中的数据成功导入 employee 表：</p>
+<p><img src="https://doc.shiyanlou.com/document-uid600404labid76timestamp1529104481426.png/wm" alt="05"></p>
+<h2 id="导出">导出</h2>
+<p>导出与导入是相反的过程，是把数据库某个表中的数据保存到一个文件之中。导出语句基本格式为：</p>
+<pre><code>SELECT 列1，列2 INTO OUTFILE '文件路径和文件名' FROM 表名字;
+</code></pre><p><strong>注意：语句中 “文件路径” 之下不能已经有同名文件。</strong></p>
+<p>现在我们把整个 employee 表的数据导出到 /var/lib/mysql-files/ 目录下，导出文件命名为 <strong>out.txt</strong> 具体语句为：</p>
+<pre><code>SELECT * INTO OUTFILE '/var/lib/mysql-files/out.txt' FROM employee;
+</code></pre><p>用 gedit 可以查看导出文件 <code>/var/lib/mysql-files/out.txt</code> 的内容：</p>
+<blockquote>
+<p>也可以使用 <code>sudo cat /var/lib/mysql-files/out.txt</code> 命令查看。</p>
+</blockquote>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-06-06.png/wm" alt="06"></p>
+<h2 id="备份">备份</h2>
+<p>数据库中的数据十分重要，出于安全性考虑，在数据库的使用中，应该注意使用备份功能。</p>
+<blockquote>
+<p>备份与导出的区别：导出的文件只是保存数据库中的数据；而备份，则是把数据库的结构，包括数据、约束、索引、视图等全部另存为一个文件。</p>
+</blockquote>
+<p><strong>mysqldump</strong> 是 MySQL 用于备份数据库的实用程序。它主要产生一个 SQL 脚本文件，其中包含从头重新创建数据库所必需的命令 CREATE TABLE INSERT 等。</p>
+<p>使用 mysqldump 备份的语句：</p>
+<pre><code>mysqldump -u root 数据库名&gt;备份文件名;   #备份整个数据库
+
+mysqldump -u root 数据库名 表名字&gt;备份文件名;  #备份整个表
+</code></pre><blockquote>
+<p>mysqldump 是一个备份工具，因此该命令是在终端中执行的，而不是在 mysql 交互环境下</p>
+</blockquote>
+<p>我们尝试备份整个数据库 <code>mysql_shiyan</code>，将备份文件命名为 <code>bak.sql</code>，先 <code>Ctrl+D</code> 退出 MySQL 控制台，再打开 Xfce 终端，在终端中输入命令：</p>
+<pre><code>cd /home/shiyanlou/
+mysqldump -u root mysql_shiyan &gt; bak.sql;
+</code></pre><p>使用命令 “ls” 可见已经生成备份文件 <code>bak.sql</code>：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-06-07.png/wm" alt="07"></p>
+<blockquote>
+<p>你可以用 gedit 查看备份文件的内容，可以看见里面不仅保存了数据，还有所备份的数据库的其它信息。</p>
+</blockquote>
+<h2 id="恢复">恢复</h2>
+<p>用备份文件恢复数据库，其实我们早就使用过了。在本次实验的开始，我们使用过这样一条命令：</p>
+<pre><code>source /tmp/SQL6/MySQL-06.sql
+</code></pre><p>这就是一条恢复语句，它把 MySQL-06.sql 文件中保存的<code>mysql_shiyan</code> 数据库恢复。</p>
+<p>还有另一种方式恢复数据库，但是在这之前我们先使用命令新建一个<strong>空的数据库 test</strong>：</p>
+<pre><code>mysql -u root          #因为在上一步已经退出了MySQL，现在需要重新登录
+
+CREATE DATABASE test;  #新建一个名为test的数据库
+</code></pre><p>再次 <strong>Ctrl+D</strong> 退出 MySQL，然后输入语句进行恢复，把刚才备份的 <strong>bak.sql</strong> 恢复到 <strong>test</strong> 数据库：</p>
+<pre><code>mysql -u root test &lt; bak.sql
+</code></pre><p>我们输入命令查看 test 数据库的表，便可验证是否恢复成功：</p>
+<pre><code>mysql -u root          #因为在上一步已经退出了MySQL，现在需要重新登录
+
+use test               #连接数据库test
+
+SHOW TABLES;           #查看test数据库的表
+</code></pre><p>可以看见原数据库的4张表和1个视图，现在已经恢复到 test 数据库中：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-06-08.png/wm" alt="08"></p>
+<p>再查看 employee 表的恢复情况：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-06-09.png/wm" alt="09"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

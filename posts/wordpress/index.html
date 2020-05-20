@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Wordpress &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Wordpress</h1>
+  <time datetime=2020-04-17T19:21:28Z class="post-date">Fri, Apr 17, 2020</time>
+  <h1 id="wordpress">Wordpress</h1>
+<h2 id="mysql域名更新">MySQL域名更新</h2>
+<pre><code>UPDATE wp_options SET option_value = replace(option_value, 'http://old.com', 'http://new.com') WHERE option_name = 'home' OR option_name = 'siteurl';
+UPDATE wp_posts SET guid = replace(guid, 'http://old.com','http://www.newurl');
+UPDATE wp_posts SET post_content = replace(post_content, 'http://old.com', 'http://new.com');
+UPDATE wp_postmeta SET meta_value = replace(meta_value,'http://old.com','http://new.com');
+UPDATE wp_usermeta SET meta_value = replace(meta_value, 'http://old.com', 'http://new.com');
+UPDATE wp_comments SET comment_content = REPLACE (comment_content, 'http://old.com', 'http://new.com');
+UPDATE wp_comments SET comment_author_url = REPLACE (comment_author_url, 'http://old.com','http://new.com');
+</code></pre><h2 id="备案添加">备案添加</h2>
+<p>添加到/var/www/html/wordpress/wp-content/themes/customizr/templates/parts/footer/footer_credits.php</p>
+<pre><code>  &lt;p class=&quot;credits&quot;&gt;
+      &lt;a target=&quot;_blank&quot; href=&quot;http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=17009718&quot; style=&quot;display&quot;&gt;&lt;p style=&quot;float: left; height: 20px; line-height: 20px; margin: 0px 0px 0px 5px; color: #939393;&quot;&gt;湘ICP备17009718号&lt;/p&gt;
+      &lt;/a&gt;
+</code></pre><p><img src="https://i.loli.net/2020/03/17/KGwQNL2bBZyrnvc.png" alt="image.png"></p>
+<h2 id="统计代码添加">统计代码添加</h2>
+<p>添加到/var/www/html/wordpress/wp-content/themes/customizr/templates/parts/footer/footer_credits.php</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;document.write(unescape(&quot;%3Cspan id='cnzz_stat_icon_1264093711'%3E%3C/span%3E%3Cscript src='https://s22.cnzz.com/stat.php%3Fid%3D1264093711%26show%3Dpic' type='text/javascript'%3E%3C/script%3E&quot;));&lt;/script&gt;
+</code></pre><p><img src="https://i.loli.net/2020/03/17/W6MocNOU51LGzx8.png" alt="image.png"></p>
+<h2 id="版权添加">版权添加</h2>
+<pre><code>&lt;p class=&quot;czr-copyright&quot;&gt;
+    &lt;span class=&quot;czr-copyright-text&quot;&gt;&amp;copy;&amp;nbsp;&lt;?php echo &quot;2016 - &quot;.esc_attr( date('Y') ) ?&gt;&amp;nbsp;&lt;/span&gt;&lt;a class=&quot;czr-copyright-link&quot; href=&quot; &gt;&quot; title=&quot;&lt;?php echo esc_attr( get_bloginfo() ) ?&gt;&quot;&gt;&lt;?php echo esc_attr( get_bloginfo() ) ?&gt;&lt;/a &gt;&lt;span class=&quot;czr-rights-text&quot;&gt;&lt;?php _e( 'All rights reserved', 'customizr') ?&gt;&lt;/span&gt;
+</code></pre><h2 id="nginx-ssl证书更新">nginx SSL证书更新</h2>
+<ol>
+<li>查询配置目录
+<code>nginx -t</code></li>
+<li>命名相同证书名字后替换cert目录里面的证书</li>
+<li>重启nginx</li>
+</ol>
+<h2 id="年份添加">年份添加</h2>
+<p>添加到/var/www/html/wordpress/wp-content/themes/customizr/templates/parts/footer/footer_credits.php
+<code>&lt;?php echo &quot;2016 - &quot;.esc_attr( date('Y') ) ?&gt;</code>
+<img src="https://i.loli.net/2020/03/17/EG5wFzqS4oZ7mLO.png" alt="image.png"></p>
+<h2 id="网站整体变灰">网站整体变灰</h2>
+<p>添加到functions.php</p>
+<pre><code>function hui_head_css() {
+    $styles = &quot;&quot;;
+        $styles .= &quot;html{overflow-y:scroll;filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);-webkit-filter: grayscale(100%);}&quot;;
+    if ($styles) {
+        echo &quot;&lt;style&gt;&quot; . $styles . &quot;&lt;/style&gt;&quot;;
+    }
+}
+add_action(&quot;wp_head&quot;, &quot;hui_head_css&quot;);
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

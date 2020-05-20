@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Network commands &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Network commands</h1>
+  <time datetime=2020-04-18T15:21:00Z class="post-date">Sat, Apr 18, 2020</time>
+  <h1 id="network-commands">Network commands</h1>
+<p><strong>Clone</strong> - copies a remote repository
+<strong>Fetch</strong> - Retrieves new objects and references from the remote repositiry
+<strong>Pull</strong> - Fetches and merges commits locally
+<strong>Push</strong> - Adds new objects and references to the remote repository</p>
+<h2 id="fetch">Fetch</h2>
+<p><code>git fetch &lt;repository&gt;</code></p>
+<ul>
+<li>Retrieves new objects and references from another repository</li>
+<li>Tracking branches are updated
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004182246xxlgAM.png" alt="202004182246xxlgAM"></li>
+</ul>
+<h3 id="fetching-the-latest-commits">Fetching the latest commits</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004182247j9VhVT.png" alt="202004182247j9VhVT"></p>
+<p>After <code>git fetch</code>  <code>git status</code> will inform you that your current branch is behind the tracking branch
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004182249Lc7Xf1.png" alt="202004182249Lc7Xf1"></p>
+<h2 id="pull">Pull</h2>
+<p><code>git pull [\&lt;repository&gt;] [\&lt;branch&gt;] Combines </code>git fetch<code>and</code>git merge FETCH_HEAD`</p>
+<ul>
+<li>If objects are fetched, the tracking branch is merged into the current local branch</li>
+<li>This is similar to a topic branch merging into a base branch
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004182253LWEo2M.png" alt="202004182253LWEo2M"></li>
+</ul>
+<h3 id="git-pull-merging-options"><code>git pull</code> merging options</h3>
+<p>&ndash;ff (default) - fast-forward if possibe, otherwise perform a merge commit
+&ndash;no-ff - always include amerge commit
+&ndash;ff-only - cancel instead of doing a merge commit
+&ndash;rebase [&ndash;preserve-merges] - discussed later &hellip;&hellip;.</p>
+<h3 id="pull-with-afast-forward-merge">Pull with afast-forward merge</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004182257XbF4Jr.png" alt="202004182257XbF4Jr"></p>
+<h3 id="pull-with-a-merge-commit">Pull with a merge commit</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004182258KOg7iC.png" alt="202004182258KOg7iC"></p>
+<ul>
+<li>
+<p><code>git pull</code> with a fast-forward merge
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/2020041823009P6H23.png" alt="2020041823009P6H23"></p>
+</li>
+<li>
+<p><code>git pull</code> with conflicting uncommited changes
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004182302qKQPS4.png" alt="202004182302qKQPS4"></p>
+</li>
+<li>
+<p><code>git pull</code> with safe uncommited changes
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004182303GIF4zn.png" alt="202004182303GIF4zn"></p>
+</li>
+</ul>
+<h4 id="the-tracking-branch-is-like-a-topic-branch">The tracking branch is like a topic branch</h4>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004182304ToZDYV.png" alt="202004182304ToZDYV"></p>
+<ul>
+<li><code>git pull</code> with a merge
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004182305WxYM1R.png" alt="202004182305WxYM1R"></li>
+</ul>
+<h2 id="push">Push</h2>
+<p><code>git push [-u] [&lt;reposotory&gt;] [&lt;branch&gt;]</code></p>
+<ul>
+<li>
+<p>-u Track this branch(&ndash;set-upsteam)
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/2020041823073O640U.png" alt="2020041823073O640U"></p>
+</li>
+<li>
+<p>Fetching or pulling before you push is suggested
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004182310flDyJV.png" alt="202004182310flDyJV"></p>
+</li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

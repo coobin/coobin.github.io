@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bash &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Bash</h1>
+  <time datetime=2020-04-24T10:00:11Z class="post-date">Fri, Apr 24, 2020</time>
+  <h1 id="bash">Bash</h1>
+<p><strong>运行Bash脚本的方式：</strong></p>
+<blockquote>
+<pre><code># 使用shell来执行
+$ sh hello.sh
+# 使用bash来执行
+$ bash hello.sh
+使用.来执行
+$ . ./hello.sh
+使用source来执行
+$ source hello.sh
+还可以赋予脚本所有者执行权限，允许该用户执行该脚本
+$ chmod u+rx hello.sh
+$  ./hello.sh
+</code></pre></blockquote>
+<h4 id="2使用重定向">2.使用重定向</h4>
+<p>比如我们想要<strong>保存</strong>刚刚的hello world为一个文本，那么该怎么办呢？</p>
+<p><code>&gt;</code> 这个符号是重定向,执行以下代码，就会在当前目录下生成一个my.txt。打开看看有没有hello world</p>
+<pre><code> #!/bin/bash
+ echo &quot;Hello World&quot; &gt; my.txt
+</code></pre><h4 id="3使用脚本清除varlog下的log文件">3.使用脚本清除/var/log下的log文件</h4>
+<p>首先我们看一看<code>/var/log/wtmp</code>里面有啥东西</p>
+<pre><code>cat /var/log/wtmp
+</code></pre><p>这个文件中记录了系统的一些信息，现在我们需要写一个脚本把里面的东西清空，但是保留文件</p>
+<pre><code>$ vim cleanlogs.sh
+</code></pre><p>说明：</p>
+<blockquote>
+<p><code>/dev/null</code>这个东西可以理解为一个黑洞，里面是空的（可以用cat命令看一看）</p>
+</blockquote>
+<pre><code>#!/bin/bash
+
+# 初始化一个变量
+LOG_DIR=/var/log
+
+cd $LOG_DIR
+
+cat /dev/null &gt; wtmp
+
+echo &quot;Logs cleaned up.&quot;
+
+exit
+</code></pre><p>运行脚本前，先使用 <code>sudo chmod +x cleanlogs.sh</code> 授予脚本执行权限，然后再看看 <code>/var/log/wtmp</code> 文件内是否有内容。运行此脚本后，文件的内容将被清除。</p>
+<p><strong>执行</strong></p>
+<blockquote>
+<ul>
+<li>
+<p>由于脚本中含有对系统日志文件内容的清除操作，这要求要有管理员权限.不然会报<code>permission denied</code>错误</p>
+<p>使用sudo命令调用<code>管理员权限</code>才能执行成功：</p>
+<p><code>$ sudo ./cleanlogs.sh</code></p>
+</li>
+<li>
+<p><code>#!/bin/bash</code>这一行是表示使用<code>/bin/bash</code>作为脚本的解释器，这行要放在脚本的行首并且不要省略</p>
+</li>
+<li>
+<p>脚本正文中以<code>#</code>号开头的行都是注释语句，这些行在脚本的实际执行过程中不会被执行。这些注释语句能方便我们在脚本中做一些注释或标记，让脚本更具可读性。</p>
+</li>
+</ul>
+</blockquote>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

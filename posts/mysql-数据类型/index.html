@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MySQL 数据类型 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>MySQL 数据类型</h1>
+  <time datetime=2020-04-23T06:53:37Z class="post-date">Thu, Apr 23, 2020</time>
+  <h1 id="mysql-数据类型">MySQL 数据类型</h1>
+<table>
+<thead>
+<tr>
+<th align="left">数据类型</th>
+<th align="center">大小(字节)</th>
+<th align="center">用途</th>
+<th align="center">格式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">INT</td>
+<td align="center">4</td>
+<td align="center">整数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="left">FLOAT</td>
+<td align="center">4</td>
+<td align="center">单精度浮点数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="left">DOUBLE</td>
+<td align="center">8</td>
+<td align="center">双精度浮点数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="left">ENUM</td>
+<td align="center">--</td>
+<td align="center">单选,比如性别</td>
+<td align="center">ENUM(&lsquo;a&rsquo;,&lsquo;b&rsquo;,&lsquo;c&rsquo;)</td>
+</tr>
+<tr>
+<td align="left">SET</td>
+<td align="center">--</td>
+<td align="center">多选</td>
+<td align="center">SET(&lsquo;1&rsquo;,&lsquo;2&rsquo;,&lsquo;3&rsquo;)</td>
+</tr>
+<tr>
+<td align="left">DATE</td>
+<td align="center">3</td>
+<td align="center">日期</td>
+<td align="center">YYYY-MM-DD</td>
+</tr>
+<tr>
+<td align="left">TIME</td>
+<td align="center">3</td>
+<td align="center">时间点或持续时间</td>
+<td align="center">HH:MM:SS</td>
+</tr>
+<tr>
+<td align="left">YEAR</td>
+<td align="center">1</td>
+<td align="center">年份值</td>
+<td align="center">YYYY</td>
+</tr>
+<tr>
+<td align="left">CHAR</td>
+<td align="center">0~255</td>
+<td align="center">定长字符串</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="left">VARCHAR</td>
+<td align="center">0~255</td>
+<td align="center">变长字符串</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="left">TEXT</td>
+<td align="center">0~65535</td>
+<td align="center">长文本数据</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p>整数除了 INT 外，还有 TINYINT、SMALLINT、MEDIUMINT、BIGINT。</p>
+<p><strong>CHAR 和 VARCHAR 的区别:</strong> CHAR 的长度是固定的，而 VARCHAR 的长度是可以变化的，比如，存储字符串 “abc&rdquo;，对于 CHAR(10)，表示存储的字符将占 10 个字节(包括 7 个空字符)，而同样的 VARCHAR(12) 则只占用4个字节的长度，<code>增加一个额外字节来存储字符串本身的长度</code>，12 只是最大值，当你存储的字符小于 12 时，按实际长度存储。</p>
+<p><strong>ENUM和SET的区别:</strong> ENUM 类型的数据的值，必须是定义时枚举的值的其中之一，即单选，而 SET 类型的值则可以多选。</p>
+<p><a href="http://www.cnblogs.com/bukudekong/archive/2011/06/27/2091590.html">MySQL 数据类型</a></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

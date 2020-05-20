@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VLAN &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>VLAN</h1>
+  <time datetime=2020-04-13T09:51:45Z class="post-date">Mon, Apr 13, 2020</time>
+  <h1 id="vlan">VLAN</h1>
+<ol>
+<li>将一个物理局域网在逻辑上划分成多个广播域的二层交换技术</li>
+<li><!-- raw HTML omitted -->1 VLAN = 1广播域 = 1子网<!-- raw HTML omitted --></li>
+<li>广播不会在VLAN之间转发，而是被限制在各自的VLAN中</li>
+<li>不同VLAN间的设备默认无法通信，需要三层设备才可以实现互通</li>
+</ol>
+<p>Vlan范围：0～4095，共4096个（0和4095为保留，1为默认）</p>
+<p>链路类型：干道/中继链路（Trunk）和接入链路（Access）</p>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/2p3sXq.png" alt="2p3sXq"></p>
+<p>VLAN接口：</p>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/T9SKSE.png" alt="T9SKSE"></p>
+<p>Access接口：用于和不能识别的Tag用户终端相连，或者不需要区分不同VLAN成员时使用
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/j6HGjo.png" alt="j6HGjo">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/W9U55c.png" alt="W9U55c"></p>
+<p>Trunk干道接口：
+用于连接交换机、路由器、AP以及可同时收发Tagged帧和Untagged帧的语音终端。
+允许多个VLAN的帧带Tag通过，但只允许一个VLAN的帧从该接口上发出时不带Tag（即剥离Tag）。
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/QHfFJp.png" alt="QHfFJp">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/MOd34X.png" alt="MOd34X"></p>
+<p>Hybrid接口：
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/C7g6v8.png" alt="C7g6v8">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/TFIoWi.png" alt="TFIoWi"></p>
+<p>VLAN配置：
+一般用 基于端口配置
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/5u6w4T.png" alt="5u6w4T">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/y7azdI.png" alt="y7azdI"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

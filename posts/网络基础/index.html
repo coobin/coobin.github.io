@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>网络基础 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>网络基础</h1>
+  <time datetime=2020-04-28T13:58:15Z class="post-date">Tue, Apr 28, 2020</time>
+  <h1 id="网络基础">网络基础</h1>
+<h2 id="什么是tcpip">什么是TCP/IP</h2>
+<ul>
+<li>TCP/IP 是供已连接因特网的计算机进行通信的通信协议</li>
+<li>TCP/IP 指传输控制协议/网际协议（Transmission Control Protocol / Internet Protocol）</li>
+<li>TCP/IP 定义了电子设备（比如计算机）如何连入因特网，以及数据如何在它们之间传输的标准。</li>
+</ul>
+<h3 id="在tcpip内部">在TCP/IP内部</h3>
+<p>在TCP/IP中包含一系列用于处理数据通信的协议：</p>
+<ul>
+<li>TCP（传输控制协议） - 应用程序之间的通信</li>
+<li>UDP（用户数据包协议） - 应用程序之间的简单通信</li>
+<li>IP（网际协议） - 计算机之间的通信</li>
+<li>ICMP（因特网消息控制协议） - 针对错误和状态</li>
+<li>DHCP（动态主机配置协议） - 针对动态寻址</li>
+</ul>
+<h3 id="ip是无连接的">IP是无连接的</h3>
+<ul>
+<li>IP用于计算机之间的通信</li>
+<li>IP是无连接的通信协议。它不会占用两个正在通信的计算机之间的通信线路。这样，IP就降低了对网络线路的需求。每条线可以同时满足许多不同的计算机之间的通信需要。</li>
+<li>通过IP，消息（或其他数据）被分割为小的独立的包，并通过因特网在计算机之间的传送。</li>
+<li>IP负责将每个包路由至它的目的地。</li>
+</ul>
+<h3 id="ip路由器">IP路由器</h3>
+<ul>
+<li>当一个IP包从一台计算机被发送，它会到达一个IP路由器</li>
+<li>IP路由器负责将这个包路由至它的目的地，直接的或者通过其他的路由器。</li>
+<li>在一个相同的通信中，一个包所经由的路径可能会和其他的包不同。而路由器负责根据通信量、网络中的错误或者其他参数来进行正确地寻址。</li>
+</ul>
+<h3 id="tcpip">TCP/IP</h3>
+<ul>
+<li>TCP/IP意味着TCP和IP在一起协同工作。</li>
+<li>TCP负责应用软件和网络软件之间的通信。</li>
+<li>IP负责计算机之间的通信。</li>
+<li>TCP负责将数据分割并装入IP包，然后在它们到达的时候重新组合它们。</li>
+<li>IP负责将包发送至接受者。</li>
+</ul>
+<h2 id="网络类型">网络类型</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/sbfCW2.png" alt="sbfCW2"></p>
+<h2 id="协议">协议</h2>
+<ul>
+<li>决定数据的格式和传输的一组规则</li>
+</ul>
+<h2 id="网络的性能指标">网络的性能指标</h2>
+<ul>
+<li>带宽(Bandwidth)
+描述在单位时间内传输的数据量
+以bps(bit per second,比特每秒)为单位</li>
+<li>延迟(delay)
+描述数据传输所经历的时间
+以ms(毫秒)为单位</li>
+</ul>
+<h2 id="分层模型">分层模型</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/8nE2c8.png" alt="8nE2c8">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/488vxr.png" alt="488vxr">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/oAuXFq.png" alt="oAuXFq">
+<img src="@attachment/%E7%A7%91%E6%9D%A5%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AE%AF%E5%8D%8F%E8%AE%AE%E5%9B%BE2019%E7%89%88.pdf" alt=""></p>
+<h2 id="封装和解封encapsulate--de-encapsulate">封装和解封:encapsulate &amp; de-encapsulate</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/79abi6.png" alt="79abi6"></p>
+<ul>
+<li>
+<p>数据发送,需要逐层向下传递数据,并添加相关头部或尾部的过程称为封装(打包)</p>
+</li>
+<li>
+<p>数据接收,需要逐层向下传递数据,称为解封(拆包)
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/SEIfMa.png" alt="SEIfMa"></p>
+</li>
+<li>
+<p>OSI把每一层数据称为PDU(Protocol Data Unit,协议数据单元)
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/J3Wxte.png" alt="J3Wxte"></p>
+</li>
+<li>
+<p>TCP/IP根据不同层分别使用了段、包、帧、比特
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/VaM08h.png" alt="VaM08h"></p>
+</li>
+</ul>
+<h3 id="过程">过程</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/3IO7rZ.png" alt="3IO7rZ">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/K1dkoQ.png" alt="K1dkoQ"></p>
+<h2 id="常见协议">常见协议</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/4gvNvq.png" alt="4gvNvq"></p>
+<h2 id="应用层">应用层</h2>
+<h3 id="应用层概述">应用层概述</h3>
+<ul>
+<li>直接为应用程序提供网络服务
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/P7ZmCg.png" alt="P7ZmCg"></li>
+</ul>
+<h3 id="dnsdomain-name-system域名解析系统">DNS:Domain Name System,域名解析系统</h3>
+<ul>
+<li>建立IP地址与域名之间的映射关系</li>
+<li>将域名解析为IP地址</li>
+<li>将IP地址解析为域名
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/vV2ygp.png" alt="vV2ygp">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/r0FAnK.png" alt="r0FAnK"></li>
+</ul>
+<h4 id="windows相关命令">Windows相关命令</h4>
+<p>nslookup:DNS调试工具
+ipconfig /displaydns:查看DNS缓存
+ipconfig /flushdns:清空DNS缓存</p>
+<h3 id="http和httpshypertext-transfer-protocol超文本传输协议">HTTP和HTTPS:Hypertext Transfer Protocol,超文本传输协议</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/346r0F.png" alt="346r0F"></p>
+<h3 id="smtp与pop3">SMTP与POP3</h3>
+<ul>
+<li>SMTP:Simple Mail Transfer Protocol,简单邮件传输协议,用于发送邮件.</li>
+<li>POP3:Post Office Protocol v3,邮局协议版本3,用于接收邮件.</li>
+<li>IMAP:Internet Message Access Protocol,互联网邮件访问协议,类似POP3,功能更多.
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/o6BjMz.png" alt="o6BjMz"></li>
+</ul>
+<h3 id="telnet">Telnet</h3>
+<ul>
+<li>Terminal Network,终端网络</li>
+<li>一种远程管理协议,可以用来远程管理:网络设备、服务器、数据库等.</li>
+<li>借助终端工具管理会话,常用终端工具有:SecureCRT、Putty、Xshell</li>
+<li>明文数据传输,不安全(建议使用SSH)</li>
+</ul>
+<h3 id="ftp和tftp">FTP和TFTP</h3>
+<h4 id="ftp">FTP</h4>
+<ul>
+<li>File Transfer Protocol,文件传输协议.</li>
+<li>提供可靠的文件传输服务</li>
+<li>具有认证、权限等功能</li>
+</ul>
+<h4 id="tftp">TFTP</h4>
+<ul>
+<li>Trivial File Transfer Protocol,简单文件传输协议</li>
+<li>提供不可靠的文件传输服务</li>
+<li>常用于网路设备的配置文件和系统文件传输</li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

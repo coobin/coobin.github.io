@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>配置思科交换机Telnet功能远程登录管理功能 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>配置思科交换机Telnet功能远程登录管理功能</h1>
+  <time datetime=2020-04-09T14:14:06Z class="post-date">Thu, Apr 9, 2020</time>
+  <h1 id="配置思科交换机telnet功能远程登录管理功能">配置思科交换机Telnet功能远程登录管理功能</h1>
+<p>摘要：
+在配置一台新的交换机时，一项最基本的配置就是Telnet远程登录，以方便管理员通过远程登录对交换机进行管理和操作，只要配置好Telnet服务，后续一些其它配置都可以直接通过远程登录来进行，而不必在现场进行，可以省去不必要人工费用那，本文为大家讲解思科交换机基本的Telnet配置。</p>
+<h3 id="工具原料">工具/原料：</h3>
+<ul>
+<li>Cisco Packet Tracer 7.0模拟软件</li>
+<li>PC一台（用于管理交换机和Telnet登录连接）</li>
+<li>交换机一台，可以通过PC连接Console口进行配置。</li>
+</ul>
+<h3 id="介绍">介绍：</h3>
+<p>Telnet 协议是TCP/IP协议簇的一员，是Internet远程登录服务的标准协议和主要方式。它是属于应用层的协议，采用客户端/服务器模型，使用TCP- 23号端口为用户提供在本地主机上登录远程设备的服务</p>
+<h3 id="配置过程">配置过程：</h3>
+<h4 id="一组网需求">一、组网需求</h4>
+<p>通过Telnet功能远程登录管理设备。</p>
+<h4 id="二组网拓扑">二、组网拓扑</h4>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/29NOzg.jpg" alt="29NOzg"></p>
+<h4 id="三配置要点">三、配置要点</h4>
+<p>1、需要给交换机配置一个管理IP，如果PC与交换机不是同一个网段，需要给交换机配置一个默认网关
+2、需要配置一个enable密码及telnet密码</p>
+<h4 id="四配置步骤">四、配置步骤</h4>
+<p>通过Console线 登陆交换机，开启交换机的远程登入密码及配置enable密码</p>
+<h5 id="1配置交换机管理ip">1)、配置交换机管理IP</h5>
+<p>Switch&gt;enable                                                               &mdash;&mdash;&gt;进入特权模式</p>
+<p>Switch#configure terminal                                             &mdash;&mdash;&gt;进入全局配置模式</p>
+<p>Switch(config)#interface vlan 1                                      &mdash;&mdash;&gt;进入vlan 1接口</p>
+<p>Switch(config-if)#ip address 192.168.1.1 255.255.255.0 &mdash;&mdash;&gt;为vlan 1接口上设置管理ip</p>
+<p>Switch(config-if)#no shutdown                                      &mdash;&mdash;&gt;开启vlan 1端口</p>
+<p>Switch(config-if)#exit                                                     &mdash;&mdash;&gt;退回到全局配置模式</p>
+<h5 id="2配置telnet密码">2)、配置telnet密码</h5>
+<p><strong>需求一：telnet时使用密码登入交换机</strong></p>
+<p>Switch(config)#line vty 0 4                                             &mdash;&mdash;&gt;  进入telnet密码配置模式，0 4表示允许共5个用户同时telnet登入到交换机</p>
+<p>Switch(config-line)#password ruijie                                &mdash;&mdash;&gt; 将telnet密码设置为ruijie</p>
+<p>Switch(config-line)#login                                               &mdash;&mdash;&gt;启用需输入密码才能telnet成功</p>
+<p>Switch(config-line)#exit                                                 &mdash;&mdash;&gt;  回到全局配置模式</p>
+<p>Switch(config)#enable password  ruijie 或者 enable secret ruijie   &mdash;&mdash;&gt;配置进入特权模式的密码为ruijie，区别：前者show查询明码显示，后者加密，推荐第二种
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/pUwtiY.jpg" alt="pUwtiY"></p>
+<p>Switch(config)#end                                                        &mdash;&mdash;&gt;退出到特权模式</p>
+<p>Switch#write                                                                  &mdash;&mdash;&gt;确认配置正确，保存配置</p>
+<p>确认telnet配置是否正确</p>
+<p>1)在开始&ndash;运行中输入cmd命令，点击”确定“，在弹出的CMD命令行中，输入telnet  192.168.1.1
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/zyc46P.jpg" alt="zyc46P"></p>
+<p>2)回车后，输入line vty 所配置的密码，进入设备的用户模式，出现Ruijie&gt;模式
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/zXxWvT.jpg" alt="zXxWvT"></p>
+<p>3)在Ruijie&gt;模式下输入enable后，提示输入特权密码，输入正确的密码后回车，进入特权模式
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/lFJNar.jpg" alt="lFJNar"></p>
+<p><strong>需求二：telnet时使用用户名及密码登入交换机</strong></p>
+<p>Switch(config)#line vty 0 4                                            &mdash;&mdash;&gt;进入telnet密码配置模式，0 4表示允许共5个用户同时telnet登入到交换机</p>
+<p>Switch(config-line)#login local                                      &mdash;&mdash;&gt;启用telnet时使用本地用户和密码功能</p>
+<p>Switch(config-line)#exit                                                 &mdash;&mdash;&gt;回到全局配置模式</p>
+<p>Switch(config)#username admin password ruijie          &mdash;&mdash;&gt;配置远程登入的用户名为admin，密码为ruijie</p>
+<p>Switch(config)#enable password  ruijie 或者 enable secret ruijie &mdash;&mdash;&gt;配置进入特权模式的密码为ruijie</p>
+<p>Switch(config)#end                                                        &mdash;&mdash;&gt;退出到特权模式</p>
+<p>Switch#write                                                                  &mdash;&mdash;&gt;确认配置正确，保存配置</p>
+<pre><code>   确认telnet配置是否正确
+</code></pre>
+<p>1)、在开始&ndash;运行中输入cmd命令，点击”确定“，在弹出的CMD命令行中，输入telnet  192.168.1.1
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/xULm98.jpg" alt="xULm98"></p>
+<p>2)、回车后，出现输入用户和密码，密码输入时隐藏不显示。输入正确的密码后回车，进入设备的用户模式，出现Switch&gt;模式
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/6h5lyN.jpg" alt="6h5lyN"></p>
+<p>3)、在Ruijie&gt;模式下输入enable后，提示输入特权密码，输入正确的密码后回车，进入特权模式
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/CV5XGq.jpg" alt="CV5XGq"></p>
+<h4 id="五功能验证">五、功能验证</h4>
+<p>查看当前用户登入交换机情况
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/VUYVGa.jpg" alt="VUYVGa"></p>
+<p>如上图，有两个用户登入交换机，一个是通过console线登入，另外一个是通过telnet登入交换机，登入用户的IP地址是192.168.1.2。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

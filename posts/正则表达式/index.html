@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>正则表达式 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>正则表达式</h1>
+  <time datetime=2020-05-11T12:58:03Z class="post-date">Mon, May 11, 2020</time>
+  <h1 id="正则表达式">正则表达式</h1>
+<p>一个正则表达式通常被称为一个模式（<strong>pattern</strong>），为用来描述或者匹配一系列符合某个句法规则的字符串。</p>
+<h4 id="选择">选择</h4>
+<p><code>|</code>竖直分隔符表示选择，例如&quot;boy|girl&quot;可以匹配&quot;boy&quot;或者&quot;girl&rdquo;</p>
+<h4 id="数量限定">数量限定</h4>
+<p>数量限定除了我们举例用的<code>*</code>,还有<code>+</code>加号,<code>?</code>问号,如果在一个模式中不加数量限定符则表示出现一次且仅出现一次：</p>
+<ul>
+<li><code>+</code>表示前面的字符必须出现至少一次(1 次或多次)，例如，&ldquo;goo+gle&rdquo;,可以匹配&quot;gooogle&rdquo;,&ldquo;goooogle&quot;等；</li>
+<li><code>?</code>表示前面的字符最多出现一次(0 次或 1 次)，例如，&ldquo;colou?r&rdquo;,可以匹配&quot;color&quot;或者&quot;colour&rdquo;;</li>
+<li><code>*</code>星号代表前面的字符可以不出现，也可以出现一次或者多次（0 次、或 1 次、或多次），例如，“0*42”可以匹配 42、042、0042、00042 等。</li>
+</ul>
+<h4 id="范围和优先级">范围和优先级</h4>
+<p><code>()</code>圆括号可以用来定义模式字符串的范围和优先级，这可以简单的理解为是否将括号内的模式串作为一个整体。例如，&ldquo;gr(a|e)y&quot;等价于&quot;gray|grey&rdquo;，（这里体现了优先级，竖直分隔符用于选择 a 或者 e 而不是 gra 和 ey），&quot;(grand)?father&quot;匹配 father 和 grandfather（这里体现了范围，<code>?</code>将圆括号内容作为一个整体匹配）。</p>
+<h4 id="语法部分">语法（部分）</h4>
+<p>正则表达式有多种不同的风格，下面列举一些常用的作为 PCRE 子集的适用于<code>perl</code>和<code>python</code>编程语言及<code>grep</code>或<code>egrep</code>的正则表达式匹配规则：(<strong>由于 markdown 表格解析的问题，下面的竖直分隔符用全角字符代替，实际使用时请换回半角字符</strong>)</p>
+<blockquote>
+<p>PCRE（Perl Compatible Regular Expressions 中文含义：perl 语言兼容正则表达式）是一个用 C 语言编写的正则表达式函数库，由菲利普.海泽(Philip Hazel)编写。PCRE 是一个轻量级的函数库，比 Boost 之类的正则表达式库小得多。PCRE 十分易用，同时功能也很强大，性能超过了 POSIX 正则表达式库和一些经典的正则表达式库。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\</td>
+<td>**将下一个字符标记为一个特殊字符、或一个原义字符。**例如，“n”匹配字符“n”。“\n”匹配一个换行符。序列“\\”匹配“\”而“\(”则匹配“(”。</td>
+</tr>
+<tr>
+<td>^</td>
+<td><strong>匹配输入字符串的开始位置。</strong></td>
+</tr>
+<tr>
+<td>$</td>
+<td><strong>匹配输入字符串的结束位置。</strong></td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>n 是一个非负整数。<strong>匹配确定的 n 次</strong>。例如，“o{2}”不能匹配“Bob”中的“o”，但是能匹配“food”中的两个 o。</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>n 是一个非负整数。<strong>至少匹配 n 次</strong>。例如，“o{2,}”不能匹配“Bob”中的“o”，但能匹配“foooood”中的所有 o。“o{1,}”等价于“o+”。“o{0,}”则等价于“o*”。</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>m 和 n 均为非负整数，其中 n&lt;=m。**最少匹配 n 次且最多匹配 m 次。**例如，“o{1,3}”将匹配“fooooood”中的前三个 o。“o{0,1}”等价于“o?”。请注意在逗号和两个数之间不能有空格。</td>
+</tr>
+<tr>
+<td>*</td>
+<td><strong>匹配前面的子表达式零次或多次</strong>。例如，zo*能匹配“z”、“zo”以及“zoo”。*等价于{0,}。</td>
+</tr>
+<tr>
+<td>+</td>
+<td><strong>匹配前面的子表达式一次或多次</strong>。例如，“zo+”能匹配“zo”以及“zoo”，但不能匹配“z”。+等价于{1,}。</td>
+</tr>
+<tr>
+<td>?</td>
+<td><strong>匹配前面的子表达式零次或一次</strong>。例如，“do(es)?”可以匹配“do”或“does”中的“do”。?等价于{0,1}。</td>
+</tr>
+<tr>
+<td>?</td>
+<td>当该字符紧跟在任何一个其他限制符（*,+,?，{n}，{n,}，{n,m}）后面时，匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串“oooo”，“o+?”将匹配单个“o”，而“o+”将匹配所有“o”。</td>
+</tr>
+<tr>
+<td>.</td>
+<td><strong>匹配除“\n”之外的任何单个字符</strong>。要匹配包括“\n”在内的任何字符，请使用像“(.｜\n)”的模式。</td>
+</tr>
+<tr>
+<td>(pattern)</td>
+<td><strong>匹配 pattern 并获取这一匹配的子字符串</strong>。该子字符串用于向后引用。要匹配圆括号字符，请使用“\(”或“\)”。</td>
+</tr>
+<tr>
+<td>x ｜ y</td>
+<td><strong>匹配 x 或 y</strong>。例如，“z ｜ food”能匹配“z”或“food”。“(z ｜ f)ood”则匹配“zood”或“food”。</td>
+</tr>
+<tr>
+<td>[xyz]</td>
+<td>字符集合（character class）。<strong>匹配所包含的任意一个字符</strong>。例如，“[abc]”可以匹配“plain”中的“a”。其中特殊字符仅有反斜线\保持特殊含义，用于转义字符。其它特殊字符如星号、加号、各种括号等均作为普通字符。脱字符^如果出现在首位则表示负值字符集合；如果出现在字符串中间就仅作为普通字符。<strong>连字符 <code>-</code> 如果出现在字符串中间表示字符范围描述；如果出现在首位则仅作为普通字符。</strong></td>
+</tr>
+<tr>
+<td>[^xyz]</td>
+<td>排除型（negate）字符集合。**匹配未列出的任意字符。**例如，“[^abc]”可以匹配“plain”中的“plin”。</td>
+</tr>
+<tr>
+<td>[a-z]</td>
+<td>字符范围。**匹配指定范围内的任意字符。**例如，“[a-z]”可以匹配“a”到“z”范围内的任意小写字母字符。</td>
+</tr>
+<tr>
+<td>[^a-z]</td>
+<td>排除型的字符范围。<strong>匹配任何不在指定范围内的任意字符</strong>。例如，“[^a-z]”可以匹配任何不在“a”到“z”范围内的任意字符。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="优先级">优先级</h4>
+<p>优先级为从上到下从左到右，依次降低：</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\</td>
+<td>转义符</td>
+</tr>
+<tr>
+<td>(), (?:), (?=), []</td>
+<td>括号和中括号</td>
+</tr>
+<tr>
+<td>*、+、?、{n}、{n,}、{n,m}</td>
+<td>限定符</td>
+</tr>
+<tr>
+<td>^、$、\任何元字符</td>
+<td>定位点和序列</td>
+</tr>
+<tr>
+<td>｜</td>
+<td>选择</td>
+</tr>
+</tbody>
+</table>
+<p>更多正则表达式的内容可以参考以下链接：</p>
+<ul>
+<li><a href="http://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">正则表达式 wiki</a></li>
+<li><a href="http://www.greenend.org.uk/rjk/tech/regexp.html">几种正则表达式引擎的语法差异</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Comparison_of_regular_expression_engines">各语言各平台对正则表达式的支持</a></li>
+</ul>
+<p>regex 的思导图：</p>
+<p><img src="https://doc.shiyanlou.com/linux_base/RegularExpression.png/wm" alt=""></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

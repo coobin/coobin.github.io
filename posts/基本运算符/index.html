@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>基本运算符 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>基本运算符</h1>
+  <time datetime=2020-04-24T10:06:17Z class="post-date">Fri, Apr 24, 2020</time>
+  <h1 id="基本运算符">基本运算符</h1>
+<h2 id="算数运算符">算数运算符</h2>
+<p><img src="https://doc.shiyanlou.com/document-uid8797labid3895timestamp1554172034738.png/wm" alt="5-1-1"></p>
+<pre><code>$vim test.sh
+</code></pre><pre><code>#!/bin/bash
+
+a=10
+b=20
+
+val=`expr $a + $b`
+echo &quot;a + b : $val&quot;
+
+val=`expr $a - $b`
+echo &quot;a - b : $val&quot;
+
+val=`expr $a \* $b`
+echo &quot;a * b : $val&quot;
+
+val=`expr $b / $a`
+echo &quot;b / a : $val&quot;
+
+val=`expr $b % $a`
+echo &quot;b % a : $val&quot;
+
+if [ $a == $b ]
+then
+   echo &quot;a == b&quot;
+fi
+if [ $a != $b ]
+then
+   echo &quot;a != b&quot;
+fi
+</code></pre><p>运行</p>
+<pre><code>$bash test.sh
+a + b : 30
+a - b : -10
+a * b : 200
+b / a : 2
+b % a : 0
+a != b
+</code></pre><blockquote>
+<ul>
+<li>原生bash不支持简单的数学运算，但是可以通过其他命令来实现，例如 <code>awk</code> 和 <code>expr</code>，<code>expr</code> 最常用。</li>
+<li><code>expr</code> 是一款表达式计算工具，使用它能完成表达式的求值操作。</li>
+<li>注意使用的反引号（esc键下边）</li>
+<li>表达式和运算符之间要有空格<code>$a + $b</code>写成<code>$a+$b</code>不行</li>
+<li>条件表达式要放在方括号之间，并且要有空格<code>[ $a == $b ]</code>写成<code>[$a==$b]</code>不行</li>
+<li>乘号（<code>*</code>）前边必须加反斜杠（<code>\</code>)才能实现乘法运算</li>
+</ul>
+</blockquote>
+<h2 id="关系运算符">关系运算符</h2>
+<p>关系运算符只支持数字，不支持字符串，除非字符串的值是数字。</p>
+<p><img src="https://doc.shiyanlou.com/document-uid8797labid3895timestamp1554172035555.png/wm" alt="5-2-1"></p>
+<p>实例</p>
+<pre><code>vim test2.sh
+</code></pre><pre><code>#!/bin/bash
+
+a=10
+b=20
+
+if [ $a -eq $b ]
+then
+   echo &quot;$a -eq $b : a == b&quot;
+else
+   echo &quot;$a -eq $b: a != b&quot;
+fi
+</code></pre><p>运行</p>
+<pre><code>$bash test2.sh
+10 -eq 20: a != b
+</code></pre><h2 id="逻辑运算符">逻辑运算符</h2>
+<p><img src="https://doc.shiyanlou.com/document-uid8797labid3895timestamp1554172035321.png/wm" alt="5-3-1"></p>
+<p>实例</p>
+<pre><code>#!/bin/bash
+a=10
+b=20
+
+if [[ $a -lt 100 &amp;&amp; $b -gt 100 ]]
+then
+   echo &quot;return true&quot;
+else
+   echo &quot;return false&quot;
+fi
+
+if [[ $a -lt 100 || $b -gt 100 ]]
+then
+   echo &quot;return true&quot;
+else
+   echo &quot;return false&quot;
+fi
+</code></pre><p>结果</p>
+<pre><code>return false
+return true
+</code></pre><h2 id="字符串运算符">字符串运算符</h2>
+<p><img src="https://doc.shiyanlou.com/courses/uid600404-20191105-1572939096824/wm" alt="图片描述"></p>
+<pre><code>#!/bin/bash
+
+a=&quot;abc&quot;
+b=&quot;efg&quot;
+
+if [ $a = $b ]
+then
+   echo &quot;$a = $b : a == b&quot;
+else
+   echo &quot;$a = $b: a != b&quot;
+fi
+if [ -n $a ]
+then
+   echo &quot;-n $a : The string length is not 0&quot;
+else
+   echo &quot;-n $a : The string length is  0&quot;
+fi
+if [ $a ]
+then
+   echo &quot;$a : The string is not empty&quot;
+else
+   echo &quot;$a : The string is empty&quot;
+fi
+</code></pre><p>结果</p>
+<pre><code>abc = efg: a != b
+-n abc : The string length is not 0
+abc : The string is not empty
+</code></pre><h2 id="文件测试运算符">文件测试运算符</h2>
+<p><img src="https://doc.shiyanlou.com/document-uid8797labid3895timestamp1554172035089.png/wm" alt="5-5-1"></p>
+<p>实例</p>
+<pre><code>#!/bin/bash
+
+file=&quot;/home/shiyanlou/test.sh&quot;
+if [ -r $file ]
+then
+   echo &quot;The file is readable&quot;
+else
+   echo &quot;The file is not readable&quot;
+fi
+if [ -e $file ]
+then
+   echo &quot;File exists&quot;
+else
+   echo &quot;File not exists&quot;
+fi
+</code></pre><p>结果</p>
+<pre><code>The file is readable
+File exists
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Nginx 架构与进程 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Nginx 架构与进程</h1>
+  <time datetime=2020-05-06T10:37:00Z class="post-date">Wed, May 6, 2020</time>
+  <h1 id="nginx-架构与进程">Nginx 架构与进程</h1>
+<h2 id="nginx-架构">Nginx 架构</h2>
+<p>Nginx 的代码是由一个 <strong>核心</strong> 和一系列的 <strong>模块</strong> 组成。</p>
+<h4 id="核心">核心</h4>
+<p>核心的功能如下：</p>
+<ul>
+<li>主要用于提供 WebServer 的基本功能；</li>
+<li>实现 Web 和 Mail 反向代理的功能；</li>
+<li>还用于启用网络协议；</li>
+<li>创建必要的运行时环境以及确保不同的模块之间平滑地进行交互。</li>
+</ul>
+<h4 id="模块">模块</h4>
+<p>大多跟协议相关的功能和应用特有的功能都是由 Nginx 的模块实现的。</p>
+<p>这些功能模块大致可以分为：事件模块、阶段性处理器、输出过滤器、变量处理器、协议、upstream 和负载均衡几个类别，这些功能模块共同组成了 Nginx 的 http 功能。</p>
+<p>其中：</p>
+<ul>
+<li>事件模块主要用于提供 OS 独立的（不同操作系统的事件机制有所不同）事件通知机制，如 kqueue 或 epoll 等。</li>
+<li>协议模块则负责实现 Nginx 通过 HTTP、TLS/SSL、SMTP、POP3 以及 IMAP 与对应的客户端建立会话。</li>
+</ul>
+<blockquote>
+<p>在 Nginx 内部，进程间的通信是通过模块的 <code>pipeline</code> 或 <code>chain</code> 实现的。</p>
+</blockquote>
+<p>每一个功能或操作都由一个模块来实现。例如：压缩、通过 FastCGI 或 uwsgi 协议与 upstream 服务器通信、以及与 memcached 建立会话等。</p>
+<h2 id="nginx-进程">Nginx 进程</h2>
+<p>首先我们要知道，Nginx 是以多进程的方式来工作的，当然 Nginx 也是支持多线程的方式的。</p>
+<p>Nginx 启动后，在 unix 系统中会以 daemon （守护进程）的方式在后台运行，后台进程包含一个 master 进程和多个 worker 进程（你可以理解为工人和管理员）。</p>
+<p>这里就主要讲解 Nginx 的多进程模式。</p>
+<h4 id="nginx-处理连接的过程">Nginx 处理连接的过程</h4>
+<p>Nginx 不会为每个连接派生进程或线程，而是由 worker 进程通过监听共享套接字接收新请求，并且使用高效的循环来处理数千个连接。</p>
+<p>Nginx 不使用仲裁器或分发器来分发连接，这个工作由操作系统内核机制完成。</p>
+<p>监听套接字在启动时就完成初始化，worker 进程通过这些套接字接收、读取请求和输出响应。</p>
+<h4 id="master-进程">master 进程</h4>
+<p>当 Nginx 在启动后，会有一个 <code>master</code> 进程和多个 <code>worker</code> 进程。</p>
+<p>master 进程主要用来管理 worker 进程，master 要做的就是：接收来自外界的信号，向各 worker 进程发送信号，监控 worker 进程的运行状态，当 worker 进程退出后（异常情况下），会自动重新启动新的 worker 进程。</p>
+<p>master 进程主要完成如下工作：</p>
+<ul>
+<li>读取并验证配置信息；</li>
+<li>创建、绑定及关闭套接字；</li>
+<li>启动、终止 worker 进程及维护 worker 进程的个数；</li>
+<li>无须中止服务而重新配置工作；</li>
+<li>控制非中断式程序升级，启用新的二进制程序并在需要时回滚至老版本；</li>
+<li>重新打开日志文件；</li>
+<li>编译嵌入式 Perl 脚本。</li>
+</ul>
+<h4 id="worker-进程">worker 进程</h4>
+<p>对于基本的网络事件，Nginx 则是放在 worker 进程中来处理。多个 worker 进程之间是对等的，他们同等竞争来自客户端的请求，各进程互相之间是独立的。</p>
+<p>一个请求，只可能在一个 worker 进程中处理，一个 worker 进程，不可能处理其它进程的请求（一对一）。</p>
+<p>然而 Nginx 没有专门地仲裁或连接分布的 worker，这项工作是由操作系统内核机制完成的。在启动时，创建一组初始的监听套接字，HTTP 请求和响应之时，worker 连续接收、读取和写入套接字。</p>
+<p>worker 进程主要完成如下工作：</p>
+<ul>
+<li>接收、传入并处理来自客户端的连接</li>
+<li>提供反向代理及过滤功能</li>
+<li>nginx 任何能完成的其它任务</li>
+</ul>
+<h4 id="nginx-的进程模型">Nginx 的进程模型</h4>
+<p><img src="https://doc.shiyanlou.com/md0417411architecture.png/wm" alt="enter image description here"></p>
+<p>上图是 Nginx 的进程模型，下面我们会简单讲解图中不同部分的含义：</p>
+<p>既然 worker 进程之间是平等的，每个进程，处理请求的机会也是一样的。当我们提供 <code>80</code> 端口的 <code>http</code> 服务时，一个连接请求过来，每个进程都有可能处理这个连接。那么问题来了，到底最后怎样处理，是由什么决定的呢？我们来看一看一个完整的请求是怎样通过互相的协作来实现的：</p>
+<p>（1）首先，每个 worker 进程都是从 master 进程 <code>fork</code> 过来，在 master 进程里面，先建立好需要 <code>listen</code> 的 <code>socket</code>（<code>listenfd</code>）之后，然后再 <code>fork</code> 出多个 worker 进程。</p>
+<p>（2）所有 worker 进程的 <code>listenfd</code> 会在新连接到来时变得可读，为保证只有一个进程处理该连接，所有 worker 进程会在注册 <code>listenfd</code> 读事件前抢 <code>accept_mutex</code>，抢到互斥锁的那个进程注册 <code>listenfd</code> 读事件，然后在读事件里调用 <code>accept</code> 接受该连接。</p>
+<p>（3）当一个 worker 进程在 <code>accept</code> 这个连接之后，就开始读取请求、解析请求、处理请求。产生数据后，再返回给客户端，最后才断开连接，这样一个完整的请求就是这样的了。</p>
+<p>我们可以看到：一个请求，完全由 worker 进程来处理，而且只在一个 worker 进程中处理。</p>
+<p>也许你还有个疑问，那就是 Nginx 采用多 worker 的方式来处理请求，每个 worker 里面只有一个主线程，那能够处理的并发数很有限啊，多少个 worker 就能处理多少个并发，何来高并发呢？这就是 Nginx 的高明之处，Nginx 采用了 <strong>异步非阻塞</strong> 的方式来处理请求，也就是说，Nginx 是可以同时处理成千上万个请求的。</p>
+<blockquote>
+<p>这里补充一下异步非阻塞的概念：</p>
+<p>异步的概念是和同步相对的，也就是不同事件之间不是同时发生的。</p>
+<p>非阻塞的概念是和阻塞对应的，阻塞是事件按顺序执行，每一事件都要等待上一事件的完成，而非阻塞是如果事件没有准备好，这个事件可以直接返回，过一段时间再进行处理询问，这期间可以做其他事情。</p>
+</blockquote>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

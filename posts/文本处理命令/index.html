@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>文本处理命令 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>文本处理命令</h1>
+  <time datetime=2020-04-28T14:00:05Z class="post-date">Tue, Apr 28, 2020</time>
+  <h1 id="文本处理命令">文本处理命令</h1>
+<h2 id="tr">tr</h2>
+<p>tr 命令可以用来删除一段文本信息中的某些文字。或者将其进行转换。</p>
+<h4 id="使用方式">使用方式：</h4>
+<pre><code>tr [option] ‘[SET1]’ [‘[SET2]’]
+</code></pre><h4 id="常用的选项有">常用的选项有：</h4>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-d</code></td>
+<td>删除和 set1 匹配的字符，注意不是全词匹配也不是按字符顺序匹配</td>
+</tr>
+<tr>
+<td><code>-s</code></td>
+<td>去除 set1 指定的在输入文本中连续并重复的字符</td>
+</tr>
+</tbody>
+</table>
+<h4 id="操作举例">操作举例：</h4>
+<pre><code># 删除 &quot;hello shiyanlou&quot; 中所有的'o','l','h'
+$ echo 'hello shiyanlou' | tr -d 'olh'
+# 将&quot;hello&quot; 中的ll,去重为一个l
+$ echo 'hello' | tr -s 'l'
+# 将输入文本，全部转换为大写或小写输出
+$ echo 'input some text here' | tr '[:lower:]' '[:upper:]'
+# 上面的'[:lower:]' '[:upper:]'你也可以简单的写作'[a-z]' '[A-Z]',当然反过来将大写变小写也是可以的
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid337timestamp1532414877239.png/wm" alt="此处输入图片的描述"></p>
+<p>更多 tr 的使用，你可以使用<code>--help</code>或者<code>man tr</code>获得。</p>
+<h2 id="col">col</h2>
+<p>col 命令可以将<code>Tab</code>换成对等数量的空格键，或反转这个操作。</p>
+<h4 id="使用方式-1">使用方式：</h4>
+<pre><code>col [option]
+</code></pre><h4 id="常用的选项有-1">常用的选项有：</h4>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-x</code></td>
+<td>将<code>Tab</code>转换为空格</td>
+</tr>
+<tr>
+<td><code>-h</code></td>
+<td>将空格转换为<code>Tab</code>（默认选项）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="操作举例-1">操作举例：</h4>
+<pre><code># 查看 /etc/protocols 中的不可见字符，可以看到很多 ^I ，这其实就是 Tab 转义成可见字符的符号
+$ cat -A /etc/protocols
+# 使用 col -x 将 /etc/protocols 中的 Tab 转换为空格,然后再使用 cat 查看，你发现 ^I 不见了
+$ cat /etc/protocols | col -x | cat -A
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid337timestamp1532414886554.png/wm" alt="此处输入图片的描述"></p>
+<h2 id="join">join</h2>
+<p>将两个文件中包含相同内容的那一行合并在一起。</p>
+<h4 id="使用方式-2">使用方式：</h4>
+<pre><code>join [option]... file1 file2
+</code></pre><h4 id="常用的选项有-2">常用的选项有：</h4>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-t</code></td>
+<td>指定分隔符，默认为空格</td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>忽略大小写的差异</td>
+</tr>
+<tr>
+<td><code>-1</code></td>
+<td>指明第一个文件要用哪个字段来对比，默认对比第一个字段</td>
+</tr>
+<tr>
+<td><code>-2</code></td>
+<td>指明第二个文件要用哪个字段来对比，默认对比第一个字段</td>
+</tr>
+</tbody>
+</table>
+<h4 id="操作举例-2">操作举例：</h4>
+<pre><code>$ cd /home/shiyanlou
+# 创建两个文件
+$ echo '1 hello' &gt; file1
+$ echo '1 shiyanlou' &gt; file2
+$ join file1 file2
+# 将/etc/passwd与/etc/shadow两个文件合并，指定以':'作为分隔符
+$ sudo join -t':' /etc/passwd /etc/shadow
+# 将/etc/passwd与/etc/group两个文件合并，指定以':'作为分隔符, 分别比对第4和第3个字段
+$ sudo join -t':' -1 4 /etc/passwd -2 3 /etc/group
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid337timestamp1532414902443.png/wm" alt="此处输入图片的描述"> <img src="https://doc.shiyanlou.com/document-uid735639labid337timestamp1532414948354.png/wm" alt="此处输入图片的描述"></p>
+<h2 id="paste">paste</h2>
+<p><code>paste</code>这个命令与<code>join</code> 命令类似，它是在不对比数据的情况下，简单地将多个文件合并一起，以<code>Tab</code>隔开。</p>
+<h4 id="使用方式-3">使用方式：</h4>
+<pre><code>paste [option] file...
+</code></pre><h4 id="常用的选项有-3">常用的选项有：</h4>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-d</code></td>
+<td>指定合并的分隔符，默认为 Tab</td>
+</tr>
+<tr>
+<td><code>-s</code></td>
+<td>不合并到一行，每个文件为一行</td>
+</tr>
+</tbody>
+</table>
+<h4 id="操作举例-3">操作举例：</h4>
+<pre><code>$ echo hello &gt; file1
+$ echo shiyanlou &gt; file2
+$ echo www.shiyanlou.com &gt; file3
+$ paste -d ':' file1 file2 file3
+$ paste -s file1 file2 file3
+</code></pre><p>[{&ldquo;name&rdquo;:&ldquo;check file3&rdquo;,&ldquo;script&rdquo;:&quot;#!/bin/bash\nls /home/shiyanlou/file3\n&rdquo;,&ldquo;error&rdquo;:&quot;/home/shiyanlou 目录下没有 file3 文件&rdquo;},{&ldquo;name&rdquo;:&ldquo;check file3 content&rdquo;,&ldquo;script&rdquo;:&quot;#!/bin/bash\ngrep com /home/shiyanlou/file3\n&rdquo;,&ldquo;error&rdquo;:&ldquo;file3 内容不对&rdquo;}]</p>
+<p><img src="https://doc.shiyanlou.com/document-uid735639labid337timestamp1532414967936.png/wm" alt="此处输入图片的描述"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

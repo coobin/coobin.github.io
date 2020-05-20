@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>System Control &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>System Control</h1>
+  <time datetime=2020-05-04T03:42:42Z class="post-date">Mon, May 4, 2020</time>
+  <h1 id="system-control">System Control</h1>
+<h2 id="reboot命令">reboot命令</h2>
+<p><strong>reboot命令</strong>用来重新启动正在运行的Linux操作系统。</p>
+<h3 id="语法">语法</h3>
+<pre><code>reboot(选项)
+</code></pre><h3 id="选项">选项</h3>
+<pre><code>-d：重新开机时不把数据写入记录文件/var/tmp/wtmp。本参数具有“-n”参数效果；
+-f：强制重新开机，不调用shutdown指令的功能；
+-i：在重开机之前，先关闭所有网络界面；
+-n：重开机之前不检查是否有未结束的程序；
+-w：仅做测试，并不真正将系统重新开机，只会把重开机的数据写入/var/log目录下的wtmp记录文件。
+</code></pre><h3 id="实例">实例</h3>
+<pre><code>reboot        //重开机。
+reboot -w     //做个重开机的模拟（只有纪录并不会真的重开机）。
+</code></pre><h2 id="poweroff命令">poweroff命令</h2>
+<p><strong>poweroff命令</strong>用来关闭计算机操作系统并且切断系统电源。</p>
+<h3 id="语法-1">语法</h3>
+<pre><code>poweroff(选项)
+</code></pre><h3 id="选项-1">选项</h3>
+<pre><code>-n：关闭操作系统时不执行sync操作；
+-w：不真正关闭操作系统，仅在日志文件“/var/log/wtmp”中；
+-d：关闭操作系统时，不将操作写入日志文件“/var/log/wtmp”中添加相应的记录；
+-f：强制关闭操作系统；
+-i：关闭操作系统之前关闭所有的网络接口；
+-h：关闭操作系统之前将系统中所有的硬件设置为备用模式。
+</code></pre><h3 id="实例-1">实例</h3>
+<p>如果确认系统中已经没有用户存在且所有数据都已保存，需要立即关闭系统，可以使用poweroff命令。</p>
+<p>使用poweroff立即关闭系统：</p>
+<pre><code>poweroff
+</code></pre><h2 id="ps命令">ps命令</h2>
+<p><strong>ps命令</strong>用于报告当前系统的进程状态。可以搭配<a href="http://man.linuxde.net/kill" title="kill命令">kill</a>指令随时中断、删除不必要的程序。ps命令是最基本同时也是非常强大的进程查看命令，使用该命令可以确定有哪些进程正在运行和运行的状态、进程是否结束、进程有没有僵死、哪些进程占用了过多的资源等等，总之大部分信息都是可以通过执行该命令得到的。</p>
+<h3 id="语法-2">语法</h3>
+<pre><code>ps(选项)
+</code></pre><h3 id="选项-2">选项</h3>
+<p>查看所有进程</p>
+<pre><code>ps -ef
+</code></pre><p>指定进程查询</p>
+<pre><code>ps -ef | grep python
+</code></pre><pre><code>-a：显示所有终端机下执行的程序，除了阶段作业领导者之外。
+a：显示现行终端机下的所有程序，包括其他用户的程序。
+-A：显示所有程序。
+-c：显示CLS和PRI栏位。
+c：列出程序时，显示每个程序真正的指令名称，而不包含路径，选项或常驻服务的标示。
+-C&lt;指令名称&gt;：指定执行指令的名称，并列出该指令的程序的状况。
+-d：显示所有程序，但不包括阶段作业领导者的程序。
+-e：此选项的效果和指定&quot;A&quot;选项相同。
+e：列出程序时，显示每个程序所使用的环境变量。
+-f：显示UID,PPIP,C与STIME栏位。
+f：用ASCII字符显示树状结构，表达程序间的相互关系。
+-g&lt;群组名称&gt;：此选项的效果和指定&quot;-G&quot;选项相同，当亦能使用阶段作业领导者的名称来指定。
+g：显示现行终端机下的所有程序，包括群组领导者的程序。
+-G&lt;群组识别码&gt;：列出属于该群组的程序的状况，也可使用群组名称来指定。
+h：不显示标题列。
+-H：显示树状结构，表示程序间的相互关系。
+-j或j：采用工作控制的格式显示程序状况。
+-l或l：采用详细的格式来显示程序状况。
+L：列出栏位的相关信息。
+-m或m：显示所有的执行绪。
+n：以数字来表示USER和WCHAN栏位。
+-N：显示所有的程序，除了执行ps指令终端机下的程序之外。
+-p&lt;程序识别码&gt;：指定程序识别码，并列出该程序的状况。
+p&lt;程序识别码&gt;：此选项的效果和指定&quot;-p&quot;选项相同，只在列表格式方面稍有差异。
+r：只列出现行终端机正在执行中的程序。
+-s&lt;阶段作业&gt;：指定阶段作业的程序识别码，并列出隶属该阶段作业的程序的状况。
+s：采用程序信号的格式显示程序状况。
+S：列出程序时，包括已中断的子程序资料。
+-t&lt;终端机编号&gt;：指定终端机编号，并列出属于该终端机的程序的状况。
+t&lt;终端机编号&gt;：此选项的效果和指定&quot;-t&quot;选项相同，只在列表格式方面稍有差异。
+-T：显示现行终端机下的所有程序。
+-u&lt;用户识别码&gt;：此选项的效果和指定&quot;-U&quot;选项相同。
+u：以用户为主的格式来显示程序状况。
+-U&lt;用户识别码&gt;：列出属于该用户的程序的状况，也可使用用户名称来指定。
+U&lt;用户名称&gt;：列出属于该用户的程序的状况。
+v：采用虚拟内存的格式显示程序状况。
+-V或V：显示版本信息。
+-w或w：采用宽阔的格式来显示程序状况。　
+x：显示所有程序，不以终端机来区分。
+X：采用旧式的Linux i386登陆格式显示程序状况。
+-y：配合选项&quot;-l&quot;使用时，不显示F(flag)栏位，并以RSS栏位取代ADDR栏位　。
+-&lt;程序识别码&gt;：此选项的效果和指定&quot;p&quot;选项相同。
+--cols&lt;每列字符数&gt;：设置每列的最大字符数。
+--columns&lt;每列字符数&gt;：此选项的效果和指定&quot;--cols&quot;选项相同。
+--cumulative：此选项的效果和指定&quot;S&quot;选项相同。
+--deselect：此选项的效果和指定&quot;-N&quot;选项相同。
+--forest：此选项的效果和指定&quot;f&quot;选项相同。
+--headers：重复显示标题列。
+--help：在线帮助。
+--info：显示排错信息。
+--lines&lt;显示列数&gt;：设置显示画面的列数。
+--no-headers：此选项的效果和指定&quot;h&quot;选项相同，只在列表格式方面稍有差异。
+--group&lt;群组名称&gt;：此选项的效果和指定&quot;-G&quot;选项相同。
+--Group&lt;群组识别码&gt;：此选项的效果和指定&quot;-G&quot;选项相同。
+--pid&lt;程序识别码&gt;：此选项的效果和指定&quot;-p&quot;选项相同。
+--rows&lt;显示列数&gt;：此选项的效果和指定&quot;--lines&quot;选项相同。
+--sid&lt;阶段作业&gt;：此选项的效果和指定&quot;-s&quot;选项相同。
+--tty&lt;终端机编号&gt;：此选项的效果和指定&quot;-t&quot;选项相同。
+--user&lt;用户名称&gt;：此选项的效果和指定&quot;-U&quot;选项相同。
+--User&lt;用户识别码&gt;：此选项的效果和指定&quot;-U&quot;选项相同。
+--version：此选项的效果和指定&quot;-V&quot;选项相同。
+--widty&lt;每列字符数&gt;：此选项的效果和指定&quot;-cols&quot;选项相同。
+</code></pre><p>由于ps命令能够支持的系统类型相当的多，所以选项多的离谱！</p>
+<h2 id="top命令">top命令</h2>
+<p><strong>top命令</strong>可以实时动态地查看系统的整体运行情况，是一个综合了多方信息监测系统性能和运行信息的实用工具。通过top命令所提供的互动式界面，用热键可以管理。</p>
+<h3 id="语法-3">语法</h3>
+<pre><code>top(选项)
+</code></pre><h3 id="选项-3">选项</h3>
+<pre><code>-b：以批处理模式操作；
+-c：显示完整的治命令；
+-d：屏幕刷新间隔时间；
+-I：忽略失效过程；
+-s：保密模式；
+-S：累积模式；
+-i&lt;时间&gt;：设置间隔时间；
+-u&lt;用户名&gt;：指定用户名；
+-p&lt;进程号&gt;：指定进程；
+-n&lt;次数&gt;：循环显示的次数。
+</code></pre><h3 id="top交互命令">top交互命令</h3>
+<p>在top命令执行过程中可以使用的一些交互命令。这些命令都是单字母的，如果在命令行中使用了-s选项， 其中一些命令可能会被屏蔽。</p>
+<pre><code>h：显示帮助画面，给出一些简短的命令总结说明；
+k：终止一个进程；
+i：忽略闲置和僵死进程，这是一个开关式命令；
+q：退出程序；
+r：重新安排一个进程的优先级别；
+S：切换到累计模式；
+s：改变两次刷新之间的延迟时间（单位为s），如果有小数，就换算成ms。输入0值则系统将不断刷新，默认值是5s；
+f或者F：从当前显示中添加或者删除项目；
+o或者O：改变显示项目的顺序；
+l：切换显示平均负载和启动时间信息；
+m：切换显示内存信息；
+t：切换显示进程和CPU状态信息；
+c：切换显示命令名称和完整命令行；
+M：根据驻留内存大小进行排序；
+P：根据CPU使用百分比大小进行排序；
+T：根据时间/累计时间进行排序；
+w：将当前设置写入~/.toprc文件中。
+</code></pre><h3 id="实例-2">实例</h3>
+<pre><code>top - 09:44:56 up 16 days, 21:23,  1 user,  load average: 9.59, 4.75, 1.92
+Tasks: 145 total,   2 running, 143 sleeping,   0 stopped,   0 zombie
+Cpu(s): 99.8%us,  0.1%sy,  0.0%ni,  0.2%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
+Mem:   4147888k total,  2493092k used,  1654796k free,   158188k buffers
+Swap:  5144568k total,       56k used,  5144512k free,  2013180k cached
+</code></pre><p><strong>解释：</strong></p>
+<ul>
+<li>top - 09:44:56[当前系统时间],</li>
+<li>16 days[系统已经运行了16天],</li>
+<li>1 user[个用户当前登录],</li>
+<li>load average: 9.59, 4.75, 1.92[系统负载，即任务队列的平均长度]</li>
+<li>Tasks: 145 total[总进程数],</li>
+<li>2 running[正在运行的进程数],</li>
+<li>143 sleeping[睡眠的进程数],</li>
+<li>0 stopped[停止的进程数],</li>
+<li>0 zombie[冻结进程数],</li>
+<li>Cpu(s): 99.8%us[用户空间占用CPU百分比],</li>
+<li>0.1%sy[内核空间占用CPU百分比],</li>
+<li>0.0%ni[用户进程空间内改变过优先级的进程占用CPU百分比],</li>
+<li>0.2%id[空闲CPU百分比], 0.0%wa[等待输入输出的CPU时间百分比],</li>
+<li>0.0%hi[],</li>
+<li>0.0%st[],</li>
+<li>Mem: 4147888k total[物理内存总量],</li>
+<li>2493092k used[使用的物理内存总量],</li>
+<li>1654796k free[空闲内存总量],</li>
+<li>158188k buffers[用作内核缓存的内存量]</li>
+<li>Swap:  5144568k total[交换区总量],</li>
+<li>56k used[使用的交换区总量],</li>
+<li>5144512k free[空闲交换区总量],</li>
+<li>2013180k cached[缓冲的交换区总量],</li>
+</ul>
+<h2 id="pidof命令">pidof命令</h2>
+<p><strong>pidof命令</strong>用于查找指定名称的进程的进程号<a href="http://man.linuxde.net/id" title="id命令">id</a>号。</p>
+<h3 id="语法-4">语法</h3>
+<pre><code>pidof(选项)(参数)
+</code></pre><h3 id="选项-4">选项</h3>
+<pre><code>-s：仅返回一个进程号；
+-c：仅显示具有相同“root”目录的进程；
+-x：显示由脚本开启的进程；
+-o：指定不显示的进程ID。
+</code></pre><h3 id="参数">参数</h3>
+<p>进程名称：指定要查找的进程名称。</p>
+<h3 id="实例-3">实例</h3>
+<pre><code>pidof nginx
+13312 5371
+
+pidof crond
+1509
+
+pidof init
+1
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>centos常见错误 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>centos常见错误</h1>
+  <time datetime=2020-05-11T12:58:03Z class="post-date">Mon, May 11, 2020</time>
+  <h1 id="centos常见错误">centos常见错误</h1>
+<h2 id="failed-to-set-locale-defaulting-to-c">Failed to set locale, defaulting to C</h2>
+<p>错误描述：
+当在centos中使用yum命令时，输出错误：
+<code>Failed to set locale, defaulting to C</code>
+用locale检测，出现如下提示：</p>
+<pre><code>locale：Cannot set LC\_CTYPE to default locale： No such file or directory
+ocale：Cannot set LC\_MESSAGES to default locale： No such file or directory
+locale：Cannot set LC\_ALL to default locale： No such file or directory
+</code></pre><p>错误分析：
+查询可知locale是用来设置语言环境的，故此需要查看并正确设置locale
+解决方案：
+<code>echo &quot;export LC\_ALL\=en\_US.UTF\-8&quot;  \&gt;\&gt;  /etc/profile</code>
+执行命令后重新登录即可！</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

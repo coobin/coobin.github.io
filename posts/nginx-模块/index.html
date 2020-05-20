@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Nginx 模块 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Nginx 模块</h1>
+  <time datetime=2020-05-06T10:44:11Z class="post-date">Wed, May 6, 2020</time>
+  <h1 id="nginx-模块">Nginx 模块</h1>
+<p>Nginx 真正的魅力在于它的模块，整个应用程序建立在一个模块化系统之上，在编译时，可以对每一个模块进行启用或者禁用，需要什么就定制什么。</p>
+<p>对 Nginx 模块的基本原理总结一下，基本就是：在特定地方调用函数。（Nginx 本身支持多种模块，如 <code>HTTP</code> 模块、<code>EVENTS</code> 模块和 <code>MAIL</code> 模块，这里只简单讲述 HTTP 的模块及其中的命令）</p>
+<p>下面是配置文件结构图：</p>
+<p><img src="https://doc.shiyanlou.com/userid20406labid411time1422495978452/wm" alt="图片描述"></p>
+<p>Nginx 本身做的工作实际很少，当它接到一个 <code>HTTP</code> 请求时，它仅仅是通过查找配置文件将此次请求映射到一个 <code>location block</code>，而此 <code>location</code> 中所配置的各个指令则会启动不同的模块去完成工作，因此模块可以看做 Nginx 真正的劳动工作者。</p>
+<ul>
+<li>通常一个 <code>location</code> 中的指令会涉及一个 <code>handler</code> 模块和多个 <code>filter</code> 模块（当然，多个 <code>location</code> 可以复用同一个模块）。
+<ul>
+<li><code>handler</code> 模块负责处理请求，完成响应内容的生成；</li>
+<li><code>filter</code> 模块对响应内容进行处理。</li>
+</ul>
+</li>
+</ul>
+<p>因此 <code>Nginx</code> 模块开发分为 <code>handler</code> 开发和 <code>filter</code> 开发（本文不考虑 load-balancer 模块）。</p>
+<p>下图展示了一次常规请求和响应的过程。</p>
+<p><img src="https://doc.shiyanlou.com/userid20406labid411time1422497618598" alt="图片描述"></p>
+<h2 id="http-index-模块">http index 模块</h2>
+<p>模块：<code>ngx_http_index_module</code></p>
+<p>语法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">index</span> <span style="color:#e6db74">file</span> <span style="color:#e6db74">...</span>;
+</code></pre></div><p>配置范例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">location</span> <span style="color:#e6db74">/</span> {
+    <span style="color:#f92672">index</span> <span style="color:#e6db74">index.</span>$geo.html <span style="color:#e6db74">index.html</span>;
+}
+</code></pre></div><p>默认值：<code>index index.html;</code></p>
+<p>作用域：<code>http, server, location</code></p>
+<p>模块功能及注意：</p>
+<ul>
+<li>定义将要被作为默认页的文件。</li>
+<li>文件的名字可以包含变量。</li>
+<li>文件以配置中指定的顺序被 Nginx 检查。</li>
+<li>列表中的最后一个元素可以是一个带有绝对路径的文件。</li>
+</ul>
+<p>例子：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">index</span> <span style="color:#e6db74">index.</span>$geo.html <span style="color:#e6db74">index.0.html</span> <span style="color:#e6db74">/index.html</span>;
+</code></pre></div><blockquote>
+<p>需要注意的是，<code>index</code> 文件会引发内部重定向，请求可能会被其它 <code>location</code> 处理。 比如，下面这个例子：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">location</span> = <span style="color:#e6db74">/</span> {
+    <span style="color:#f92672">index</span> <span style="color:#e6db74">index.html</span>;
+}
+
+<span style="color:#66d9ef">location</span> <span style="color:#e6db74">/</span> {
+    <span style="color:#f92672">...</span>
+<span style="color:#960050;background-color:#1e0010">}</span>
+</code></pre></div><p>请求 “<code>/</code>” 实际上将会在第二个 <code>location</code> 中作为 “<code>/index.html</code>” 被处理。</p>
+</blockquote>
+<h2 id="http-log-模块">http log 模块</h2>
+<p>模块：<code>ngx_http_log_module</code></p>
+<p>配置范例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">log_format</span>  <span style="color:#e6db74">gzip</span> <span style="color:#e6db74">&#39;</span>$remote_addr-$remote_user[$time_local]&#39; <span style="color:#e6db74">&#39;</span>$request$status $bytes_sent&#39; <span style="color:#e6db74">&#39;&#34;</span>$ <span style="color:#e6db74">http</span> <span style="color:#e6db74">_</span> <span style="color:#e6db74">referer&#34;</span> <span style="color:#e6db74">&#34;</span>$http_user_agent&#34; <span style="color:#e6db74">&#34;</span>$gzip_ratio&#34;&#39;;
+<span style="color:#66d9ef">access_log</span>  <span style="color:#e6db74">/spool/logs/nginx-access.log</span>  <span style="color:#e6db74">gzip</span>  <span style="color:#e6db74">buffer=32k</span>;
+</code></pre></div><h4 id="access_log-指令"><code>access_log</code> 指令</h4>
+<p>语法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">access_log</span> <span style="color:#e6db74">path</span> <span style="color:#e6db74">[format</span> <span style="color:#e6db74">[buffer=size]]</span>;
+<span style="color:#75715e"># or
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">access_log</span> <span style="color:#66d9ef">off</span>;
+</code></pre></div><p>默认值：<code>access_log log/access.log combined</code></p>
+<p>作用域：<code>http, server, location</code></p>
+<p>指令功能及注意：</p>
+<ul>
+<li>指令 <code>access_log</code> 指派路径、格式和缓存大小。</li>
+<li>参数 &ldquo;<code>off</code>&rdquo; 将清除当前级别的所有 <code>access_log</code> 指令。</li>
+<li>如果未指定格式，则使用预置的 &ldquo;<code>combined</code>&rdquo; 格式。</li>
+<li>缓存不能大于能写入磁盘的文件的最大值。在 FreeBSD 3.0-6.0 ，缓存大小无此限制。</li>
+</ul>
+<h4 id="log_format-指令"><code>log_format</code> 指令</h4>
+<p>语法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">log_format</span> <span style="color:#e6db74">name</span> <span style="color:#e6db74">format</span> <span style="color:#e6db74">[format</span> <span style="color:#e6db74">...]</span>;
+</code></pre></div><p>默认值： <code>log_format combined &quot;...&quot;</code></p>
+<p>作用域： <code>http server</code></p>
+<h2 id="access-模块">Access 模块</h2>
+<p>模块：<code>ngx_http_access_module</code></p>
+<p>模块功能及注意：</p>
+<ul>
+<li>此模块提供了一个简易的基于主机的访问控制（对网络地址有放行和禁止的权利），使 Nginx 可以对特定 <code>IP</code> 客户端进行控制。</li>
+<li>规则为：顺序匹配，以第一次匹配到的结果为准。</li>
+</ul>
+<p>配置范例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">location</span> <span style="color:#e6db74">/</span> {
+  <span style="color:#f92672">deny</span>    <span style="color:#ae81ff">192</span><span style="color:#e6db74">.168.1.1</span>;
+  <span style="color:#f92672">allow</span>   <span style="color:#ae81ff">192</span><span style="color:#e6db74">.168.1.0/24</span>;
+  <span style="color:#f92672">allow</span>   <span style="color:#ae81ff">10</span><span style="color:#e6db74">.1.1.0/16</span>;
+  <span style="color:#f92672">deny</span>    <span style="color:#e6db74">all</span>;
+}
+</code></pre></div><blockquote>
+<p>在上面的例子中，仅允许网段 <code>10.1.1.0/16</code> 和 <code>192.168.1.0/24</code> 中除 <code>192.168.1.1</code> 之外的 <code>ip</code> 访问。</p>
+</blockquote>
+<h4 id="放行语法">放行语法</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">allow</span> <span style="color:#e6db74">address</span> <span style="color:#e6db74">|</span> <span style="color:#e6db74">CIDR</span> <span style="color:#e6db74">|</span> <span style="color:#e6db74">all</span>;
+</code></pre></div><blockquote>
+<p>在上面的配置范例中， 192.168.1.1 为 address，192.168.1.0/24 为 CIDR，all 对应 all。</p>
+</blockquote>
+<p>作用域：<code>http, server, location, limit_except</code></p>
+<p>指令功能：<code>allow</code> 描述的网络地址有权直接访问</p>
+<h4 id="禁止语法">禁止语法</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">deny</span> <span style="color:#e6db74">address</span> <span style="color:#e6db74">|</span> <span style="color:#e6db74">CIDR</span> <span style="color:#e6db74">|</span> <span style="color:#e6db74">all</span>;
+</code></pre></div><p>作用域：<code>http, server, location, limit_except</code></p>
+<p>指令功能：<code>deny</code> 描述的网络地址拒绝访问</p>
+<h2 id="rewrite-模块">Rewrite 模块</h2>
+<p>模块：<code>ngx_http_rewrite_module</code></p>
+<p>模块功能及注意：</p>
+<ul>
+<li>执行 <code>URL</code> 重定向，允许你去掉带有恶意的 <code>URL</code>，包含多个参数（修改）</li>
+<li>利用正则的匹配，分组和引用，达到目的</li>
+</ul>
+<p>配置范例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">if</span> <span style="color:#e6db74">(</span>$http_user_agent ~ <span style="color:#e6db74">MSIE)</span> {
+  <span style="color:#f92672">rewrite</span>  <span style="color:#e6db74">^(.*)</span>$  <span style="color:#e6db74">/msie/</span>$1  <span style="color:#e6db74">break</span>;
+}
+<span style="color:#66d9ef">if</span> <span style="color:#e6db74">(</span>$http_cookie ~<span style="color:#e6db74">*</span> <span style="color:#e6db74">&#34;id=([^</span>;<span style="color:#66d9ef">]</span> <span style="color:#e6db74">+)(?:</span>;<span style="color:#66d9ef">|$)&#34;</span> <span style="color:#e6db74">)</span> {
+  <span style="color:#f92672">set</span>  $id  $1;
+}
+<span style="color:#66d9ef">if</span> <span style="color:#e6db74">(</span>$request_method = <span style="color:#e6db74">POST</span> <span style="color:#e6db74">)</span> {
+  <span style="color:#f92672">return</span> <span style="color:#ae81ff">405</span>;
+}
+<span style="color:#66d9ef">if</span> <span style="color:#e6db74">(!-f</span> $request_filename<span style="color:#e6db74">)</span> {
+  <span style="color:#f92672">break</span>;
+  <span style="color:#f92672">proxy_pass</span>  <span style="color:#e6db74">http://127.0.0.1</span>;
+}
+<span style="color:#66d9ef">if</span> <span style="color:#e6db74">(</span>$slow<span style="color:#e6db74">)</span> {
+  <span style="color:#f92672">limit_rate</span>  <span style="color:#ae81ff">10k</span>;
+}
+<span style="color:#66d9ef">if</span> <span style="color:#e6db74">(</span>$invalid_referer<span style="color:#e6db74">)</span> {
+  <span style="color:#f92672">return</span>   <span style="color:#ae81ff">403</span>;
+}
+</code></pre></div><p>该模块允许使用正则表达式改变 <code>URL</code>，并且根据变量来转向以及选择配置</p>
+<h4 id="if-语句块">if 语句块</h4>
+<p>语法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">if</span> <span style="color:#e6db74">(condition)</span> {
+  <span style="color:#f92672">...</span>
+<span style="color:#960050;background-color:#1e0010">}</span>
+</code></pre></div><p>功能描述：对重定向进行流程控制</p>
+<p>作用域：<code>server, location</code></p>
+<h4 id="return-语句">return 语句</h4>
+<p>语法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">return</span> <span style="color:#e6db74">code</span>;
+</code></pre></div><p>作用域：<code>server, location, if</code></p>
+<p>功能描述：这个指令根据规则的执行情况，返回一个状态值给客户端。</p>
+<ul>
+<li>可使用值包括：204，400，402 - 406，408，410，411，413，416 及 500 - 504。</li>
+<li>也可以发送非标准的 444 代码 - 未发送任何头信息，然后结束连接。</li>
+</ul>
+<h4 id="rewrite-语句">rewrite 语句</h4>
+<p>语法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">rewrite</span> <span style="color:#e6db74">regex</span> <span style="color:#e6db74">replacement</span> <span style="color:#e6db74">flag</span>
+</code></pre></div><blockquote>
+<p>regex ：用于匹配 url 的正则表达式。使用括号（）标记要截取的内容</p>
+<p>replacement : 匹配成功后用于替换 url 中被截取内容的字符串</p>
+<p>flag : 用来设置 rewrite 对 url 的处理行为</p>
+</blockquote>
+<p>常用的 flag 如下：</p>
+<ul>
+<li><code>last</code> : 表示完成 rewrite</li>
+<li><code>break</code>: 本规则匹配完成后，终止匹配，不再匹配后面的规则</li>
+<li><code>redirect</code> : 返回 302 临时重定向，地址栏会显示跳转后的地址</li>
+<li><code>permanent</code>: 返回 301 永久重定向，地址栏会显示跳转后的地址</li>
+</ul>
+<p>作用域：<code>server, location, if</code></p>
+<p>功能描述：这个指令根据正则表达式或者待替换的字符串来更改 URL。指令根据配置文件中的先后顺序执行生效。</p>
+<h2 id="proxy-模块">Proxy 模块</h2>
+<p>模块：<code>ngx_http_proxy_module</code></p>
+<p>功能描述：此模块能代理请求到其它服务器。就是说允许你把客户端的 HTTP 请求转到后端服务器（这部分的指令非常多，但不是全部都会被用到，这里是比较常见的指令简介）。</p>
+<ul>
+<li>指令：<code>proxy_pass_header Server;</code></li>
+</ul>
+<p>功能描述：该指令强制一些被忽略的头传递到客户端。</p>
+<ul>
+<li>指令：<code>proxy_redirect off;</code></li>
+</ul>
+<p>功能描述：允许改写出现在 HTTP 头却被后端服务器触发重定向的 URL，对响应本身不做任何处理。</p>
+<ul>
+<li>指令：<code>proxy_set_header Host $http_host;</code></li>
+</ul>
+<p>功能描述：允许你重新定义代理 <code>header</code> 值再转到后端服务器，目标服务器可以看到客户端的原始主机名。</p>
+<ul>
+<li>指令： <code>proxy_set_header X-Real-IP $remote_addr;</code></li>
+</ul>
+<p>功能描述：目标服务器可以看到客户端的真实 IP，而不是转发服务器的 IP。</p>
+<blockquote>
+<p><a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html">proxy 更多的指令查询</a></p>
+</blockquote>
+<h2 id="upstream-模块">upstream 模块</h2>
+<p>模块：<code>ngx_http_upstream_module</code></p>
+<p>语法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">upstream</span> <span style="color:#e6db74">name</span> {
+  <span style="color:#f92672">...</span>
+<span style="color:#960050;background-color:#1e0010">}</span>
+</code></pre></div><p>功能简介：该指令使请求被上行信道之间的基于客户端的 IP 地址分布</p>
+<p>配置范例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">upstream</span> <span style="color:#e6db74">backend</span>  {
+  <span style="color:#f92672">server</span> <span style="color:#e6db74">backend1.example.com</span> <span style="color:#e6db74">weight=5</span>;
+  <span style="color:#f92672">server</span> backend2.example.com:<span style="color:#ae81ff">8080</span>;
+  <span style="color:#f92672">server</span> <span style="color:#e6db74">unix:/tmp/backend3</span>;
+}
+
+<span style="color:#66d9ef">server</span> {
+  <span style="color:#f92672">location</span> <span style="color:#e6db74">/</span> {
+    <span style="color:#f92672">proxy_pass</span>  <span style="color:#e6db74">http://backend</span>;
+  }
+}
+</code></pre></div><h4 id="upstream-指令"><code>upstream</code> 指令</h4>
+<p>语法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">upstream</span> <span style="color:#e6db74">name</span> { <span style="color:#f92672">...</span> <span style="color:#960050;background-color:#1e0010">}</span>
+</code></pre></div><p>作用域：<code>http</code></p>
+<p>指令功能及注意：</p>
+<ul>
+<li>这个指令描述了一个服务器的集合，该集合可被用于 proxy_pass 和 fastcgi_pass 指令中，作为一个单独的实体。</li>
+<li>这些服务器可以是监听在不同的端口，另外，并发使用同时监听 TCP 端口和 Unix 套接字的服务器是可能的。</li>
+<li>这些服务器能被分配不同的权重。如果没有指定，则都为 1 。</li>
+</ul>
+<p>示例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">upstream</span> <span style="color:#e6db74">backend</span> {
+  <span style="color:#f92672">server</span> <span style="color:#e6db74">backend1.example.com</span> <span style="color:#e6db74">weight=5</span>;
+  <span style="color:#f92672">server</span> 127.0.0.1:<span style="color:#ae81ff">8080</span> <span style="color:#e6db74">max_fails=3</span>  <span style="color:#e6db74">fail_timeout=30s</span>;
+  <span style="color:#f92672">server</span> <span style="color:#e6db74">unix:/tmp/backend3</span>;
+}
+</code></pre></div><h4 id="ip_hash-指令"><code>ip_hash</code> 指令</h4>
+<p>作用域： <code>upstream</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">upstream</span> <span style="color:#e6db74">backend</span> {
+  <span style="color:#f92672">ip_hash</span>;
+  <span style="color:#f92672">server</span>   <span style="color:#e6db74">backend1.example.com</span>;
+  <span style="color:#f92672">server</span>   <span style="color:#e6db74">backend2.example.com</span>;
+  <span style="color:#f92672">server</span>   <span style="color:#e6db74">backend3.example.com</span>;
+  <span style="color:#f92672">server</span>   <span style="color:#e6db74">backend4.example.com</span>;
+}
+</code></pre></div><p>指令功能及注意：</p>
+<ul>
+<li>指定服务器组的负载均衡方法，请求基于客户端的 IP 地址在服务器间进行分发。IPv4 地址的前三个字节或者 IPv6 的整个地址，会被用来作为一个散列 key。</li>
+<li>这种方法可以确保从同一个客户端过来的请求，会被传给同一台服务器。除了当服务器被认为不可用的时候，这些客户端的请求会被传给其他服务器，而且很有可能也是同一台服务器。</li>
+</ul>
+<blockquote>
+<p>如果其中一个服务器想暂时移除，应该加上 <code>down</code> 参数。这样可以保留当前客户端 IP 地址散列分布。就像这样：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">upstream</span> <span style="color:#e6db74">backend</span> {
+  <span style="color:#f92672">ip_hash</span>;
+  <span style="color:#f92672">server</span>   <span style="color:#e6db74">backend1.example.com</span>;
+  <span style="color:#f92672">server</span>   <span style="color:#e6db74">backend2.example.com</span>;
+  <span style="color:#f92672">server</span>   <span style="color:#e6db74">backend3.example.com</span>  <span style="color:#e6db74">down</span>;
+  <span style="color:#f92672">server</span>   <span style="color:#e6db74">backend4.example.com</span>;
+}
+</code></pre></div></blockquote>
+<h4 id="server-指令"><code>server</code> 指令</h4>
+<p>语法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">server</span> <span style="color:#e6db74">address</span> <span style="color:#e6db74">[parameters]</span>;
+</code></pre></div><p>作用域： <code>upstream</code></p>
+<p>指令功能及注意：</p>
+<ul>
+<li>定义服务器的地址 address 和其他参数 parameters。</li>
+<li>地址可以是域名或者 IP 地址，端口是可选的，或者是指定“unix:”前缀的 UNIX 域套接字的路径。如果没有指定端口，就使用 80 端口。</li>
+<li>如果一个域名解析到多个 IP，本质上是定义了多个 server。</li>
+</ul>
+<p>实例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">upstream</span>  <span style="color:#e6db74">backend</span>  {
+  <span style="color:#f92672">server</span>   <span style="color:#e6db74">backend1.example.com</span>    <span style="color:#e6db74">weight=5</span>;
+  <span style="color:#f92672">server</span>   127.0.0.1:<span style="color:#ae81ff">8080</span>          <span style="color:#e6db74">max_fails=3</span>  <span style="color:#e6db74">fail_timeout=30s</span>;
+  <span style="color:#f92672">server</span>   <span style="color:#e6db74">unix:/tmp/backend3</span>;
+}
+</code></pre></div>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

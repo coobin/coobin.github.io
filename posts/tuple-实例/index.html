@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tuple 实例 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Tuple 实例</h1>
+  <time datetime=2020-04-05T07:03:18Z class="post-date">Sun, Apr 5, 2020</time>
+  <h1 id="tuple-实例">Tuple 实例</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>tup = (1, 2, 3, 4, 5, 6)
+print(tup[0])
+1
+print(tup[1:5])
+(2, 3, 4, 5)
+tup[0] = 11  # 修改元组元素的操作是非法的
+Traceback (most recent call last):
+  File “<!-- raw HTML omitted -->”, line 1, in <!-- raw HTML omitted -->
+TypeError: ‘tuple’ object does not support item assignment</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>虽然tuple的元素不可改变，但它可以包含可变的对象，比如list列表。
+构造包含 0 个或 1 个元素的元组比较特殊，所以有一些额外的语法规则：
+Tup1 = ()    # 空元组
+Tup2 = (20,) # 一个元素，需要在元素后添加逗号
+string、list和tuple都属于sequence（序列）。
+注意：</p>
+<ul>
+<li>1、与字符串一样，元组的元素不能修改。</li>
+<li>2、元组也可以被索引和切片，方法一样。</li>
+<li>3、注意构造包含0或1个元素的元组的特殊语法规则。</li>
+<li>4、元组也可以使用+操作符进行拼接。</li>
+</ul>
+<p>#Python</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

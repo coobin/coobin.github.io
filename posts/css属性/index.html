@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CSS属性 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>CSS属性</h1>
+  <time datetime=2020-04-05T07:06:14Z class="post-date">Sun, Apr 5, 2020</time>
+  <h1 id="css属性">CSS属性</h1>
+<ul>
+<li>position
+<ul>
+<li>absolute
+<ul>
+<li>脱离原来位置进行定位</li>
+<li>相对于最近的有定位的父级进行定位，如果没有，那么相对于文档定位</li>
+</ul>
+</li>
+<li>relative
+<ul>
+<li>保留原来位置进行定位</li>
+<li>相对于自己原来位置进行定位</li>
+</ul>
+</li>
+<li>fixed
+<ul>
+<li>实现固定定位</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>定位参照一般设置为relative</p>
+<p>广告居中</p>
+<pre><code>div{
+	position: fixed;
+	left:50%;
+	top:50%;
+	width:100px;
+	height:100px;
+	background-color:red; 
+	margin-left:-50px;
+	margin-top:-50px;
+}
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

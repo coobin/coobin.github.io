@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Shell 中的括号 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Shell 中的括号</h1>
+  <time datetime=2020-04-29T10:25:14Z class="post-date">Wed, Apr 29, 2020</time>
+  <h1 id="shell-中的括号">Shell 中的括号</h1>
+<p>主要包括一下几种</p>
+<ol>
+<li>${var}</li>
+<li>$(cmd)</li>
+<li>()和{}</li>
+<li>${var:-string},${var:+string},${var:=string},${var:?string}</li>
+<li>$((exp))</li>
+<li>$(var%pattern),$(var%%pattern),$(var#pattern),$(var##pattern)</li>
+</ol>
+<p>现在分述如下：</p>
+<h2 id="shell中变量的原形var">Shell中变量的原形：${var}</h2>
+<p>大家常见的变量形式都是$var,如</p>
+<pre><code>$ var=test
+$ echo $var
+test
+</code></pre><p>但当你要显示变量值加随意的字符(我这里用AA)时，就会出错，如下：</p>
+<pre><code>$ echo $varAA
+
+$
+</code></pre><p>这时应该用变量的原形：${var}，即是加一个大括号来限定变量名称的范围，如下</p>
+<pre><code>$ echo ${var}AA
+testAA
+$
+</code></pre><p>以这个特性，我们可以很方便地写一个批量改后缀名的程序，我把它命名为mymv，程序如下：</p>
+<pre><code>#!/bin/bash
+
+tail=$1
+for filename in \`ls\`
+do
+mv $filename ${filename}.$tail
+done
+</code></pre><p>程序需要提供一个后缀名，如c，表示改为后缀为c的C程序文件，看下面的测试：</p>
+<pre><code>$ ls
+a b c
+$ mymv c
+$ ls
+a.c b.c c.c
+$
+</code></pre><p>看样子程序运行的很好，但这是不完善的程序，有2个要注意的问题：
+A,目录下没有子目录，如果有一个目录，假设为dir，则也会被改为dir.c，这显然不是我们想要的，应该修正这个程序能识别目录。
+B,没有帮助对程序的参数进行处理，程序应该足够友好，在用户没有给定后缀名时应能处理，像上面的将直接给文件加上了一个点(.),这显然也不是我们想要的。</p>
+<p>因为我们的目的是说明${var}，这样已经足够了，因此这里不会再对上面的程序进行修正。</p>
+<h2 id="命令替换cmd">命令替换$(cmd)</h2>
+<p>命令替换$(cmd)和符号`cmd`(注意这不是单引号，在美式键盘上，`是ESC下面的那个键)有相同之处</p>
+<pre><code>$ ls
+a b c
+$ echo $(ls)
+a b c
+$ echo `ls`
+a b c
+</code></pre><p>我们来分析一下命令echo $(ls)，以便理解所谓命令替换是什么意思：
+shell扫描一遍命令行，发现了$(cmd)结构，便将$(cmd)中的cmd执行一次，得到其标准输出，再将此输出放到原来命令echo $(ls)中的$(ls)位置，即替换了$(ls),再执行echo命令。
+如下：
+echo $(ls)被替换成了echo a b c
+这里要注意的是$(cmd)中的命令的错误输出是不会被替换的，替换的只是标准输出：</p>
+<pre><code>$ var=$(cat d) ###文件d在当前目录不存在
+cat: d: 没有那个文件或目录
+$ echo $var
+
+$ ###显然var变量的值是空的
+</code></pre><h2 id="一串的命令执行和">一串的命令执行()和</h2>
+<p>()和{}都是对一串的命令进行执行，但有所区别：</p>
+<ul>
+<li>()只是对一串命令重新开一个子shell进行执行</li>
+<li>{}对一串命令在当前shell执行</li>
+<li>()和{}都是把一串的命令放在括号里面，并且命令之间用;号隔开</li>
+<li>()最后一个命令可以不用分号</li>
+<li>{}最后一个命令要用分号</li>
+<li>{}的第一个命令和左括号之间必须要有一个空格</li>
+<li>()里的各命令不必和括号有空格</li>
+<li>()和{}中括号里面的某个命令的重定向只影响该命令，但括号外的重定向则影响到括号里的所有命令</li>
+</ul>
+<p>我们来看几个例子：</p>
+<pre><code>$ var=test
+$ (var=notest; echo $var) ###变量var值为notest，此是在子shell中有效
+notest
+$ echo $var ###父shell中值仍为test
+test
+$ { var=notest; echo $var;} ###注意左括号和var之间要有一个空格
+notest
+$ echo $var ###父shell中的var变量的值变为了notest
+notest
+$ { var1=test1;var2=test2;echo $var1&gt;a;echo $var2;} ###输出test1被重定向到文件a中，
+test2 ###而test2输出则仍输出到标准输出中。
+$ cat a
+test1
+$ { var1=test1;var2=test2;echo $var1;echo $var2;}&gt;a ###括号内命令的标准输出全部被重定向到文件a中
+$ cat a
+test1
+test2
+</code></pre><p>下面是一个脚步例子：</p>
+<pre><code>(
+    echo &quot;1&quot;
+    echo &quot;2&quot;
+) | awk '{print NR,$0}'
+</code></pre><h2 id="几种特殊的替换结构var-string-varstring-varstring-varstring">几种特殊的替换结构：${var:-string}, ${var:+string}, ${var:=string}, ${var:?string}</h2>
+<h3 id="var-string和">${var:-string}和$</h3>
+<p>若变量var为空，则用在命令行中用string来替换${var:-string}，否则变量var不为空时，则用变量var的值来替换${var:-string}
+如：</p>
+<pre><code>$ echo $newvar
+
+$ echo ${newvar:-a} 
+a 
+$ echo $newvar ###变量newvar的值仍然是空，但上一命令行中${newvar:-a}被替换成了a
+
+$ newvar=b 
+$ echo ${newvar:-a} ###变量newvar的值不为空时，此命令行中的${newvar:-b}被替换为$newvar，即b 
+b 
+$
+</code></pre><p>对于${var:=string}的替换规则和${var:-string}是一样的，所不同之处是${var:=string}若var为空时，用string替换${var:=string}的同时，把string赋给变量var：</p>
+<pre><code>$ echo $newvar
+
+$ echo ${newvar:=a}
+a
+$ echo $newvar ###变量newvar被赋值为a，同时${newvar:=a}被替换成a
+a
+$ echo ${newvar:=b} ###变量newvar不为空(其值已被赋为a)，则${newvar:=b}被替换为newvar的值(即b)
+a
+$ echo $newvar
+a
+</code></pre><p>${var:=string}很常用的一种用法是，判断某个变量是否赋值，没有的话则给它赋上一个默认值。
+如设置默认的编辑器：
+PHP 代码:
+echo You use editor: ${EDITOR:=/bin/vi}</p>
+<h3 id="varstring">${var:+string}</h3>
+<p>${var:+string}的替换规则和上面的相反，即只有当var不是空的时候才替换成string，若var为空时则不替换或者说是替换成变量 var的值，即空值。(因为变量var此时为空，所以这两种说法是等价的)</p>
+<pre><code>$ echo $newvar
+a
+$ echo ${newvar:+b}
+b
+$ echo $newvar
+a
+$ newvar=
+$ echo ${newvar:+b}
+$
+</code></pre><h3 id="varstring-1">${var:?string}</h3>
+<p>替换规则为：若变量var不为空，则用变量var的值来替换${var:?string}；若变量var为空，则把string输出到标准错误中，并从脚本中退出。我们可利用此特性来检查是否设置了变量的值。</p>
+<pre><code>$ newvar=
+$ echo ${newvar:?没有设置newvar的值}
+bash: newvar: 没有设置newvar的值
+$ newvar=a
+$ echo ${newvar:?没有设置newvar的值}
+a
+$
+</code></pre><p>补充扩展：在上面这五种替换结构中string不一定是常值的，可用另外一个变量的值或是一种命令的输出。</p>
+<pre><code>$ echo ${var:-`date`} 
+日 3月 6 02:10:39 CST 2005 
+$ echo ${var:-$(date)} 
+日 3月 6 02:11:46 CST 2005 
+$ a=test 
+$ echo ${var:-$a} 
+test 
+$
+</code></pre><h2 id="posix标准的扩展计算exp">POSIX标准的扩展计算:$((exp))</h2>
+<p>这种计算是符合C语言的运算符，也就是说只要符合C的运算符都可用在$((exp))，甚至是三目运算符。
+注意：这种扩展计算是整数型的计算，不支持浮点型.若是逻辑判断，表达式exp为真则为1,假则为0。</p>
+<pre><code>$ echo $((3+2))
+5
+$ echo $((3&gt;2))
+1
+$ echo $((25&lt;3 ? 2:3))
+3
+$ echo $var
+
+$ echo $((var=2+3))
+5
+$ echo $var
+5
+$ echo $((var++))
+5
+$ echo $var
+6
+$
+</code></pre><p>好了，上面的例子足够了，这也表明了这种扩展运算是很强大的。</p>
+<h2 id="四种模式匹配替换结构varpattern-varpattern-varpatternvarpattern">四种模式匹配替换结构：${var%pattern}, ${var%%pattern}, ${var#pattern},${var##pattern}</h2>
+<p>这四种结构的意义是：${var%pattern}和${var%%pattern}表示从最右边(即结尾)匹配的，${var#pattern} 和${var##pattern}从最左边(即开头)匹配的。其中${var%pattern}和${var#pattern}是最短匹 配，${var%%pattern}和${var##pattern}是最长匹配。只有在pattern中使用了通配符才能有最长最短的匹配，否则没有最 长最短匹配之分。</p>
+<p>结构中的pattern支持通配符，*表示零个或多个任意字符，?表示零个或一个任意字符，[&hellip;]表示匹配中括号里面的字符，[!&hellip;]表示不匹配中括号里面的字符。</p>
+<pre><code>$ var=aabbbccbbdbb
+$ echo ${var%b}
+aabbbccbbdb
+$ echo ${var%%b}
+aabbbccbbdb
+$ echo ${var#a}
+abbbccbbdbb
+$ echo ${var##a}
+abbbccbbdbb
+$ echo ${var%\*b}
+aabbbccbbdb
+$ echo ${var%%\*b}
+
+$ echo ${var#a\*}
+abbbccbbdbb
+$ echo ${var##a\*}
+$
+</code></pre><p>上面是简单的例举四种模式匹配替换结构的用法。</p>
+<p><strong>一．   bash [  ] 单双括号</strong></p>
+<p><strong>基本要素：</strong></p>
+<p>Ø  <strong>[ ] 两个符号左右都要有空格分隔</strong></p>
+<p>Ø  <strong>内部操作符与操作变量之间要有空格：如  [  “a”  =  “b”  ]</strong></p>
+<p>Ø  <strong>字符串比较中，&gt; &lt; 需要写成\&gt; \&lt; 进行转义</strong></p>
+<p>Ø  <strong>[ ] 中字符串或者${}变量尽量使用&rdquo;&rdquo; 双引号扩住，避免值未定义引用而出错的好办法</strong></p>
+<p>Ø  <strong>[ ] 中可以使用 –a –o 进行逻辑运算</strong></p>
+<p>Ø  <strong>[ ] 是bash 内置命令：[ is a shell builtin</strong></p>
+<p><strong>1.测试时逻辑操作符</strong>
+操作符|含义
+:&mdash;:|:&mdash;:
+-a|逻辑与，操作符两边均为真，结果为真，否则为假。
+-o|逻辑或，操作符两边一边为真，结果为真，否则为假。
+!|逻辑否，条件为假，结果为真。</p>
+<p>举例: [ -w result.txt-<strong>a</strong> -w score.txt ] ;echo $? // 测试两个文件是否均可写</p>
+<p><strong>2.常见字符串测试</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">字符串</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">string</td>
+<td align="center">断字符串是否为空，为空真0,非空假1</td>
+</tr>
+<tr>
+<td align="center">-z string</td>
+<td align="center">字符串string 为空串(长度为0)时返回真</td>
+</tr>
+<tr>
+<td align="center">-n string</td>
+<td align="center">字符串string 为非空串时返回真</td>
+</tr>
+<tr>
+<td align="center">str1  =  str2</td>
+<td align="center">字符串str1 和字符串str2 相等时返回真</td>
+</tr>
+<tr>
+<td align="center">str1  ==  str2</td>
+<td align="center">同 =</td>
+</tr>
+<tr>
+<td align="center">str1  !=  str2</td>
+<td align="center">字符串str1 和字符串str2 不相等时返回真</td>
+</tr>
+<tr>
+<td align="center">str1  \ &lt;  str2</td>
+<td align="center">按字典顺序排序，字符串str1 在字符串str2 之前</td>
+</tr>
+<tr>
+<td align="center">str1  &gt;  str2</td>
+<td align="center">按字典顺序排序，字符串str1 在字符串str2 之后</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3.常见数值测试</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">操作符</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">int1 -eq int2</td>
+<td align="center">如果int1 等于int2，则返回真</td>
+</tr>
+<tr>
+<td align="center">int1 -ne int2</td>
+<td align="center">如果int1 不等于int2，则返回真</td>
+</tr>
+<tr>
+<td align="center">int1 -lt int2</td>
+<td align="center">如果int1 小于int2，则返回真</td>
+</tr>
+<tr>
+<td align="center">int1 -le int2</td>
+<td align="center">如果int1 小于等于int2，则返回真</td>
+</tr>
+<tr>
+<td align="center">int1 -gt int2</td>
+<td align="center">如果int1 大于int2，则返回真</td>
+</tr>
+<tr>
+<td align="center">int1 -ge int2</td>
+<td align="center">如果int1 大于等于int2，则返回真</td>
+</tr>
+</tbody>
+</table>
+<p><strong>4.文件状态测试</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">操作符</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">-b filename</td>
+<td align="center">当filename 存在并且是块文件时返回真(返回0)</td>
+</tr>
+<tr>
+<td align="center">-c filename</td>
+<td align="center">当filename 存在并且是字符文件时返回真</td>
+</tr>
+<tr>
+<td align="center">-d pathname</td>
+<td align="center">当pathname 存在并且是一个目录时返回真</td>
+</tr>
+<tr>
+<td align="center">-e pathname</td>
+<td align="center">当由pathname 指定的文件或目录存在时返回真</td>
+</tr>
+<tr>
+<td align="center">-f filename</td>
+<td align="center">当filename 存在并且是正规文件时返回真</td>
+</tr>
+<tr>
+<td align="center">-g pathname</td>
+<td align="center">当由pathname 指定的文件或目录存在并且设置了SGID 位时返回真</td>
+</tr>
+<tr>
+<td align="center">-h filename</td>
+<td align="center">当filename 存在并且是符号链接文件时返回真 (或 -L filename)</td>
+</tr>
+<tr>
+<td align="center">-k pathname</td>
+<td align="center">当由pathname 指定的文件或目录存在并且设置了&quot;粘滞&quot;位时返回真</td>
+</tr>
+<tr>
+<td align="center">-p filename</td>
+<td align="center">当filename 存在并且是命名管道时返回真</td>
+</tr>
+<tr>
+<td align="center">-r pathname</td>
+<td align="center">当由pathname 指定的文件或目录存在并且可读时返回真</td>
+</tr>
+<tr>
+<td align="center">-s filename</td>
+<td align="center">当filename 存在并且文件大小大于0 时返回真</td>
+</tr>
+<tr>
+<td align="center">-S filename</td>
+<td align="center">当filename 存在并且是socket 时返回真</td>
+</tr>
+<tr>
+<td align="center">-t fd</td>
+<td align="center">当fd 是与终端设备相关联的文件描述符时返回真</td>
+</tr>
+<tr>
+<td align="center">-u pathname</td>
+<td align="center">当由pathname 指定的文件或目录存在并且设置了SUID 位时返回真</td>
+</tr>
+<tr>
+<td align="center">-w pathname</td>
+<td align="center">当由pathname 指定的文件或目录存在并且可写时返回真</td>
+</tr>
+<tr>
+<td align="center">-x pathname</td>
+<td align="center">当由pathname 指定的文件或目录存在并且可执行时返回真</td>
+</tr>
+<tr>
+<td align="center">-O pathname</td>
+<td align="center">当由pathname 存在并且被当前进程的有效用户id 的用户拥有时返回真(字母O 大写)</td>
+</tr>
+<tr>
+<td align="center">-G pathname</td>
+<td align="center">当由pathname 存在并且属于当前进程的有效用户id 的用户的用户组时返回真</td>
+</tr>
+<tr>
+<td align="center">file1 -nt file2</td>
+<td align="center">file1 比file2 新时返回真</td>
+</tr>
+<tr>
+<td align="center">file1 -ot file2</td>
+<td align="center">file1 比file2 旧时返回真</td>
+</tr>
+<tr>
+<td align="center">f1 -ef f2</td>
+<td align="center">files f1 and f2 are hard links to the same file</td>
+</tr>
+</tbody>
+</table>
+<p><strong>二．   bash  [[  ]] 双方括号</strong></p>
+<p><strong>基本要素：</strong></p>
+<p>Ø  <strong>[[ ]] 两个符号左右都要有空格分隔</strong></p>
+<p>Ø  <strong>内部操作符与操作变量之间要有空格：如  [[  “a” =  “b”  ]]</strong></p>
+<p>Ø  <strong>字符串比较中，可以直接使用 &gt; &lt; 无需转义</strong></p>
+<p>Ø  <strong>[[ ]] 中字符串或者${}变量尽量如未使用&rdquo;&rdquo; 双引号扩住的话，会进行模式和元字符匹配</strong></p>
+<pre><code>\[root@localhostkuohao\]# \[\[ &quot;ab&quot;=a\* \]\] &amp;&amp; echo &quot;ok&quot;
+ok
+</code></pre><p>Ø  <strong>[[] ] 内部可以使用 &amp;&amp;  || 进行逻辑运算</strong></p>
+<p>Ø  <strong>[[ ]] 是bash  keyword：[[ is a shell keyword</strong></p>
+<p><strong>[[ ]] 其他用法都和[ ] 一样</strong></p>
+<p><strong>二者共同特性：</strong></p>
+<p>Ø <strong>&amp;&amp; ||-a –o 处理</strong></p>
+<pre><code>[  exp1  -a exp2  ] = [[  exp1 &amp;&amp; exp2 ]] = [  exp1  ]&amp;&amp; [  exp2  ] = [[ exp1  ]] &amp;&amp; [[  exp2 ]]
+
+[  exp1  -o exp2  ] = [[  exp1 || exp2 ]] = [  exp1  ]|| [  exp2  ] = [[ exp1  ]] || [[  exp2 ]]
+
+[root@localhost ~]# if [[ &quot;a&quot; == &quot;a&quot; &amp;&amp; 2 -gt1 ]] ;then echo &quot;ok&quot; ;fi
+
+ok
+
+[root@localhost ~]# if [[ &quot;a&quot; == &quot;a&quot; ]] &amp;&amp; [[2 -gt 1 ]] ;then echo &quot;ok&quot; ;fi
+
+ok
+
+[root@localhost ~]# if [[ &quot;a&quot; == &quot;a&quot; ]] || [[ 2 -gt 1]] ;then echo &quot;ok&quot; ;fi
+
+ok
+
+[root@localhost ~]# if [[ &quot;a&quot; == &quot;a&quot; ]] || [[ 2 -gt10 ]] ;then echo &quot;ok&quot; ;fi
+
+ok
+
+[root@localhost ~]# if [[ &quot;a&quot; == &quot;a&quot;  || 2 -gt 10 ]] ;then echo &quot;ok&quot; ;fi
+
+ok
+</code></pre><p>Ø <strong>[[ ]] 和 [ ] 都可以和 ! 配合使用</strong></p>
+<p>**优先级 !  &gt;  &amp;&amp; &gt; || **</p>
+<p><strong>逻辑运算符 &lt; 关系运算符</strong></p>
+<p><strong>逻辑运算符 ： !  &amp;&amp;  || -a  -o</strong></p>
+<p><strong>关系运算符 ： &lt;  &gt;  \&gt; \&lt;  ==  = !=  – eq –ne  -gt -ge  –lt  -le</strong></p>
+<p>-----------------------------------------------------------------------------</p>
+<p>n <strong>[[  ]] 比[ ] 具备的优势</strong></p>
+<p>-----------------------------------------------------------------------------</p>
+<p>    ①[[是 bash 程序语言的关键字。并不是一个命令，[[ ]] 结构比[ ]结构更加通用。在[[和]]之间所有的字符都不会发生文件名扩展或者单词分割，但是会发生参数扩展和命令替换。</p>
+<p>    ②支持字符串的模式匹配，使用=~操作符时甚至支持shell的正则表达式。字符串比较时可以把右边的作为一个模式，而不仅仅是一个字符串，比如[[ hello == hell? ]]，结果为真。[[ ]] 中匹配字符串或通配符，不需要引号。</p>
+<p>    ③使用[[ &hellip; ]]条件判断结构，而不是[&hellip; ]，能够防止脚本中的许多逻辑错误。比如，&amp;&amp;、||、&lt;和&gt; 操作符能够正常存在于[[ ]]条件判断结构中，但是如果出现在[ ]结构中的话，会报错。</p>
+<p>    ④bash把双中括号中的表达式看作一个单独的元素，并返回一个退出状态码。</p>
+<p>使用[[ &hellip; ]]条件判断结构, 而不是[ &hellip; ], 能够防止脚本中的许多逻辑错误. 比如,&amp;&amp;, ||, &lt;, 和&gt; 操作符能够正常存在于[[]]条件判断结构中, 但是如果出现在[ ]结构中的话, 会报错。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

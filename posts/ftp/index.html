@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ftp &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>ftp</h1>
+  <time datetime=2020-04-30T07:19:01Z class="post-date">Thu, Apr 30, 2020</time>
+  <h1 id="ftp">ftp</h1>
+<p>FTP 是File Transfer Protocol（文件传输协议）的英文简称，而中文简称为“文传协议”。</p>
+<p>用于Internet上的控制文件的双向传输。</p>
+<p>同时，它也是一个应用程序（Application）。基于不同的操作系统有不同的FTP应用程序，而所有这些应用程序都遵守同一种协议以传输文件。</p>
+<p>在FTP的使用当中，用户经常遇到两个概念：&ldquo;下载&rdquo;（Download）和&quot;上传&rdquo;（Upload）。</p>
+<p>&ldquo;下载&quot;文件就是从远程主机拷贝文件至自己的计算机上；</p>
+<p>&ldquo;上传&quot;文件就是将文件从自己的计算机中拷贝至远程主机上。用Internet语言来说，用户可通过客户机程序向（从）远程主机上传（下载）文件。</p>
+<p><img src="https://s1.ax1x.com/2020/03/24/8LNCh6.png" alt="8LNCh6.png"></p>
+<p>1.安装vsftpd服务器</p>
+<p><code>sudo apt-get install vsftpd</code></p>
+<p><img src="https://s1.ax1x.com/2020/03/24/8LNZBd.png" alt="8LNZBd.png"></p>
+<p>2.配置vsftpd.conf文件</p>
+<p><code>sudo vi /etc/vsftpd.conf</code></p>
+<p><img src="https://s1.ax1x.com/2020/03/24/8LNnAI.png" alt="8LNnAI.png">
+<img src="https://s1.ax1x.com/2020/03/24/8LNGuQ.png" alt="8LNGuQ.png">
+<img src="https://s1.ax1x.com/2020/03/24/8LN03T.png" alt="8LN03T.png">
+<img src="https://s1.ax1x.com/2020/03/24/8LNgER.png" alt="8LNgER.png">
+<img src="https://s1.ax1x.com/2020/03/24/8LNqUI.png" alt="8LNqUI.png">
+<img src="https://s1.ax1x.com/2020/03/24/8LNxxS.png" alt="8LNxxS.png">
+<img src="https://s1.ax1x.com/2020/03/24/8LUEGV.png" alt="8LUEGV.png">
+<img src="https://s1.ax1x.com/2020/03/24/8LUGRK.png" alt="8LUGRK.png">
+<img src="https://s1.ax1x.com/2020/03/24/8LUtMD.png" alt="8LUtMD.png">
+<img src="https://s1.ax1x.com/2020/03/24/8LUsRf.png" alt="8LUsRf.png">
+<img src="https://s1.ax1x.com/2020/03/24/8LU5iq.png" alt="8LU5iq.png"></p>
+<p>3.测试上传功能，登陆ftp服务器</p>
+<p><code>ftp  IP</code></p>
+<p><img src="https://s1.ax1x.com/2020/03/24/8LUoWV.png" alt="8LUoWV.png"></p>
+<p>4.上传命令，可以把文件上传到ftp服务器</p>
+<p><code>put somefile</code></p>
+<p>5.下载命令，可以把ftp服务器上的文件下载到本地</p>
+<p><code>get somefile</code></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

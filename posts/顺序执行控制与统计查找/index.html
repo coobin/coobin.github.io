@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>顺序执行控制与统计查找 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>顺序执行控制与统计查找</h1>
+  <time datetime=2020-05-11T12:58:03Z class="post-date">Mon, May 11, 2020</time>
+  <h1 id="顺序执行控制与统计查找">顺序执行控制与统计查找</h1>
+<h2 id="顺序执行多条命令">顺序执行多条命令</h2>
+<pre><code>$ sudo apt-get update;sudo apt-get install some-tool;some-tool
+# 按顺序执行,无论之前的命令是否成功,后续命令都会继续执行完成.
+</code></pre><h2 id="有选择的执行命令">有选择的执行命令</h2>
+<pre><code>$ which cowsay&gt;/dev/null &amp;&amp; cowsay -f head-in ohch~
+</code></pre><p>你如果没有安装<code>cowsay</code>，你可以先执行一次上述命令，你会发现什么也没发生，你再安装好之后你再执行一次上述命令，你也会发现一些惊喜。</p>
+<p>上面的<code>&amp;&amp;</code>就是用来实现选择性执行的，它表示如果前面的命令执行结果（不是表示终端输出的内容，而是表示命令执行状态的结果）返回 0 则执行后面的，否则不执行，你可以从<code>$?</code>环境变量获取上一次命令的返回结果：</p>
+<p><img src="https://doc.shiyanlou.com/document-uid1labid63timestamp1544148440172.png/wm" alt="此处输入图片的描述"></p>
+<p>学习过 C 语言的用户应该知道在 C 语言里面<code>&amp;&amp;</code>表示逻辑与，而且还有一个<code>||</code>表示逻辑或，同样 Shell 也有一个<code>||</code>，它们的区别就在于，shell 中的这两个符号除了也可用于表示逻辑与和或之外，就是可以实现这里的命令执行顺序的简单控制。<code>||</code>在这里就是与<code>&amp;&amp;</code>相反的控制效果，当上一条命令执行结果为 ≠0($?≠0)时则执行它后面的命令：</p>
+<pre><code>$ which cowsay&gt;/dev/null || echo &quot;cowsay has not been install, please run 'sudo apt-get install cowsay' to install&quot;
+</code></pre><p>除了上述基本的使用之外，我们还可以结合着<code>&amp;&amp;</code>和<code>||</code>来实现一些操作，比如：</p>
+<pre><code>$ which cowsay&gt;/dev/null &amp;&amp; echo &quot;exist&quot; || echo &quot;not exist&quot;
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid63timestamp1532414664955.png/wm" alt="此处输入图片的描述"></p>
+<p>我画个流程图来解释一下上面的流程：
+<img src="https://doc.shiyanlou.com/linux_base/8-3.png/wm" alt=""></p>
+<h2 id="管道">管道|</h2>
+<p><code>ls -al /etc | less</code>
+通过管道将前一个命令(ls)的输出作为下一个命令(less)的输入，然后就可以一行一行地看。</p>
+<h2 id="cut-命令打印每一行的某一字段">cut 命令，打印每一行的某一字段</h2>
+<p>打印<code>/etc/passwd</code>文件中以<code>:</code>为分隔符的第 1 个字段和第 6 个字段分别表示用户名和其家目录：</p>
+<pre><code>$ cut /etc/passwd -d ':' -f 1,6
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid63timestamp1532414685006.png/wm" alt="此处输入图片的描述">
+打印<code>/etc/passwd</code>文件中每一行的前 N 个字符：</p>
+<pre><code># 前五个（包含第五个）
+$ cut /etc/passwd -c -5
+# 前五个之后的（包含第五个）
+$ cut /etc/passwd -c 5-
+# 第五个
+$ cut /etc/passwd -c 5
+# 2到5之间的（包含第五个）
+$ cut /etc/passwd -c 2-5
+</code></pre><h2 id="grep-命令在文本中或-stdin-中查找匹配字符串">grep 命令，在文本中或 stdin 中查找匹配字符串</h2>
+<p><code>grep</code>命令的一般形式为：</p>
+<pre><code>grep [命令选项]... 用于匹配的表达式 [文件]...
+</code></pre><p>还是先体验一下，我们搜索<code>/home/shiyanlou</code>目录下所有包含&quot;shiyanlou&quot;的文本文件，并显示出现在文本中的行号：</p>
+<pre><code>$ grep -rnI &quot;shiyanlou&quot; ~
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid63timestamp1532414709836.png/wm" alt="此处输入图片的描述"></p>
+<p><code>-r</code> 参数表示递归搜索子目录中的文件,<code>-n</code>表示打印匹配项行号，<code>-I</code>表示忽略二进制文件。这个操作实际没有多大意义，但可以感受到<code>grep</code>命令的强大与实用。</p>
+<p>当然也可以在匹配字段中使用正则表达式，下面简单的演示：</p>
+<pre><code># 查看环境变量中以&quot;yanlou&quot;结尾的字符串
+$ export | grep &quot;.*yanlou$&quot;
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid63timestamp1532414725827.png/wm" alt="此处输入图片的描述">
+其中<code>$</code>就表示一行的末尾。</p>
+<h2 id="wc-命令简单小巧的计数工具wc-命令用于统计并输出一个文件中行单词和字节的数目比如输出etcpasswd文件的统计信息">wc 命令，简单小巧的计数工具wc 命令用于统计并输出一个文件中行、单词和字节的数目，比如输出<code>/etc/passwd</code>文件的统计信息：</h2>
+<pre><code>$ wc /etc/passwd
+</code></pre><p>分别只输出行数、单词数、字节数、字符数和输入文本中最长一行的字节数：</p>
+<pre><code># 行数
+$ wc -l /etc/passwd
+# 单词数
+$ wc -w /etc/passwd
+# 字节数
+$ wc -c /etc/passwd
+# 字符数
+$ wc -m /etc/passwd
+# 最长行字节数
+$ wc -L /etc/passwd
+</code></pre><p><strong>注意：对于西文字符来说，一个字符就是一个字节，但对于中文字符一个汉字是大于 2 个字节的，具体数目是由字符编码决定的</strong></p>
+<p><img src="https://doc.shiyanlou.com/document-uid735639labid63timestamp1532414808838.png/wm" alt="此处输入图片的描述"></p>
+<p>再来结合管道来操作一下，下面统计 /etc 下面所有目录数：</p>
+<pre><code>$ ls -dl /etc/*/ | wc -l
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid600404labid6125timestamp1523946094712.png/wm" alt="此处输入图片的描述"></p>
+<h2 id="sort-排序">sort 排序</h2>
+<p>将输入按照一定方式排序，然后再输出,它支持的排序有按字典排序,数字排序，按月份排序，随机排序，反转排序，指定特定字段进行排序等等。</p>
+<p>默认为字典排序：</p>
+<pre><code>$ cat /etc/passwd | sort
+</code></pre><p>反转排序：</p>
+<pre><code>$ cat /etc/passwd | sort -r
+</code></pre><p>按特定字段排序：</p>
+<pre><code>$ cat /etc/passwd | sort -t':' -k 3
+</code></pre><p>上面的<code>-t</code>参数用于指定字段的分隔符，这里是以&rdquo;:&ldquo;作为分隔符；<code>-k 字段号</code>用于指定对哪一个字段进行排序。这里<code>/etc/passwd</code>文件的第三个字段为数字，默认情况下是以字典序排序的，如果要按照数字排序就要加上<code>-n</code>参数：</p>
+<pre><code>$ cat /etc/passwd | sort -t':' -k 3 -n
+</code></pre><p>注意观察第二个冒号后的数字： <img src="https://doc.shiyanlou.com/document-uid735639labid63timestamp1532414849333.png/wm" alt="此处输入图片的描述"></p>
+<h2 id="uniq-去重">uniq 去重</h2>
+<p><code>uniq</code>命令可以用于过滤或者输出重复行。</p>
+<ul>
+<li>过滤重复行</li>
+</ul>
+<p>我们可以使用<code>history</code>命令查看最近执行过的命令（实际为读取${SHELL}_history 文件,如我们环境中的~/.zsh_history 文件），不过你可能只想查看使用了哪个命令而不需要知道具体干了什么，那么你可能就会要想去掉命令后面的参数然后去掉重复的命令：</p>
+<pre><code>$ history | cut -c 8- | cut -d ' ' -f 1 | uniq
+</code></pre><p>然后经过层层过滤，你会发现确是只输出了执行的命令那一列，不过去重效果好像不明显，仔细看你会发现它确实去重了，只是不那么明显，之所以不明显是<strong>因为<code>uniq</code>命令只能去连续重复的行，不是全文去重</strong>，所以要达到预期效果，我们先排序：</p>
+<pre><code>$ history | cut -c 8- | cut -d ' ' -f 1 | sort | uniq
+# 或者$ history | cut -c 8- | cut -d ' ' -f 1 | sort -u
+</code></pre><p>这就是 Linux/UNIX 哲学吸引人的地方，大繁至简，一个命令只干一件事却能干到最好。</p>
+<ul>
+<li>输出重复行</li>
+</ul>
+<pre><code># 输出重复过的行（重复的只输出一个）及重复次数
+$ history | cut -c 8- | cut -d ' ' -f 1 | sort | uniq -dc
+# 输出所有重复的行
+$ history | cut -c 8- | cut -d ' ' -f 1 | sort | uniq -D
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

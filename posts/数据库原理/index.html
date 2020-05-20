@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>数据库原理 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>数据库原理</h1>
+  <time datetime=2020-04-16T08:22:45Z class="post-date">Thu, Apr 16, 2020</time>
+  <h1 id="数据库原理">数据库原理</h1>
+<h2 id="数据库管理系统">数据库管理系统</h2>
+<h3 id="优点">优点</h3>
+<ul>
+<li>相互关联的数据的集合</li>
+<li>较少的数据冗余</li>
+<li>程序与数据相互读独立</li>
+<li>保证数据的安全、可靠</li>
+<li>最大限度地保证数据的正确性</li>
+<li>数据可以并发使用并且同时保证一致性</li>
+</ul>
+<h3 id="基本功能">基本功能</h3>
+<ul>
+<li>数据定义</li>
+<li>数据处理</li>
+<li>数据安全</li>
+<li>数据备份</li>
+</ul>
+<h3 id="架构">架构</h3>
+<ul>
+<li>单机架构</li>
+<li>大型主机/终端架构</li>
+<li>主从式架构(C/S)</li>
+<li>分布式架构</li>
+</ul>
+<h2 id="关系型数据库">关系型数据库</h2>
+<ul>
+<li>row(行):表中的每一行,又称为一条记录</li>
+<li>column(列):表中的每一列,称为属性</li>
+<li>Primary Key(主键):用于唯一确定一个记录的字段</li>
+<li>domain(域):属性的取值范围</li>
+</ul>
+<h3 id="transaction事物">Transaction事物</h3>
+<p>在数据库系统中，一个事务是指：由一系列数据库操作组成的一个完整的逻辑过程。例如银行转帐，从原账户扣除金额，以及向目标账户添加金额，这两个数据库操作的总和，构成一个完整的逻辑过程，不可拆分。这个过程被称为一个事务，具有ACID特性。</p>
+<h4 id="acid">ACID</h4>
+<h5 id="概念">概念</h5>
+<p>是指数据库管理系统（DBMS）在写入或更新资料的过程中，为保证事务（transaction）是正确可靠的。</p>
+<h5 id="特性">特性</h5>
+<ul>
+<li>Atomicity（原子性）：一个事务（transaction）中的所有操作，或者全部完成，或者全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。即，事务不可分割、不可约简。</li>
+<li>Consistency（一致性）：在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设约束、触发器、级联回滚等。</li>
+<li>Isolation（隔离性）：数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括未提交读（Read uncommitted）、提交读（read committed）、可重复读（repeatable read）和串行化（Serializable）。</li>
+<li>Durability（持久性）：事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</li>
+</ul>
+<h3 id="er模型">ER模型</h3>
+<p>实体联系模型，是概念数据模型的高层描述所使用的数据模型或模式图。</p>
+<h4 id="数据模型三要素">数据模型三要素</h4>
+<ul>
+<li>数据结构</li>
+<li>数据操作</li>
+<li>数据约束</li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

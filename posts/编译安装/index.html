@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>编译安装 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>编译安装</h1>
+  <time datetime=2020-05-08T14:22:30Z class="post-date">Fri, May 8, 2020</time>
+  <h1 id="编译安装">编译安装</h1>
+<h2 id="准备工作">准备工作</h2>
+<p>    那么，要如何才能从源代码安装软件呢？首先，你必须要做好为编译源代码所需的准备工作。这包括两个方面：</p>
+<ol>
+<li>
+<p><strong>编译工具</strong>：要将源代码编译成可执行的二进制文件，编译工具必不可少： gcc , g++ , make , autoconfig 等等。在CentOS系列中，可以通过  yum -y groupinstall &ldquo;Development Tools&rdquo; 来安装。在 Ubuntu 中，可以从终端中执行 <code>sudo apt-get install build-essential</code> 指令来安装基本的编译工具。根据所编译程序的实际情况，你也可能需要安装其他一些工具。</p>
+</li>
+<li>
+<p>编译依赖：除了安装基本的编译工具之外，为了顺利编译源代码，我们也要把该程序所需要的依赖安装好。包含系统提供的库函数， 以及第三方软件的依赖包。在CentOS系列中，可以通过 yum -y install  xxxx   xxxx-devel  来安装相应的依赖包。Ubuntu 系统可以通过 <code>sudo apt-get build-dep</code>命令后跟包名的方式来准备所需的依赖。一般情况下，如果 configure 或者 make 报错，其报错信息都明确的指出缺少依赖，只需按要求做即可。或者把错误信息复制到 google 一下，即可愉快的解决。</p>
+</li>
+</ol>
+<h2 id="源码安装3部曲-configure--make--make-install">源码安装3部曲： ./configure ; make &amp;&amp; make install</h2>
+<p>    在编译源代码之前，你一定把软件的源码包下载到了自己的硬盘上吧。一般而言，程序源码包经常被打包成 .tar.gz 和 .tar.bz2 这两种格式。前者可用 <code>tar zxvf *.tar.gz</code> 来解包，后者则用 <code>tar jxvf *.tar.bz2</code>。通常情况建议解压到 /usr/local/src 目录： # tar xf *.tar.gz -C /usr/local/src</p>
+<p>    通常，在解包后，我们应该阅读程序附带的相关说明文件，如 README（自述文件）、INSTALL（安装文件）等，以便了解程序的编译介绍。这一步超级重要！！！</p>
+<p>当所有的事情都准备妥当了后，那么让我们来进行源代码编译的三部曲吧。</p>
+<ol>
+<li>
+<p>配置，建立makefile文件：这是编译源代码的第一步，通过 <code>./configure</code> 命令完成。执行此步以便为编译源代码作准备。常用的选项有 <code>--</code>prefix=PREFIX，用以指定程序的安装位置。例如<code>./configure --prefix=/usr/local/memcached/</code>.更多的选项可通过 --help 查询。也有某些程序无需执行此步。</p>
+</li>
+<li>
+<p>编译：一旦配置通过，可即刻使用 <code>make</code> 指令根据makefile的定义，调用 gcc 来执行源代码的编译过程。视软件的具体情况而定，编译所需的时间也各有差异，我们所要做的就是耐心等候和静观其变。此步虽然仅下简单的指令，但有时候所遇到的问题却十分复杂。较常碰到的情形是程序编译到中途却无法圆满结束。此时，需要根据出错提示分析以便找到应对之策。需要执行 make clean , 然后再重新执行 make 指令。</p>
+</li>
+<li>
+<p>安装：如果编译没有问题，那么执行 <code>make install</code> 就可以将程序安装到系统中了。</p>
+</li>
+</ol>
+<p>需要注意的是：上面的步骤必须一步一步的进行，只要其中的一个步骤无法成功，那么后续就完全没有办法再进行。</p>
+<h2 id="管理目录规划卸载升级">管理：目录规划，卸载，升级</h2>
+<ul>
+<li>
+<p>源码通常解压到 /usr/local/src 目录</p>
+</li>
+<li>
+<p>安装时最好安装在 /usr/local 目录</p>
+</li>
+<li>
+<p>将 软件的 man page 加入 man path 中， 编辑 /etc/man.config ，增加 MANPATH  项。</p>
+</li>
+<li>
+<p>把软件的 bin 目录加入到 PATH 环境变量， 编辑 /etc/profile.d/xxxx.sh, 增加 export PATH=$PATH:/usr/local/xxx/bin</p>
+</li>
+</ul>
+<p>若是觉得所编译的软件不够适用想要删除，又如何做呢？我们只需转到编译源代码的目录，执行 <code>sudo make uninstall</code> 命令。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

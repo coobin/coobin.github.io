@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Git&#39;s Graph Model &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Git&#39;s Graph Model</h1>
+  <time datetime=2020-04-18T09:26:34Z class="post-date">Sat, Apr 18, 2020</time>
+  <h1 id="gits-graph-model">Git&rsquo;s Graph Model</h1>
+<h2 id="directed-acyclic-graph-dag">Directed Acyclic Graph (DAG)</h2>
+<h3 id="graph">Graph</h3>
+<ul>
+<li>A way to model connected things</li>
+<li>Contain <em>nodes</em> connected by <em>edge</em>
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/NwIjEV.png" alt="NwIjEV"></li>
+</ul>
+<h3 id="direcrted-graph">Direcrted Graph</h3>
+<ul>
+<li>Nodes are connected in a certain director
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/4buWZ8.png" alt="4buWZ8"></li>
+</ul>
+<h4 id="arrow-direction">Arrow direction</h4>
+<ul>
+<li>Direction depends on how you define the relationship
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/rcBqqj.png" alt="rcBqqj"></li>
+</ul>
+<h3 id="acyclic">Acyclic</h3>
+<ul>
+<li>Acyclic mean &ldquo;no cycles&rdquo; or &ldquo;non-circular&rdquo;
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/yy35Fv.png" alt="yy35Fv"></li>
+</ul>
+<h3 id="dag">DAG</h3>
+<ul>
+<li>Contains nodes connected with arrows and has no cycles
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/qo6NO0.png" alt="qo6NO0"></li>
+</ul>
+<h3 id="git-dag">Git DAG</h3>
+<ul>
+<li>Git models the relationship of commits with a DAG</li>
+<li>The arrows point at a commit&rsquo;s parent(s)
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/RXhWWW.png" alt="RXhWWW"></li>
+</ul>
+<h3 id="branch">Branch</h3>
+<ul>
+<li>Occurs if a commit has more than one child
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/kvTBj9.png" alt="kvTBj9"></li>
+</ul>
+<h3 id="merge">Merge</h3>
+<ul>
+<li>A <em>merge</em> occurs when a commit has more than one parent
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/xtbjQT.png" alt="xtbjQT"></li>
+</ul>
+<h2 id="git-ids">Git IDs</h2>
+<h3 id="git-objects">Git Objects</h3>
+<ol>
+<li>Commit - A small text file</li>
+<li>Annotated tages - A permanent reference to a commit</li>
+<li>Tree - Directories and filenames in the project</li>
+<li>Blob - The content of a file in the project</li>
+</ol>
+<h3 id="git-ids-1">Git IDs</h3>
+<ul>
+<li>The name of a Git object</li>
+<li>40-character hexadecimal sting</li>
+<li>Also known as <em>object ID, SHA-1, hash</em> and <em>checksum</em>
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/ndGRKX.png" alt="ndGRKX"></li>
+</ul>
+<h4 id="secure-hash-algorithm-1-sha-1">Secure Hash Algorithm 1 (SHA-1)</h4>
+<ul>
+<li>Git IDs are <em>SHA-1</em> values</li>
+<li>Unique for a given piece of content (statistically speaking)</li>
+</ul>
+<h5 id="sha-1-is-designed-to-avalanche">SHA-1 is designed to avalanche</h5>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/iVYXM7.png" alt="iVYXM7"></p>
+<h4 id="creating-a-sha-1-for-file-contents">Creating a SHA-1 for file contents</h4>
+<p>Use <code>git hush-object &lt;file&gt;</code> to creat an SHA-1 for any content
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/QXz978.png" alt="QXz978"></p>
+<h4 id="shortened-git-ids">Shortened Git IDs</h4>
+<ul>
+<li>Four or more characters of the beginning of a Git ID
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/1NaKyo.png" alt="1NaKyo"></li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

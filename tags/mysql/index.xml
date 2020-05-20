@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MySQL on 梦还在吗</title>
+    <link>http://example.org/tags/mysql/</link>
+    <description>Recent content in MySQL on 梦还在吗</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 11 May 2020 12:31:54 +0000</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Install MySQL</title>
+      <link>http://example.org/posts/install-mysql/</link>
+      <pubDate>Mon, 11 May 2020 12:31:54 +0000</pubDate>
+      
+      <guid>http://example.org/posts/install-mysql/</guid>
+      <description>Install MySQL Ubuntu 在 Ubuntu 上安装 MySQL，最简单的方式是在线安装。只需要几行简单的命令（ # 号后面是注释）：
+#安装 MySQL 服务端、核心程序 sudo apt-get install mysql-server #安装 MySQL 客户端 sudo apt-get install mysql-client 在安装过程中会提示确认输入 YES，设置 root 用户密码（之后也可以修改）等，稍等片刻便可安装成功。
+安装结束后，用命令验证是否安装并启动成功：
+sudo netstat -tap | grep mysql 如果出现如下提示，则安装成功：
+此时，可以根据自己的需求，用 gedit 修改 MySQL 的配置文件（my.cnf）,使用以下命令:
+sudo gedit /etc/mysql/my.cnf 至此，MySQL 已经安装、配置完成，可以正常使用了。
+CentOS 引言 最近某云搞活动，买了个服务器作为平时学习和测试用，新机器啥也没有，一些常用软件的安装是免不了的，于是乎想着把安装过程都详细记录下来，一是做个备忘，二是给有需要的同学作个参考。
+Linux上安装软件常见的几种方式：
+ 源码编译 压缩包解压（一般为tar.gz） 编译好的安装包（RPM、DPKG等） 在线安装（YUM、APT等）  以上几种方式便捷性依次增加，但通用性依次下降，比如直接下载压缩包进行解压，这种方式一般需要自己做一些额外的配置工作，但只要掌握了方法，各个平台基本都适用，YUM虽然简单，但是平台受限，网络受限，必要的时候还需要增加一些特定YUM源。
+几种安装方式最好都能掌握，原则上能用简单的就用简单的：YUM&amp;gt;RPM&amp;gt;tar.gz&amp;gt;源码
+本文是介绍MySQL在CentOS上的安装，主要步骤都是参考了MySQL官方文档：dev.mysql.com/doc/refman/…
+为了测试不同安装方式，反复折腾了好几次，装了删，删了装，每个步骤都是亲测成功的，每条命令都是亲自执行过的，可以放心使用
+咱们闲话少说，书归正传（这闲话就不少了&amp;hellip;）
+一、YUM 0、删除已安装的MySQL 检查MariaDB shell&amp;gt; rpm -qa|grep mariadb mariadb-server-5.5.60-1.el7_5.x86_64 mariadb-5.5.60-1.el7_5.x86_64 mariadb-libs-5.5.60-1.el7_5.x86_64 删除mariadb 如果不存在（上面检查结果返回空）则跳过步骤</description>
+    </item>
+    
+    <item>
+      <title>MySQL 操作</title>
+      <link>http://example.org/posts/mysql-%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Mon, 11 May 2020 12:28:59 +0000</pubDate>
+      
+      <guid>http://example.org/posts/mysql-%E6%93%8D%E4%BD%9C/</guid>
+      <description>MySQL 操作 MySQL 教程_w3cschool
+基本操作 创建数据库 mysqladmin -u root -p create W3CSCHOOL
+删除数据库 mysqladmin -u root -p drop W3CSCHOOL
+修改密码 mysqladmin -u USER -p password PASSWORD 该命令之后会提示输入原密码，输入正确后即可修改。 例如，设置root用户的密码为123456，则 mysqladmin -u root -p password 123456
+选择数据库 [root@host]# mysql -u root -p Enter password:****** mysql&amp;gt; use W3CSCHOOL; Database changed mysql&amp;gt; 创建数据表： CREATE TABLE table_name (column_name column_type,column_name2 column_type2);
+删除数据表： DROP TABLE table_name ;
+插入数据 INSERT INTO table_name ( field1, field2,...fieldN ) VALUES ( value1, value2,.</description>
+    </item>
+    
+    <item>
+      <title>SELECT 详解</title>
+      <link>http://example.org/posts/select-%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Thu, 23 Apr 2020 14:29:47 +0000</pubDate>
+      
+      <guid>http://example.org/posts/select-%E8%AF%A6%E8%A7%A3/</guid>
+      <description>SELECT 详解 Where SELECT 要查询的列名 FROM 表名字 WHERE 限制条件;
+=,&amp;lt;,&amp;gt;,&amp;gt;=,&amp;lt;= # 筛选出 age 大于25的 SELECT name,age FROM employee WHERE age&amp;gt;25; # 查找一个名字为 Mary 的员工的 name,age 和 phone： SELECT name,age,phone FROM employee WHERE name=&#39;Mary&#39;; AND,OR # 筛选出 age 小于 25，或 age 大于 30 SELECT name,age FROM employee WHERE age&amp;lt;25 OR age&amp;gt;30; #筛选出 age 大于 25，且 age 小于 30 SELECT name,age FROM employee WHERE age&amp;gt;25 AND age&amp;lt;30; # 筛选出 age 在25到30之间的 SELECT name,age FROM employee WHERE age BETWEEN 25 AND 30 IN,NOT IN # 要查询在 dpt3 或 dpt4 的人 SELECT name,age,phone,in_dpt FROM employee WHERE in_dpt IN (&#39;dpt3&#39;,&#39;dpt4&#39;); # 查询出了不在 dpt1 也不在 dpt3 的人 SELECT name,age,phone,in_dpt FROM employee WHERE in_dpt NOT IN (&#39;dpt1&#39;,&#39;dpt3&#39;); 通配符 关键字 LIKE 可用于实现模糊查询，常见于搜索功能中。</description>
+    </item>
+    
+    <item>
+      <title>MySQL 约束</title>
+      <link>http://example.org/posts/mysql-%E7%BA%A6%E6%9D%9F/</link>
+      <pubDate>Thu, 23 Apr 2020 08:50:59 +0000</pubDate>
+      
+      <guid>http://example.org/posts/mysql-%E7%BA%A6%E6%9D%9F/</guid>
+      <description>MySQL 约束 约束分类 听名字就知道，约束是一种限制，它通过对表的行或列的数据做出限制，来确保表的数据的完整性、唯一性。
+比如，规定一个用户的用户名不能为空值且没有重复的记录，这就是一种约束规则。
+在MySQL中，通常有这几种约束：
+   约束类型： 主键 默认值 唯一 外键 非空     关键字： PRIMARY KEY DEFAULT UNIQUE FOREIGN KEY NOT NULL    建立含约束的表 为了方便介绍这几种约束，我们先建立一个数据库。
+ 注：如果你是从上一节直接进入本节进行学习的，请先删除上一节建立的数据库mysql_shiyan，删除语句为DROP DATABASE mysql_shiyan; 关于数据库的删除操作我们会具体讲解，这里先继续实验。
+ 当然不用你一行一行地输入命令搭建这个数据库，实验楼已经为你准备好了。首先打开 Xfce 终端，输入命令进入 /home/shiyanlou/Desktop 目录：
+cd Desktop 使用 git 命令将需要的数据文件下载到本地文件夹：
+git clone https://github.com/shiyanlou/SQL3.git 下载完成后，输入命令开启 MySQL 服务并使用 root 用户登录：
+#打开 MySQL 服务 sudo service mysql start #使用 root 用户登录 mysql -u root [{&amp;ldquo;name&amp;rdquo;:&amp;ldquo;check service&amp;rdquo;,&amp;ldquo;script&amp;rdquo;:&amp;quot;#!</description>
+    </item>
+    
+    <item>
+      <title>MySQL 常见问题</title>
+      <link>http://example.org/posts/mysql-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 23 Apr 2020 08:40:38 +0000</pubDate>
+      
+      <guid>http://example.org/posts/mysql-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+      <description>MySQL 常见问题 MySQL跳过登录验证 打开 vim /etc/my.cnf 并在[mysql]下面加上skip-grant-tables 这个用于跳过密码问题. 2. 重启mysql服务
+修改密码   USE mysql
+  UPDATE user SET authentication_string = password(&amp;quot;123456&amp;quot;) WHERE user=&amp;quot;root&amp;quot;;
+  FLUSH PRIVILEGES;
+  </description>
+    </item>
+    
+    <item>
+      <title>MySQL 数据类型</title>
+      <link>http://example.org/posts/mysql-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Thu, 23 Apr 2020 06:53:37 +0000</pubDate>
+      
+      <guid>http://example.org/posts/mysql-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+      <description>MySQL 数据类型    数据类型 大小(字节) 用途 格式     INT 4 整数    FLOAT 4 单精度浮点数    DOUBLE 8 双精度浮点数    ENUM -- 单选,比如性别 ENUM(&amp;lsquo;a&amp;rsquo;,&amp;lsquo;b&amp;rsquo;,&amp;lsquo;c&amp;rsquo;)   SET -- 多选 SET(&amp;lsquo;1&amp;rsquo;,&amp;lsquo;2&amp;rsquo;,&amp;lsquo;3&amp;rsquo;)   DATE 3 日期 YYYY-MM-DD   TIME 3 时间点或持续时间 HH:MM:SS   YEAR 1 年份值 YYYY   CHAR 0~255 定长字符串    VARCHAR 0~255 变长字符串    TEXT 0~65535 长文本数据     整数除了 INT 外，还有 TINYINT、SMALLINT、MEDIUMINT、BIGINT。</description>
+    </item>
+    
+    <item>
+      <title>数据库原理</title>
+      <link>http://example.org/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Thu, 16 Apr 2020 08:22:45 +0000</pubDate>
+      
+      <guid>http://example.org/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/</guid>
+      <description>数据库原理 数据库管理系统 优点  相互关联的数据的集合 较少的数据冗余 程序与数据相互读独立 保证数据的安全、可靠 最大限度地保证数据的正确性 数据可以并发使用并且同时保证一致性  基本功能  数据定义 数据处理 数据安全 数据备份  架构  单机架构 大型主机/终端架构 主从式架构(C/S) 分布式架构  关系型数据库  row(行):表中的每一行,又称为一条记录 column(列):表中的每一列,称为属性 Primary Key(主键):用于唯一确定一个记录的字段 domain(域):属性的取值范围  Transaction事物 在数据库系统中，一个事务是指：由一系列数据库操作组成的一个完整的逻辑过程。例如银行转帐，从原账户扣除金额，以及向目标账户添加金额，这两个数据库操作的总和，构成一个完整的逻辑过程，不可拆分。这个过程被称为一个事务，具有ACID特性。
+ACID 概念 是指数据库管理系统（DBMS）在写入或更新资料的过程中，为保证事务（transaction）是正确可靠的。
+特性  Atomicity（原子性）：一个事务（transaction）中的所有操作，或者全部完成，或者全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。即，事务不可分割、不可约简。 Consistency（一致性）：在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设约束、触发器、级联回滚等。 Isolation（隔离性）：数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括未提交读（Read uncommitted）、提交读（read committed）、可重复读（repeatable read）和串行化（Serializable）。 Durability（持久性）：事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。  ER模型 实体联系模型，是概念数据模型的高层描述所使用的数据模型或模式图。
+数据模型三要素  数据结构 数据操作 数据约束  </description>
+    </item>
+    
+    <item>
+      <title>SQL</title>
+      <link>http://example.org/posts/sql/</link>
+      <pubDate>Tue, 14 Apr 2020 10:04:53 +0000</pubDate>
+      
+      <guid>http://example.org/posts/sql/</guid>
+      <description>SQL SQL语句  Structured Query Language,结构化查询语音 非过程性的语言:一条语言就对应一个返回结果.  SQL分类  DDL:数据定义语言  CREATE, DROP, ALTER 操作表   DML:数据操作语言  INSERT, DELETE, UPDATE 操作数据   DCL:数据控制语言  GRANT, REVOKE   DQL:数据查询语言  SELECT    </description>
+    </item>
+    
+  </channel>
+</rss>

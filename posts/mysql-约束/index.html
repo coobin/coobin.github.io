@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MySQL 约束 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>MySQL 约束</h1>
+  <time datetime=2020-04-23T08:50:59Z class="post-date">Thu, Apr 23, 2020</time>
+  <h1 id="mysql-约束">MySQL 约束</h1>
+<h2 id="约束分类">约束分类</h2>
+<p>听名字就知道，约束是一种限制，它通过对表的行或列的数据做出限制，来确保表的数据的完整性、唯一性。</p>
+<p>比如，规定一个用户的用户名不能为空值且没有重复的记录，这就是一种约束规则。</p>
+<p>在MySQL中，通常有这几种约束：</p>
+<table>
+<thead>
+<tr>
+<th>约束类型：</th>
+<th>主键</th>
+<th>默认值</th>
+<th>唯一</th>
+<th>外键</th>
+<th>非空</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关键字：</td>
+<td>PRIMARY KEY</td>
+<td>DEFAULT</td>
+<td>UNIQUE</td>
+<td>FOREIGN KEY</td>
+<td>NOT NULL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="建立含约束的表">建立含约束的表</h2>
+<p>为了方便介绍这几种约束，我们先建立一个数据库。</p>
+<blockquote>
+<p>注：如果你是从上一节直接进入本节进行学习的，请先删除上一节建立的数据库<code>mysql_shiyan</code>，删除语句为<code>DROP DATABASE mysql_shiyan;</code> 关于数据库的删除操作我们会具体讲解，这里先继续实验。</p>
+</blockquote>
+<p>当然不用你一行一行地输入命令搭建这个数据库，实验楼已经为你准备好了。首先打开 Xfce 终端，输入命令进入 <code>/home/shiyanlou/Desktop</code> 目录：</p>
+<pre><code>cd Desktop
+</code></pre><p>使用 git 命令将需要的数据文件下载到本地文件夹：</p>
+<pre><code>git clone https://github.com/shiyanlou/SQL3.git
+</code></pre><p>下载完成后，输入命令开启 MySQL 服务并使用 root 用户登录：</p>
+<pre><code>#打开 MySQL 服务
+sudo service mysql start
+
+#使用 root 用户登录
+mysql -u root
+</code></pre><p>[{&ldquo;name&rdquo;:&ldquo;check service&rdquo;,&ldquo;script&rdquo;:&quot;#!/bin/bash\nps -ef | grep -v grep | grep mysql\n&rdquo;,&ldquo;error&rdquo;:&ldquo;还没有启动 mysql&rdquo;}]</p>
+<p>刚才下载的 SQL3 目录下，有个文件 <code>MySQL-03-01.sql</code>，其中包含的代码可以新建一个数据库 <code>mysql_shiyan</code>,然后在其中创建三张表 <code>department</code>，<code>employee</code>，<code>project</code>，它们包含了各种约束。</p>
+<p>（SQL3 目录在桌面上，你可以用Gedit查看里面的 <code>MySQL-03-01.sql</code> 文件。）</p>
+<p>如果你是接着上一个实验开始操作的话，记得先使用如下命令删掉 mysql_shiyan 数据库：</p>
+<pre><code>drop database mysql_shiyan;
+</code></pre><p>加载文件中的数据，需要在 MySQL 控制台中输入命令：</p>
+<pre><code>source /home/shiyanlou/Desktop/SQL3/MySQL-03-01.sql;
+</code></pre><p>查看一下这个数据库，输入命令 <code>show tables;</code>，可见：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-03-00.png/wm" alt="00"></p>
+<h2 id="主键">主键</h2>
+<p>在数据库中，如果有两行记录数据完全一样，那么如何来区分呢？ 答案是无法区分，如果有两行记录完全相同，那么对于 Mysql 就会认定它们是同一个实体，这于现实生活是存在差别的。</p>
+<p>假如我们要存储一个学生的信息，信息包含姓名，身高，性别，年龄。</p>
+<p>不幸的是有两个女孩都叫小梦，且她们的身高和年龄相同，数据库将无法区分这两个实体，这时就需要用到主键了。</p>
+<p>主键 (PRIMARY KEY)是用于约束表中的一行，作为这一行的唯一标识符，在一张表中通过主键就能准确定位到一行，因此主键十分重要，主键不能有重复记录且不能为空。</p>
+<p>在 <code>MySQL-03-01.sql</code> 中，这里有主键：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-03-07.png/wm" alt="07"></p>
+<p>也可以这样定义主键：</p>
+<p><img src="https://doc.shiyanlou.com/1sql-03-08-.png/wm" alt="08-"></p>
+<p>还有一种特殊的主键——复合主键。主键不仅可以是表中的一列，也可以由表中的两列或多列来共同标识，比如：</p>
+<p><img src="https://doc.shiyanlou.com/1sql-03-09-.png/wm" alt="09-"></p>
+<h2 id="默认值约束">默认值约束</h2>
+<p>默认值约束 (DEFAULT) 规定，当有 DEFAULT 约束的列，插入数据为空时，将使用默认值。</p>
+<p>默认值常用于一些可有可无的字段，比如用户的个性签名，如果用户没有设置，系统给他应该设定一个默认的文本，比如空文本或 ‘这个人太懒了，没有留下任何信息’</p>
+<p>在 <code>MySQL-03-01.sql</code> 中，这段代码包含了 DEFAULT 约束：</p>
+<pre><code>people_num INT(10) DEFAULT 10,
+</code></pre><p>DEFAULT 约束只会在使用 INSERT 语句（上一实验介绍过）时体现出来， INSERT 语句中，如果被 DEFAULT 约束的位置没有值，那么这个位置将会被 DEFAULT 的值填充，如语句：</p>
+<pre><code># 正常插入数据
+INSERT INTO department(dpt_name,people_num) VALUES('dpt1',11);
+
+#插入新的数据，people_num 为空，使用默认值
+INSERT INTO department(dpt_name) VALUES('dpt2');
+</code></pre><p>输入命令 <code>SELECT * FROM department;</code>，可见表中第二行的people_num 被 DEFAULT 的值 (10) 填充：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-03-01.png/wm" alt="01"></p>
+<h2 id="唯一约束">唯一约束</h2>
+<p>唯一约束 (UNIQUE) 比较简单，它规定一张表中指定的一列的值必须不能有重复值，即这一列每个值都是唯一的。</p>
+<p>在 <code>MySQL-03-01.sql</code> 中，也有 UNIQUE 约束：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-03-11.png/wm" alt="11"></p>
+<p>当 INSERT 语句新插入的数据和已有数据重复的时候，如果有 UNIQUE 约束，则 INSERT 失败，比如：</p>
+<pre><code>INSERT INTO employee VALUES(01,'Tom',25,3000,110110,'dpt1');
+INSERT INTO employee VALUES(02,'Jack',30,3500,110110,'dpt2');
+</code></pre><p>结果如图：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-03-02.png/wm" alt="02"></p>
+<h2 id="外键约束">外键约束</h2>
+<p>外键 (FOREIGN KEY) 既能确保数据完整性，也能表现表之间的关系。</p>
+<p>比如，现在有用户表和文章表，给文章表中添加一个指向用户 id 的外键，表示这篇文章所属的用户 id，外键将确保这个外键指向的记录是存在的，如果你尝试删除一个用户，而这个用户还有文章存在于数据库中，那么操作将无法完成并报错。因为你删除了该用户过后，他发布的文章都没有所属用户了，而这样的情况是不被允许的。同理，你在创建一篇文章的时候也不能为它指定一个不存在的用户 id。</p>
+<p>一个表可以有多个外键，每个外键必须 REFERENCES (参考) 另一个表的主键，被外键约束的列，取值必须在它参考的列中有对应值。</p>
+<p><img src="https://doc.shiyanlou.com/1sql-03-12-.png/wm" alt="12-"></p>
+<p>在 INSERT 时，如果被外键约束的值没有在参考列中有对应，比如以下命令，参考列 (department 表的 dpt_name) 中没有 dpt3，则 INSERT 失败：</p>
+<pre><code>INSERT INTO employee VALUES(02,'Jack',30,3500,114114,'dpt3');
+</code></pre><p>可见之后将 dpt3 改为 dpt2（department 表中有 dpt2），则插入成功：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-03-03.png/wm" alt="03"></p>
+<h2 id="非空约束">非空约束</h2>
+<p>非空约束 (NOT NULL),听名字就能理解，被非空约束的列，在插入值时必须非空。</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-03-13.png/wm" alt="13"></p>
+<p>在MySQL中违反非空约束，会报错，比如以下语句：</p>
+<pre><code>#INSERT 成功 age 为空，因为没有非空约束，表中显示 NULL
+INSERT INTO employee(id,name,salary,phone,in_dpt) VALUES(03,'Jim',3400,119119,'dpt2');
+
+#报错 salary 被非空约束，插入数据失败
+INSERT INTO employee(id,name,age,phone,in_dpt) VALUES(04,'Bob',23,123456,'dpt1');
+</code></pre><p>结果如图，插入数据失败，实验楼的 MySQL 环境是 <code>5.7.22</code>，禁止插入不符合非空约束的数据：</p>
+<p><img src="https://doc.shiyanlou.com/document-uid600404labid73timestamp1529106622613.png/wm" alt="04"></p>
+<p>此时 employee 表的内容为：</p>
+<p><img src="https://doc.shiyanlou.com/document-uid600404labid73timestamp1529106642913.png/wm" alt="05"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

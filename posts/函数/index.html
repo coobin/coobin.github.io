@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>函数 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>函数</h1>
+  <time datetime=2020-04-24T10:24:19Z class="post-date">Fri, Apr 24, 2020</time>
+  <h1 id="函数">函数</h1>
+<h2 id="函数定义">函数定义</h2>
+<p>shell中函数的定义格式如下：</p>
+<pre><code>[ function ] funname [()]
+
+{
+
+    action;
+
+    [return int;]
+
+}
+</code></pre><p>说明：</p>
+<blockquote>
+<ul>
+<li>可以带function fun() 定义，也可以直接fun() 定义,不带任何参数。</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>参数返回，可以显示加：return 返回，如果不加，将以最后一条命令运行结果，作为返回值。 return后跟数值n(0-255)</li>
+</ul>
+</blockquote>
+<p>下面的例子定义了一个函数并进行调用：</p>
+<pre><code>#!/bin/bash
+
+demoFun(){
+    echo &quot;This is my first shell function!&quot;
+}
+echo &quot;-----Execution-----&quot;
+demoFun
+echo &quot;-----Finished-----&quot;
+
+Output the result：
+-----Execution-----
+This is my first shell function!
+-----Finished-----
+</code></pre><p>下面定义一个带有return语句的函数：</p>
+<pre><code>#!/bin/bash
+funWithReturn(){
+    echo &quot;This function will add the two numbers of the input...&quot;
+    echo &quot;Enter the first number: &quot;
+    read aNum
+    echo &quot;Enter the second number: &quot;
+    read anotherNum
+    echo &quot;The two numbers are $aNum and $anotherNum !&quot;
+    return $(($aNum+$anotherNum))
+}
+funWithReturn
+echo &quot;The sum of the two numbers entered is $? !&quot;
+</code></pre><p>输出类似下面：</p>
+<pre><code>This function will add the two numbers of the input...
+Enter the first number:
+1
+Enter the second number:
+2
+The two numbers are 1 and  2 !
+The sum of the two numbers entered is 3 !
+</code></pre><blockquote>
+<ul>
+<li>函数返回值在调用该函数后通过 $? 来获得</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>所有函数在使用前必须定义。</li>
+</ul>
+</blockquote>
+<h2 id="函数参数">函数参数</h2>
+<p>在Shell中，调用函数时可以向其传递参数。在函数体内部，通过 n的形式来获取参数的值，例如，n 的形式来获取参数的值，例如， n的形式 来获取参数的值 ，例如， 1表示第一个参数，$2表示第二个参数&hellip; 带参数的函数示例：</p>
+<pre><code>#!/bin/bash
+funWithParam(){
+    echo &quot;The first parameter is $1 !&quot;
+    echo &quot;The second parameter is $2 !&quot;
+    echo &quot;The tenth parameter is $10 !&quot;
+    echo &quot;The tenth parameter is ${10} !&quot;
+    echo &quot;The eleventh parameter is ${11} !&quot;
+    echo &quot;The total number of parameters is $# !&quot;
+    echo &quot;Outputs all parameters as a string $* !&quot;
+}
+funWithParam 1 2 3 4 5 6 7 8 9 34 73
+</code></pre><p>输出结果：</p>
+<pre><code>The first parameter is 1 !
+The second parameter is 2 !
+The tenth parameter is 10 !
+The tenth parameter is 34 !
+The eleventh parameter is 73 !
+The total number of parameters is 11 !
+Outputs all parameters as a string 1 2 3 4 5 6 7 8 9 34 73 !
+</code></pre><p><strong>注意</strong></p>
+<blockquote>
+<p>10不能获取第十个参数，获取第十个参数需要10 不能获取第十个参数，获取第十个参数需要 10不能获 取第十个参数， 获取第十个参数 需要 {10}。当n&gt;=10时，需要使用${n}来获取参数。</p>
+</blockquote>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

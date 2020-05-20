@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CSS选择器 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>CSS选择器</h1>
+  <time datetime=2020-04-05T07:06:14Z class="post-date">Sun, Apr 5, 2020</time>
+  <h1 id="css选择器">CSS选择器</h1>
+<h3 id="id">ID</h3>
+<p>/#ID{}</p>
+<h3 id="class">class</h3>
+<p>.class{}</p>
+<h3 id="标签选择器">标签选择器</h3>
+<p>标签{}</p>
+<h3 id="通配符选择器">通配符选择器</h3>
+<p>*{}</p>
+<h3 id="属性选择器">属性选择器</h3>
+<p>[]{}</p>
+<h2 id="优先级">优先级</h2>
+<p>!important&gt;行间样式&gt;ID&gt;class=属性选择器&gt;标签选择器&gt;通配符选择器
+<code>!important</code>可以把优先级提到最高</p>
+<p>CSS权重</p>
+<p>!important				Infinity
+行间样式				1000
+id						100
+class｜属性｜伪类		10
+标签｜伪元素			1
+通配符					0</p>
+<p>PS：权重为256进制</p>
+<table>
+<thead>
+<tr>
+<th align="center">选择器</th>
+<th align="center">例子</th>
+<th align="center">例子描述</th>
+<th align="center">CSS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">.class</td>
+<td align="center">.intro</td>
+<td align="center">选择class=&quot;intro&rdquo; 的所有元素。</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">#id</td>
+<td align="center">#firstname</td>
+<td align="center">选择 id=&quot;firstname&rdquo; 的所有元素。</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>|*	|选择所有元素。	|2
+element	|p	|选择所有 <!-- raw HTML omitted --> 元素。	|1
+element,element	|div,p	|选择所有 <!-- raw HTML omitted --> 元素和所有 <!-- raw HTML omitted --> 元素。	|1
+element element	|div p	|选择 <!-- raw HTML omitted --> 元素内部的所有 <!-- raw HTML omitted --> 元素。	|1
+element&gt;element	|div&gt;p	|选择父元素为 <!-- raw HTML omitted --> 元素的所有 <!-- raw HTML omitted --> 元素。	|2
+element+element	|div+p	|选择紧接在 <!-- raw HTML omitted --> 元素之后的所有 <!-- raw HTML omitted --> 元素。	|2
+[attribute]	|[target]	|选择带有 target 属性所有元素。	|2
+[attribute=value]	|[target=_blank]	|选择 target=&rdquo;_blank&rdquo; 的所有元素。	|2
+[attribute~=value]	|[title~=flower]	|选择 title 属性包含单词 &ldquo;flower&rdquo; 的所有元素。	|2
+[attribute|=value]	|[lang|=en]	|选择 lang 属性值以 &ldquo;en&rdquo; 开头的所有元素。	|2
+:link	|a:link	|选择所有未被访问的链接。	|1
+:visited	|a:visited	|选择所有已被访问的链接。	|1
+:active	|a:active	|选择活动链接。	|1
+:hover	|a:hover	|选择鼠标指针位于其上的链接。	|1
+:focus	|input:focus	|选择获得焦点的 input 元素。	|2
+:first-letter	|p:first-letter	|选择每个 <!-- raw HTML omitted --> 元素的首字母。	|1
+:first-line	|p:first-line	|选择每个 <!-- raw HTML omitted --> 元素的首行。	|1
+:first-child	|p:first-child	|选择属于父元素的第一个子元素的每个 <!-- raw HTML omitted --> 元素。	|2
+:before	|p:before	|在每个 <!-- raw HTML omitted --> 元素的内容之前插入内容。	|2
+:after	|p:after	|在每个 <!-- raw HTML omitted --> 元素的内容之后插入内容。	|2
+:lang(language)	|p:lang(it)	|选择带有以 &ldquo;it&rdquo; 开头的 lang 属性值的每个 <!-- raw HTML omitted --> 元素。	|2
+element1~element2	|p~ul	|选择前面有 <!-- raw HTML omitted --> 元素的每个 <!-- raw HTML omitted --> 元素。	|3
+[attribute^=value]	|a[src^=&quot;https&rdquo;]	|选择其 src 属性值以 &ldquo;https&rdquo; 开头的每个 <!-- raw HTML omitted --> 元素。	|3
+[attribute$=value]	|a[src$=&rdquo;.pdf&rdquo;]	|选择其 src 属性以 &ldquo;.pdf&rdquo; 结尾的所有 <!-- raw HTML omitted --> 元素。	|3
+[attribute*=value]	|a[src*=&quot;abc&rdquo;]	|选择其 src 属性中包含 &ldquo;abc&rdquo; 子串的每个 <!-- raw HTML omitted --> 元素。	|3
+:first-of-type	|p:first-of-type	|选择属于其父元素的首个 <!-- raw HTML omitted --> 元素的每个 <!-- raw HTML omitted --> 元素。	|3
+:last-of-type	|p:last-of-type	|选择属于其父元素的最后 <!-- raw HTML omitted --> 元素的每个 <!-- raw HTML omitted --> 元素。	|3
+:only-of-type	|p:only-of-type	|选择属于其父元素唯一的 <!-- raw HTML omitted --> 元素的每个 <!-- raw HTML omitted --> 元素。	|3
+:only-child	|p:only-child	|选择属于其父元素的唯一子元素的每个 <!-- raw HTML omitted --> 元素。	|3
+:nth-child(n)	|p:nth-child(2)	|选择属于其父元素的第二个子元素的每个 <!-- raw HTML omitted --> 元素。	|3
+:nth-last-child(n)	|p:nth-last-child(2)	|同上，从最后一个子元素开始计数。	|3
+:nth-of-type(n)	|p:nth-of-type(2)	|选择属于其父元素第二个 <!-- raw HTML omitted --> 元素的每个 <!-- raw HTML omitted --> 元素。	|3
+:nth-last-of-type(n)	|p:nth-last-of-type(2)	|同上，但是从最后一个子元素开始计数。	|3
+:last-child	|p:last-child	|选择属于其父元素最后一个子元素每个 <!-- raw HTML omitted --> 元素。	|3
+:root	|:root	|选择文档的根元素。	|3
+:empty	|p:empty	|选择没有子元素的每个 <!-- raw HTML omitted --> 元素（包括文本节点）。	|3
+:target	|#news:target	|选择当前活动的 #news 元素。	|3
+:enabled	|input:enabled	|选择每个启用的 <!-- raw HTML omitted --> 元素。	|3
+:disabled	|input:disabled	|选择每个禁用的 <!-- raw HTML omitted --> 元素	|3
+:checked	|input:checked	|选择每个被选中的 <!-- raw HTML omitted --> 元素。	|3
+:not(selector)	|:not(p)	|选择非 <!-- raw HTML omitted --> 元素的每个元素。	|3
+::selection	|::selection	|选择被用户选取的元素部分。	|3</li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

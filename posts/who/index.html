@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>who &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>who</h1>
+  <time datetime=2020-05-11T05:41:32Z class="post-date">Mon, May 11, 2020</time>
+  <h1 id="who">who</h1>
+<p><strong>who命令</strong>是显示目前登录系统的用户信息。执行who命令可得知目前有那些用户登入系统，单独执行who命令会列出登入帐号，使用的终端机，登入时间以及从何处登入或正在使用哪个X显示器。</p>
+<h3 id="语法">语法</h3>
+<pre><code>who(选项)(参数)
+</code></pre><h3 id="选项">选项</h3>
+<pre><code>-H或--heading：显示各栏位的标题信息列；
+-i或-u或--idle：显示闲置时间，若该用户在前一分钟之内有进行任何动作，将标示成&quot;.&quot;号，如果该用户已超过24小时没有任何动作，则标示出&quot;old&quot;字符串；
+-m：此参数的效果和指定&quot;am i&quot;字符串相同；
+-q或--count：只显示登入系统的帐号名称和总人数；
+-s：此参数将忽略不予处理，仅负责解决who指令其他版本的兼容性问题；
+-w或-T或--mesg或--message或--writable：显示用户的信息状态栏；
+--help：在线帮助；
+--version：显示版本信息。
+</code></pre><h3 id="参数">参数</h3>
+<p>文件：指定查询文件。</p>
+<h3 id="实例">实例</h3>
+<pre><code>[root@localhost ~]# who
+root     pts/0        2013-08-19 15:04 (192.168.0.134)
+root     pts/1        2013-12-20 10:37 (180.111.155.40)
+
+[root@localhost ~]# who -q
+root root
+# users=2
+
+[root@localhost ~]# who -H
+NAME     LINE         time             COMMENT
+root     pts/0        2013-08-19 15:04 (192.168.0.134)
+root     pts/1        2013-12-20 10:37 (180.111.155.40)
+
+[root@localhost ~]# who -w
+root     + pts/0        2013-08-19 15:04 (192.168.0.134)
+root     + pts/1        2013-12-20 10:37 (180.111.155.40)
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

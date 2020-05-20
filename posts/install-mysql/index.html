@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Install MySQL &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Install MySQL</h1>
+  <time datetime=2020-05-11T12:31:54Z class="post-date">Mon, May 11, 2020</time>
+  <h1 id="install-mysql">Install MySQL</h1>
+<h2 id="ubuntu">Ubuntu</h2>
+<p>在 Ubuntu 上安装 MySQL，最简单的方式是在线安装。只需要几行简单的命令（ <code>#</code> 号后面是注释）：</p>
+<pre><code>#安装 MySQL 服务端、核心程序
+sudo apt-get install mysql-server
+
+#安装 MySQL 客户端
+sudo apt-get install mysql-client
+</code></pre><p>在安装过程中会提示确认输入 YES，设置 root 用户密码（之后也可以修改）等，稍等片刻便可安装成功。</p>
+<p>安装结束后，用命令验证是否安装并启动成功：</p>
+<pre><code>sudo netstat -tap | grep mysql
+</code></pre><p>如果出现如下提示，则安装成功：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-01-02.png/wm" alt="1-02"></p>
+<p>此时，可以根据自己的需求，用 gedit 修改 MySQL 的配置文件（my.cnf）,使用以下命令:</p>
+<pre><code>sudo gedit /etc/mysql/my.cnf
+</code></pre><p>至此，MySQL 已经安装、配置完成，可以正常使用了。</p>
+<h2 id="centos">CentOS</h2>
+<h3 id="引言">引言</h3>
+<p>最近某云搞活动，买了个服务器作为平时学习和测试用，新机器啥也没有，一些常用软件的安装是免不了的，于是乎想着把安装过程都详细记录下来，一是做个备忘，二是给有需要的同学作个参考。</p>
+<p>Linux上安装软件常见的几种方式：</p>
+<ul>
+<li>源码编译</li>
+<li>压缩包解压（一般为tar.gz）</li>
+<li>编译好的安装包（RPM、DPKG等）</li>
+<li>在线安装（YUM、APT等）</li>
+</ul>
+<p>以上几种方式便捷性依次增加，但通用性依次下降，比如直接下载压缩包进行解压，这种方式一般需要自己做一些额外的配置工作，但只要掌握了方法，各个平台基本都适用，YUM虽然简单，但是平台受限，网络受限，必要的时候还需要增加一些特定YUM源。</p>
+<p>几种安装方式最好都能掌握，原则上能用简单的就用简单的：YUM&gt;RPM&gt;tar.gz&gt;源码</p>
+<p>本文是介绍MySQL在CentOS上的安装，主要步骤都是参考了MySQL官方文档：<a href="https://dev.mysql.com/doc/refman/5.7/en/installing.html">dev.mysql.com/doc/refman/…</a></p>
+<p>为了测试不同安装方式，反复折腾了好几次，装了删，删了装，每个步骤都是亲测成功的，每条命令都是亲自执行过的，可以放心使用</p>
+<p>咱们闲话少说，书归正传（这闲话就不少了&hellip;）</p>
+<h3 id="一yum">一、YUM</h3>
+<h4 id="0删除已安装的mysql">0、删除已安装的MySQL</h4>
+<h5 id="检查mariadb">检查MariaDB</h5>
+<pre><code>shell&gt; rpm -qa|grep mariadb
+mariadb-server-5.5.60-1.el7_5.x86_64
+mariadb-5.5.60-1.el7_5.x86_64
+mariadb-libs-5.5.60-1.el7_5.x86_64
+</code></pre><h5 id="删除mariadb">删除mariadb</h5>
+<p>如果不存在（上面检查结果返回空）则跳过步骤</p>
+<pre><code>shell&gt; rpm -e --nodeps mariadb-server
+shell&gt; rpm -e --nodeps mariadb
+shell&gt; rpm -e --nodeps mariadb-libs
+</code></pre><p><em>其实yum方式安装是可以不用删除mariadb的，安装MySQL会覆盖掉之前已存在的mariadb</em></p>
+<h5 id="检查mysql">检查MySQL</h5>
+<pre><code>shell&gt; rpm -qa|grep mysql
+</code></pre><h5 id="删除mysql">删除MySQL</h5>
+<p>如果不存在（上面检查结果返回空）则跳过步骤</p>
+<pre><code>shell&gt; rpm -e --nodeps xxx
+</code></pre><h3 id="1添加mysql-yum-repository">1、添加MySQL Yum Repository</h3>
+<blockquote>
+<p>从CentOS 7开始，MariaDB成为Yum源中默认的数据库安装包。也就是说在CentOS 7及以上的系统中使用yum安装MySQL默认安装的会是MariaDB（MySQL的一个分支）。如果想安装官方MySQL版本，需要使用MySQL提供的Yum源。</p>
+</blockquote>
+<h5 id="下载mysql源">下载MySQL源</h5>
+<p>官网地址：<a href="https://dev.mysql.com/downloads/repo/yum/">dev.mysql.com/downloads/r…</a></p>
+<p>查看系统版本：</p>
+<pre><code>shell&gt; cat /etc/redhat-release
+CentOS Linux release 7.6.1810 (Core)
+</code></pre><p>选择对应的版本进行下载，例如CentOS 7当前在官网查看最新Yum源的下载地址为： <a href="https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm">dev.mysql.com/get/mysql80…</a></p>
+<pre><code>shell&gt; wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+</code></pre><h5 id="安装mysql源">安装MySQL源</h5>
+<pre><code>shell&gt; sudo rpm -Uvh platform-and-version-specific-package-name.rpm
+</code></pre><p>例如CentOS7当前最新MySQL源安装：</p>
+<pre><code>shell&gt; sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm
+</code></pre><h5 id="检查是否安装成功">检查是否安装成功</h5>
+<p>执行成功后会在<code>/etc/yum.repos.d/</code>目录下生成两个repo文件<code>mysql-community.repo</code>及 <code>mysql-community-source.repo</code></p>
+<p>并且通过<code>yum repolist</code>可以看到mysql相关资源</p>
+<pre><code>shell&gt; yum repolist enabled | grep &quot;mysql.*-community.*&quot;
+!mysql-connectors-community/x86_64 MySQL Connectors Community                108
+!mysql-tools-community/x86_64      MySQL Tools Community                      90
+!mysql80-community/x86_64          MySQL 8.0 Community Server                113
+</code></pre><h3 id="2选择mysql版本">2、选择MySQL版本</h3>
+<p>使用MySQL Yum Repository安装MySQL，默认会选择当前最新的稳定版本，例如通过上面的MySQL源进行安装的话，默安装会选择MySQL 8.0版本，如果就是想要安装该版本，可以直接跳过此步骤，如果不是，比如我这里希望安装MySQL5.7版本，就需要“切换一下版本”：</p>
+<h5 id="查看当前mysql-yum-repository中所有mysql版本每个版本在不同的子仓库中">查看当前MySQL Yum Repository中所有MySQL版本（每个版本在不同的子仓库中）</h5>
+<pre><code>shell&gt; yum repolist all | grep mysql
+</code></pre><h5 id="切换版本">切换版本</h5>
+<pre><code>shell&gt; sudo yum-config-manager --disable mysql80-community
+shell&gt; sudo yum-config-manager --enable mysql57-community
+</code></pre><p>除了使用yum-config-manager之外，还可以直接编辑<code>/etc/yum.repos.d/mysql-community.repo</code>文件</p>
+<p>enabled=0禁用</p>
+<pre><code>[mysql80-community]
+name=MySQL 8.0 Community Server
+baseurl=http://repo.mysql.com/yum/mysql-8.0-community/el/7/$basearch/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
+</code></pre><p>enabled=1启用</p>
+<pre><code># Enable to use MySQL 5.7
+[mysql57-community]
+name=MySQL 5.7 Community Server
+baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/7/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
+</code></pre><h5 id="检查当前启用的mysql仓库">检查当前启用的MySQL仓库</h5>
+<pre><code>shell&gt; yum repolist enabled | grep mysql
+</code></pre><p><em>如果同时启用了多个仓库，安装时会选择最新版本</em></p>
+<h3 id="3安装mysql">3、安装MySQL</h3>
+<pre><code>shell&gt; sudo yum install mysql-community-server
+</code></pre><p>该命令会安装MySQL服务器 (mysql-community-server) 及其所需的依赖、相关组件，包括mysql-community-client、mysql-community-common、mysql-community-libs等</p>
+<p>如果带宽不够，这个步骤时间会比较长，请耐心等待~</p>
+<h3 id="4启动mysql">4、启动MySQL</h3>
+<h5 id="启动">启动</h5>
+<pre><code>shell&gt; sudo systemctl start mysqld.service
+</code></pre><p>CentOS 6：</p>
+<pre><code>shell&gt; sudo service mysqld start
+</code></pre><h5 id="查看状态">查看状态</h5>
+<pre><code>shell&gt; sudo systemctl status mysqld.service
+</code></pre><p>CentOS 6：</p>
+<pre><code>shell&gt; sudo service mysqld status
+</code></pre><h5 id="停止">停止</h5>
+<pre><code>shell&gt; sudo systemctl stop mysqld.service
+</code></pre><p>CentOS 6：</p>
+<pre><code>shell&gt; sudo service mysqld stop
+</code></pre><h5 id="重启">重启</h5>
+<pre><code>shell&gt; sudo systemctl restart mysqld.service
+</code></pre><p>CentOS 6：</p>
+<pre><code>shell&gt; sudo service mysqld restart
+</code></pre><h3 id="5修改密码">5、修改密码</h3>
+<h5 id="初始密码">初始密码</h5>
+<p>MySQL第一次启动后会创建超级管理员账号<code>root@localhost</code>，初始密码存储在日志文件中：</p>
+<pre><code>shell&gt; sudo grep 'temporary password' /var/log/mysqld.log
+</code></pre><h5 id="修改默认密码">修改默认密码</h5>
+<pre><code>shell&gt; mysql -uroot -p
+</code></pre><pre><code>mysql&gt; ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+ERROR 1819 (HY000): Your password does not satisfy the current policy requirements
+</code></pre><p>出现上面的提示是因为密码太简单了，解决方法如下：</p>
+<ol>
+<li>使用复杂密码，MySQL默认的密码策略是要包含数字、字母及特殊字符；</li>
+<li>如果只是测试用，不想用那么复杂的密码，可以修改默认策略，即<code>validate_password_policy</code>（以及<code>validate_password_length</code>等相关参数），使其支持简单密码的设定，具体方法可以自行百度；</li>
+<li>修改配置文件<code>/etc/my.cnf</code>，添加<code>validate_password=OFF</code>，保存并重启MySQL</li>
+</ol>
+<pre><code>mysql&gt; ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+Query OK, 0 rows affected (0.00 sec)
+</code></pre><blockquote>
+<p>修改mysql用户密码
+1.mysqladmin命令
+<code>mysqladmin -u USER -p password PASSWORD</code>
+该命令之后会提示输入原密码，输入正确后即可修改。
+例如，设置root用户的密码为123456，则
+<code>mysqladmin -u root -p password 123456</code>
+2.UPDATE user 语句
+这种方式必须是先用root帐户登入mysql，然后执行：
+<code>UPDATE user SET password=PASSWORD('123456') WHERE user='root';</code>
+<code>FLUSH PRIVILEGES;</code>
+3.SET PASSWORD 语句
+这种方式也需要先用root命令登入mysql，然后执行：
+<code>SET PASSWORD FOR root=PASSWORD('123456');</code></p>
+</blockquote>
+<h3 id="6允许root远程访问">6、允许root远程访问</h3>
+<pre><code>mysql&gt; GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+mysql&gt; FLUSH PRIVILEGES;
+</code></pre><h3 id="7设置编码为utf8">7、设置编码为utf8</h3>
+<h5 id="查看编码">查看编码</h5>
+<pre><code>mysql&gt; SHOW VARIABLES LIKE 'character%';
+</code></pre><h5 id="设置编码">设置编码</h5>
+<p>编辑/etc/my.cnf，[mysqld]节点增加以下代码：</p>
+<pre><code>[mysqld]
+character_set_server=utf8
+init-connect='SET NAMES utf8'
+</code></pre><h3 id="8设置开机启动">8、设置开机启动</h3>
+<pre><code>shell&gt; systemctl enable mysqld
+shell&gt; systemctl daemon-reload
+</code></pre><h3 id="二rpm">二、RPM</h3>
+<blockquote>
+<p>除安装过程外，其他步骤和yum方式安装相同，不再赘述</p>
+</blockquote>
+<h4 id="0删除已旧版本">0、删除已旧版本</h4>
+<p>略</p>
+<h4 id="1下载mysql安装包">1、下载MySQL安装包</h4>
+<p>下载地址：<a href="https://dev.mysql.com/downloads/mysql/">dev.mysql.com/downloads/m…</a></p>
+<p>选择对应的版本：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/6/18/16b66894c80e9b32?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<pre><code>shell&gt; wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.26-1.el7.x86_64.rpm-bundle.tar
+</code></pre><h4 id="2安装mysql">2、安装MySQL</h4>
+<h5 id="解压解打包">解压（解打包）</h5>
+<pre><code>shell&gt; tar -xvf mysql-5.7.26-1.el7.x86_64.rpm-bundle.tar
+tar -xvf mysql-5.7.26-1.el7.x86_64.rpm-bundle.tar
+mysql-community-embedded-devel-5.7.26-1.el7.x86_64.rpm
+mysql-community-libs-5.7.26-1.el7.x86_64.rpm
+mysql-community-embedded-5.7.26-1.el7.x86_64.rpm
+mysql-community-test-5.7.26-1.el7.x86_64.rpm
+mysql-community-embedded-compat-5.7.26-1.el7.x86_64.rpm
+mysql-community-common-5.7.26-1.el7.x86_64.rpm
+mysql-community-devel-5.7.26-1.el7.x86_64.rpm
+mysql-community-client-5.7.26-1.el7.x86_64.rpm
+mysql-community-server-5.7.26-1.el7.x86_64.rpm
+</code></pre><p>我们主要安装的是这四个（如果有需要也可以一并安装其它的）：</p>
+<pre><code>mysql-community-libs-5.7.26-1.el7.x86_64.rpm
+mysql-community-common-5.7.26-1.el7.x86_64.rpm
+mysql-community-client-5.7.26-1.el7.x86_64.rpm
+mysql-community-server-5.7.26-1.el7.x86_64.rpm
+</code></pre><p>如果不想下载rpm-bundle，官网也提供单独的rpm下载链接</p>
+<h5 id="安装">安装</h5>
+<p>各rpm包是有依赖关系的，所以需要按照一定顺序进行安装，安装期间如果提示缺少哪些依赖也要先安装相应的包：</p>
+<pre><code>shell&gt; rpm -ivh mysql-community-common-5.7.26-1.el7.x86_64.rpm
+shell&gt; rpm -ivh mysql-community-libs-5.7.26-1.el7.x86_64.rpm
+shell&gt; rpm -ivh mysql-community-client-5.7.26-1.el7.x86_64.rpm
+shell&gt; rpm -ivh mysql-community-server-5.7.26-1.el7.x86_64.rpm
+</code></pre><p>还有一种简单的方式，可以自动处理各个包之间的依赖关系并自动下载缺少的依赖：</p>
+<pre><code>shell&gt; yum install mysql-community-{server,client,common,libs}-*
+</code></pre><p><em>注意：上面的<code>yum install</code>命令需要在tar解压之后的各个rpm包所在目录内执行，否则就变成yum方式安装了，需要配置MySQL的yum源并且速度很慢，还要当前机器支持外网访问</em></p>
+<h4 id="3设置">3、设置</h4>
+<p>略</p>
+<h3 id="三targz">三、tar.gz</h3>
+<h4 id="0删除旧版本">0、删除旧版本</h4>
+<p>略</p>
+<h4 id="1下载">1、下载</h4>
+<p>下载地址：<a href="https://dev.mysql.com/downloads/mysql/">dev.mysql.com/downloads/m…</a></p>
+<p>选择对应的版本：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/6/18/16b668a1b3c258aa?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<pre><code>shell&gt; wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.26-linux-glibc2.12-x86_64.tar.gz
+</code></pre><h4 id="2安装配置">2、安装&amp;配置：</h4>
+<h5 id="依赖">依赖</h5>
+<p>MySQL依赖libaio库，如果没有先安装一下：</p>
+<pre><code>shell&gt; yum install libaio
+</code></pre><h5 id="创建mysql用户">创建mysql用户</h5>
+<p>不需要登录的一个系统账号，启动MySQL服务时会使用该账号</p>
+<pre><code>shell&gt; groupadd mysql
+shell&gt; useradd -r -g mysql -s /bin/false mysql
+</code></pre><h5 id="解压并创建链接">解压并创建链接</h5>
+<pre><code>shell&gt; cd /usr/local
+shell&gt; tar zxvf /path/to/mysql-5.7.26-linux-glibc2.12-x86_64.tar.gz
+shell&gt; ln -s mysql-5.7.26-linux-glibc2.12-x86_64/ mysql
+</code></pre><h5 id="创建mysql-files目录">创建mysql-files目录</h5>
+<p>这一步并不是必须的，可以设置secure_file_priv的值指向该目录（用于限制数据导入导出操作的目录）</p>
+<pre><code>shell&gt; cd mysql
+shell&gt; mkdir mysql-files
+shell&gt; chown mysql:mysql mysql-files
+shell&gt; chmod 750 mysql-files
+</code></pre><h5 id="初始化">初始化</h5>
+<pre><code>shell&gt; bin/mysqld --initialize --user=mysql
+</code></pre><p>如果初始化时报错如下：</p>
+<pre><code>error while loading shared libraries: libnuma.so.1: cannot open shared object file: No such file or directory
+</code></pre><p>是因为libnuma没有安装（或者默认安装的是32位），我们这里需要64位的：</p>
+<pre><code>shell&gt; yum install numactl.x86_64
+</code></pre><p>执行完后重新初始化即可 初始化成功后返回结果中有一行包含初始密码，第一次登录时要用到它：</p>
+<pre><code>A temporary password is generated for root@localhost: 8M0ary878s*U
+</code></pre><h5 id="启用ssl非必须">启用SSL（非必须）</h5>
+<pre><code>shell&gt; bin/mysql_ssl_rsa_setup
+</code></pre><h5 id="启动-1">启动</h5>
+<pre><code>shell&gt; bin/mysqld_safe --user=mysql &amp;
+</code></pre><p>查看进程可以看到一些默认参数，可以在配置文件中修改这些参数</p>
+<pre><code>shell&gt; ps -ef | grep mysql
+root     14604 12719  0 00:03 pts/0    00:00:00 /bin/sh bin/mysqld_safe --user=mysql
+mysql    14674 14604  0 00:03 pts/0    00:00:00 /usr/local/mysql/bin/mysqld --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --plugin-dir=/usr/local/mysql/lib/plugin --user=mysql --log-error=VM_2_24_centos.err --pid-file=VM_2_24_centos.pid
+</code></pre><h5 id="设置环境变量">设置环境变量</h5>
+<p>避免每次执行mysql命令都要加上路径，在<code>/etc/profile</code>中添加：</p>
+<pre><code>export PATH=$PATH:/usr/local/mysql/bin
+</code></pre><h5 id="设置为服务">设置为服务</h5>
+<pre><code>shell&gt; cp support-files/mysql.server /etc/init.d/mysqld
+shell&gt; service mysqld start|stop|restart|status
+</code></pre><h5 id="开机启动">开机启动</h5>
+<pre><code>shell&gt; chkconfig --add mysqld
+shell&gt; chkconfig --list mysqld
+mysqld         	0:关	1:关	2:开	3:开	4:开	5:开	6:关
+</code></pre><p><em>其他配置与yum、rpm相同，不再赘述</em></p>
+<h3 id="四源码安装">四、源码安装</h3>
+<p>就别费这个劲了吧&hellip;</p>
+<h3 id="结束语">结束语</h3>
+<p>我们不是Linux运维专家，也不是MySQL专家，生在这个年代也不知算是幸福还是不幸，线上的环境已经越来越少有人（主要指平时写代码的人）手动去搞这些数据库、中间件的安装配置了，为什么呢？因为各种云产品实在是太方便了呀，一般的公司也不会差这几个钱，既方便又稳定，何乐而不为呢~但是我们自己搞一搞用于自己测试还是必要的，而且还有不少公司的开发环境、测试环境偶尔还是需要手动搞一下的，当然，还有那些个自己搞机房的巨头们。</p>
+<p>那我们既然不是专家，上面所写的内容如果有纰漏也是在所难免的，如果被看到了还希望能够及时批评指正~</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

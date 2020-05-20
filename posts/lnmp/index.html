@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LNMP &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>LNMP</h1>
+  <time datetime=2020-05-11T10:24:20Z class="post-date">Mon, May 11, 2020</time>
+  <h1 id="lnmp">LNMP</h1>
+<h2 id="安装nginx">安装Nginx</h2>
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install -y nginx
+</code></pre><h3 id="启动命令">启动命令</h3>
+<pre><code>$ sudo /etc/init.d/nginx start
+
+# 或者使用如下的命令
+$ sudo service nginx start
+</code></pre><h3 id="停止命令">停止命令</h3>
+<pre><code>$ sudo /etc/init.d/nginx stop
+
+# 或者使用如下的命令
+$ sudo service nginx stop
+</code></pre><h3 id="重启命令">重启命令</h3>
+<pre><code>$ sudo /etc/init.d/nginx restart
+# 或者使用如下的命令
+$ sudo service nginx restart
+</code></pre><h3 id="基础配置">基础配置</h3>
+<p><code>$ sudo vim /etc/nginx/sites-available/default</code></p>
+<h4 id="php配置">Php配置</h4>
+<pre><code>  location ~ \.php$ {
+    root /var/www/html;        
+    fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+}
+</code></pre><h4 id="配置测试">配置测试</h4>
+<p><code>sudo nginx -t</code></p>
+<h4 id="配置重载">配置重载</h4>
+<p><code>$ sudo service nginx reload</code></p>
+<h2 id="安装mysql">安装MySQL</h2>
+<p><code>$ sudo apt-get install mysql-server mysql-client</code></p>
+<h3 id="修改-mysql-的配置文件">修改 MySQL 的配置文件</h3>
+<p><code>$ sudo vim /etc/mysql/my.cnf</code>
+将 <code>bind-address = 127.0.0.1</code> 注释掉（在对应的行前面添加 <code>#</code> ），就可以远程连接数据库了</p>
+<h2 id="安装php">安装PHP</h2>
+<p><code>$ sudo apt-get install -y php7.0-fpm</code></p>
+<p><strong>安装好以后连同上面的 Nginx 一同测试</strong></p>
+<p>现在创建一个探针文件保存在 /var/www/html 目录下（<strong>这个目录就是刚刚 nginx 配置文件中 root 目录</strong>），以便测试。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo vim /var/www/html/phpinfo.php
+</code></pre></div><p><img src="https://doc.shiyanlou.com/courses/uid871732-20190917-1568689858168/wm" alt="图片描述"></p>
+<p>接下来使用命令启动 php7.0-fpm 服务：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo service php7.0-fpm start
+</code></pre></div><p>然后访问 <a href="http://localhost/phpinfo.php">http://localhost/phpinfo.php</a> （<strong>记得刷新</strong>）</p>
+<p>接下来你就会看见：</p>
+<p><img src="https://doc.shiyanlou.com/courses/uid871732-20190917-1568690830571/wm" alt="图片描述"></p>
+<h2 id="修改模块配置文件">修改模块配置文件</h2>
+<p>修改各个模块配置文件，达到能互相支持的目的：</p>
+<p>（1）首先，要想让 php 支持 MySQL，还需要安装一系列的配套模块。</p>
+<p>在刚才打开的网页中，这是没有装模块的界面，搜索可以看出，里面没有任何 MySQL 的启动信息</p>
+<p><img src="https://doc.shiyanlou.com/userid19824labid404time1421867095195/wm" alt="img"></p>
+<p>你需要安装 php-mysql 模块，使用如下命令进行安装：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get install php-mysql
+</code></pre></div><p>安装好以后，紧接着你需要需要重启 php</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo service php7.0-fpm restart
+</code></pre></div><p>这是装好以后的表现：</p>
+<p><img src="https://doc.shiyanlou.com/courses/uid871732-20190917-1568691096747/wm" alt="图片描述"></p>
+<p>（2） 改变监听端口</p>
+<p>在某些情况下我们需要改变服务器监听的端口。</p>
+<p>因为套接字是通过绑定 ip 端口连接的，那就只需要将刚才的 Nginx 的 <code>default</code>（所在目录<code>/etc/nginx/sites-available/</code>）配置中的<strong>端口</strong>打开，改成你想要监听的端口。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 这是 Nginx 的 default 文件</span>
+$ sudo vim /etc/nginx/sites-available/default
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">server</span> {
+  <span style="color:#f92672">listen</span> <span style="color:#ae81ff">9000</span> <span style="color:#e6db74">default_server</span>;
+  <span style="color:#f92672">listen</span> <span style="color:#e6db74">[::]:9000</span> <span style="color:#e6db74">default_server</span> <span style="color:#e6db74">ipv6only=on</span>;
+
+  <span style="color:#f92672">root</span> <span style="color:#e6db74">/var/www/html</span>;
+  <span style="color:#f92672">index</span> <span style="color:#e6db74">index.html</span> <span style="color:#e6db74">index.htm</span>;
+
+  <span style="color:#75715e"># Make site accessible from http://localhost/
+</span><span style="color:#75715e"></span>  <span style="color:#f92672">server_name</span> <span style="color:#e6db74">localhost</span>;
+}
+</code></pre></div><p>命令重载配置文件，使之生效：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo service nginx reload
+</code></pre></div><p>接下来重启 Nginx 和 php 就好了</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo service nginx restart
+</code></pre></div><p>好了以后直接刷新刚才的页面 <a href="http://localhost:9000/phpinfo.php">http://localhost:9000/phpinfo.php</a> （<strong>记得刷新</strong>）就完成了</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

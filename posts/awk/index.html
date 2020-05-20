@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>awk &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>awk</h1>
+  <time datetime=2020-05-08T12:10:46Z class="post-date">Fri, May 8, 2020</time>
+  <h1 id="awk">awk</h1>
+<h2 id="介绍">介绍</h2>
+<blockquote>
+<p><code>AWK</code>是一种优良的文本处理工具，Linux 及 Unix 环境中现有的功能最强大的数据处理引擎之一.其名称得自于它的创始人 Alfred Aho（阿尔佛雷德·艾侯）、Peter Jay Weinberger（彼得·温伯格）和 Brian Wilson Kernighan（布莱恩·柯林汉)姓氏的首个字母.AWK 程序设计语言，三位创建者已将它正式定义为“样式扫描和处理语言”。它允许您创建简短的程序，这些程序读取输入文件、为数据排序、处理数据、对输入执行计算以及生成报表，还有无数其他的功能。最简单地说，AWK 是一种用于处理文本的编程语言工具。</p>
+</blockquote>
+<p>在大多数 linux 发行版上面，实际我们使用的是 gawk（GNU awk，awk 的 GNU 版本），在我们的环境中 ubuntu 上，默认提供的是 mawk，不过我们通常可以直接使用 awk 命令（awk 语言的解释器），因为系统已经为我们创建好了 awk 指向 mawk 的符号链接。</p>
+<pre><code>$ ll /usr/bin/awk
+</code></pre><p><img src="https://doc.shiyanlou.com/document-uid735639labid354timestamp1532416617431.png/wm" alt="此处输入图片的描述"></p>
+<blockquote>
+<p>nawk： 在 20 世纪 80 年代中期，对 awk 语言进行了更新，并不同程度地使用一种称为 nawk(new awk) 的增强版本对其进行了替换。许多系统中仍然存在着旧的 awk 解释器，但通常将其安装为 oawk (old awk) 命令，而 nawk 解释器则安装为主要的 awk 命令，也可以使用 nawk 命令。Dr. Kernighan 仍然在对 nawk 进行维护，与 gawk 一样，它也是开放源代码的，并且可以免费获得; gawk： 是 GNU Project 的 awk 解释器的开放源代码实现。尽管早期的 GAWK 发行版是旧的 AWK 的替代程序，但不断地对其进行了更新，以包含 NAWK 的特性; mawk 也是 awk 编程语言的一种解释器，mawk 遵循 POSIX 1003.2 （草案 11.3）定义的 AWK 语言，包含了一些没有在 AWK 手册中提到的特色，同时 mawk 提供一小部分扩展,另外据说 mawk 是实现最快的 awk</p>
+</blockquote>
+<h2 id="基础概念">基础概念</h2>
+<p>awk 所有的操作都是基于 pattern(模式)—action(动作)对来完成的，如下面的形式：</p>
+<pre><code>$ pattern {action}
+</code></pre><p>你可以看到就如同很多编程语言一样，它将所有的动作操作用一对<code>{}</code>花括号包围起来。其中 pattern 通常是表示用于匹配输入的文本的“关系式”或“正则表达式”，action 则是表示匹配后将执行的动作。在一个完整 awk 操作中，这两者可以只有其中一个，如果没有 pattern 则默认匹配输入的全部文本，如果没有 action 则默认为打印匹配内容到屏幕。</p>
+<p><code>awk</code>处理文本的方式，是将文本分割成一些“字段”，然后再对这些字段进行处理，默认情况下，awk 以空格作为一个字段的分割符，不过这不是固定的，你可以任意指定分隔符，下面将告诉你如何做到这一点。</p>
+<h2 id="基本格式">基本格式</h2>
+<pre><code>awk [-F fs] [-v var=value] [-f prog-file | 'program text'] [file...]
+</code></pre><p>其中<code>-F</code>参数用于预先指定前面提到的字段分隔符（还有其他指定字段的方式） ，<code>-v</code>用于预先为<code>awk</code>程序指定变量，<code>-f</code>参数用于指定<code>awk</code>命令要执行的程序文件，或者在不加<code>-f</code>参数的情况下直接将程序语句放在这里，最后为<code>awk</code>需要处理的文本输入，且可以同时输入多个文本文件。现在我们还是直接来具体体验一下吧。</p>
+<h2 id="常用内置变量">常用内置变量</h2>
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FILENAME</code></td>
+<td>当前输入文件名，若有多个文件，则只表示第一个。如果输入是来自标准输入，则为空字符串</td>
+</tr>
+<tr>
+<td><code>$0</code></td>
+<td>当前记录的内容</td>
+</tr>
+<tr>
+<td><code>$N</code></td>
+<td>N 表示字段号，最大值为<code>NF</code>变量的值</td>
+</tr>
+<tr>
+<td><code>FS</code></td>
+<td>字段分隔符，由正则表达式表示，默认为&rdquo; &ldquo;空格</td>
+</tr>
+<tr>
+<td><code>RS</code></td>
+<td>输入记录分隔符，默认为&rdquo;\n&rdquo;，即一行为一个记录</td>
+</tr>
+<tr>
+<td><code>NF</code></td>
+<td>当前记录字段数</td>
+</tr>
+<tr>
+<td><code>NR</code></td>
+<td>已经读入的记录数</td>
+</tr>
+<tr>
+<td><code>FNR</code></td>
+<td>当前输入文件的记录数，请注意它与 NR 的区别</td>
+</tr>
+<tr>
+<td><code>OFS</code></td>
+<td>输出字段分隔符，默认为&rdquo; &ldquo;空格</td>
+</tr>
+<tr>
+<td><code>ORS</code></td>
+<td>输出记录分隔符，默认为&rdquo;\n&rdquo;</td>
+</tr>
+</tbody>
+</table>
+<p>关于<code>awk</code>的内容本课程将只会包含这些内容，如果你想了解更多，请期待后续课程，或者参看一下链接内容：</p>
+<ul>
+<li><a href="http://awk.readthedocs.org/en/latest/chapter-one.html">awk 程序设计语言</a></li>
+<li><a href="http://coolshell.cn/articles/9070.html">awk 简明教程</a></li>
+<li><a href="http://www.gnu.org/software/gawk/manual/gawk.html">awk 用户指南</a></li>
+</ul>
+<h2 id="操作体验">操作体验</h2>
+<p>先用 vim 新建一个文本文档</p>
+<pre><code>$ vim test
+</code></pre><p>包含如下内容：</p>
+<pre><code>I like linux
+www.shiyanlou.com
+</code></pre><ul>
+<li>使用 awk 将文本内容打印到终端</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e"># &#34;quote&gt;&#34; 不用输入</span>
+$ awk <span style="color:#e6db74">&#39;{
+</span><span style="color:#e6db74">&gt; print
+</span><span style="color:#e6db74">&gt; }&#39;</span> test
+<span style="color:#75715e"># 或者写到一行</span>
+$ awk <span style="color:#e6db74">&#39;{print}&#39;</span> test
+</code></pre></div><p><img src="https://doc.shiyanlou.com/document-uid735639labid354timestamp1532415757042.png/wm" alt="此处输入图片的描述"></p>
+<p>说明:在这个操作中我是省略了<code>pattern</code>，所以<code>awk</code>会默认匹配输入文本的全部内容，然后在&rdquo;{}&ldquo;花括号中执行动作，即<code>print</code>打印所有匹配项，这里是全部文本内容</p>
+<ul>
+<li>将 test 的第一行的每个字段单独显示为一行</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ awk <span style="color:#e6db74">&#39;{
+</span><span style="color:#e6db74">&gt; if(NR==1){
+</span><span style="color:#e6db74">&gt; print $1 &#34;\n&#34; $2 &#34;\n&#34; $3
+</span><span style="color:#e6db74">&gt; } else {
+</span><span style="color:#e6db74">&gt; print}
+</span><span style="color:#e6db74">&gt; }&#39;</span> test
+
+<span style="color:#75715e"># 或者</span>
+$ awk <span style="color:#e6db74">&#39;{
+</span><span style="color:#e6db74">&gt; if(NR==1){
+</span><span style="color:#e6db74">&gt; OFS=&#34;\n&#34;
+</span><span style="color:#e6db74">&gt; print $1, $2, $3
+</span><span style="color:#e6db74">&gt; } else {
+</span><span style="color:#e6db74">&gt; print}
+</span><span style="color:#e6db74">&gt; }&#39;</span> test
+</code></pre></div><p><img src="https://doc.shiyanlou.com/document-uid735639labid354timestamp1532415834591.png/wm" alt="此处输入图片的描述"></p>
+<p>说明:你首先应该注意的是，这里我使用了<code>awk</code>语言的分支选择语句<code>if</code>,它的使用和很多高级语言如<code>C/C++</code>语言基本一致，如果你有这些语言的基础，这里将很好理解。另一个你需要注意的是<code>NR</code>与<code>OFS</code>，这两个是<code>awk</code>内建的变量，<code>NR</code>表示当前读入的记录数，你可以简单的理解为当前处理的行数，<code>OFS</code>表示输出时的字段分隔符，默认为&rdquo; &ldquo;空格，如上图所见，我们将字段分隔符设置为<code>\n</code>换行符，所以第一行原本以空格为字段分隔的内容就分别输出到单独一行了。然后是<code>$N</code>其中 N 为相应的字段号，这也是<code>awk</code>的内建变量，它表示引用相应的字段，因为我们这里第一行只有三个字段，所以只引用到了<code>$3</code>。除此之外另一个这里没有出现的<code>$0</code>，它表示引用当前记录（当前行）的全部内容。</p>
+<ul>
+<li>将 test 的第二行的以点为分段的字段换成以空格为分隔</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ awk -F<span style="color:#e6db74">&#39;.&#39;</span> <span style="color:#e6db74">&#39;{
+</span><span style="color:#e6db74">&gt; if(NR==2){
+</span><span style="color:#e6db74">&gt; print $1 &#34;\t&#34; $2 &#34;\t&#34; $3
+</span><span style="color:#e6db74">&gt; }}&#39;</span> test
+
+<span style="color:#75715e"># 或者</span>
+$ awk <span style="color:#e6db74">&#39;
+</span><span style="color:#e6db74">&gt; BEGIN{
+</span><span style="color:#e6db74">&gt; FS=&#34;.&#34;
+</span><span style="color:#e6db74">&gt; OFS=&#34;\t&#34;  # 如果写为一行，两个动作语句之间应该以&#34;;&#34;号分开
+</span><span style="color:#e6db74">&gt; }{
+</span><span style="color:#e6db74">&gt; if(NR==2){
+</span><span style="color:#e6db74">&gt; print $1, $2, $3
+</span><span style="color:#e6db74">&gt; }}&#39;</span> test
+</code></pre></div><p><img src="https://doc.shiyanlou.com/document-uid735639labid354timestamp1532415838840.png/wm" alt="此处输入图片的描述"></p>
+<p>说明：这里的<code>-F</code>参数，前面已经介绍过，它是用来预先指定待处理记录的字段分隔符。我们需要注意的是除了指定<code>OFS</code>我们还可以在<code>print</code> 语句中直接打印特殊符号如这里的<code>\t</code>，<strong>print 打印的非变量内容都需要用&quot;&ldquo;一对引号包围起来</strong>。上面另一个版本，展示了实现预先指定变量分隔符的另一种方式，即使用<code>BEGIN</code>，就这个表达式指示了，其后的动作将在所有动作之前执行，这里是<code>FS</code>赋值了新的&rdquo;.&ldquo;点号代替默认的&rdquo; &ldquo;空格</p>
+<p><strong>注意</strong>:首先说明一点，我们在学习和使用 awk 的时候应该尽可能将其作为一门程序语言来理解，这样将会使你学习起来更容易，所以初学阶段在练习<code>awk</code>时应该尽量按照我那样的方式分多行按照一般程序语言的换行和缩进来输入，而不是全部写到一行（当然这在你熟练了之后是没有任何问题的）。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

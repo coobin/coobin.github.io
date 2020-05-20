@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>cat &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>cat</h1>
+  <time datetime=2020-05-04T03:43:21Z class="post-date">Mon, May 4, 2020</time>
+  <h1 id="cat">cat</h1>
+<p>cat命令的用途是连接文件或标准输入并打印。这个命令常用来显示文件内容，或者将几个文件连接起来显示，或者从标准输入读取内容并显示，它常与重定向符号配合使用。 </p>
+<h2 id="命令格式">命令格式：</h2>
+<pre><code>cat [选项] [文件]...
+</code></pre><h2 id="命令功能">命令功能：</h2>
+<p>cat主要有三大功能：</p>
+<ol>
+<li>
+<p>一次显示整个文件:cat filename</p>
+</li>
+<li>
+<p>从键盘创建一个文件:cat &gt; filename 只能创建新文件,不能编辑已有文件.</p>
+</li>
+<li>
+<p>将几个文件合并为一个文件:cat file1 file2 &gt; file</p>
+</li>
+</ol>
+<h2 id="命令参数">命令参数：</h2>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">-A, &ndash;show-all</td>
+<td align="center">等价于 -vET</td>
+</tr>
+<tr>
+<td align="center">-b, &ndash;number-nonblank</td>
+<td align="center">对非空输出行编号</td>
+</tr>
+<tr>
+<td align="center">-e</td>
+<td align="center">等价于 -vE</td>
+</tr>
+<tr>
+<td align="center">-E, &ndash;show-ends</td>
+<td align="center">在每行结束处显示 $</td>
+</tr>
+<tr>
+<td align="center">-n, &ndash;number</td>
+<td align="center">对输出的所有行编号,由1开始对所有输出的行数编号</td>
+</tr>
+<tr>
+<td align="center">-s, &ndash;squeeze-blank</td>
+<td align="center">有连续两行以上的空白行，就代换为一行的空白行 </td>
+</tr>
+<tr>
+<td align="center">-t</td>
+<td align="center">与 -vT 等价</td>
+</tr>
+<tr>
+<td align="center">-T, &ndash;show-tabs</td>
+<td align="center">将跳格字符显示为 ^I</td>
+</tr>
+<tr>
+<td align="center">-u</td>
+<td align="center">(被忽略)</td>
+</tr>
+<tr>
+<td align="center">-v, &ndash;show-nonprinting</td>
+<td align="center">使用 ^ 和 M- 引用，除了 LFD 和 TAB 之外</td>
+</tr>
+</tbody>
+</table>
+<h2 id="使用实例">使用实例：</h2>
+<p>查看系统版本：</p>
+<pre><code>cat /proc/version
+</code></pre><p>查看CPU信息</p>
+<pre><code>cat /proc/cpuinfo
+</code></pre><p>实例一：把 log2012.log 的文件内容加上行号后输入 log2013.log 这个文件里</p>
+<p>命令：</p>
+<pre><code>cat -n log2012.log log2013.log 
+</code></pre><p>输出：</p>
+<pre><code>[root@localhost test]# cat log2012.log 
+2012-01
+2012-02
+======[root@localhost test]# cat log2013.log 
+2013-01
+2013-02
+2013-03
+</code></pre><p>说明：</p>
+<p>实例二：把 log2012.log 和 log2013.log 的文件内容加上行号（空白行不加）之后将内容附加到 log.log 里。 </p>
+<p>命令：</p>
+<pre><code>cat -b log2012.log log2013.log log.log
+</code></pre><p>输出：</p>
+<pre><code>[root@localhost test]# cat -b log2012.log log2013.log log.log
+     1  2012-01
+     2  2012-02
+     3  ======
+     4  2013-01
+     5  2013-02
+     6  2013-03
+     7  ======[root@localhost test]#
+</code></pre><p>实例三：把 log2012.log 的文件内容加上行号后输入 log.log 这个文件里 </p>
+<p>命令：</p>
+<p>输出：</p>
+<pre><code>[root@localhost test]# cat log.log 
+[root@localhost test]# cat -n log2012.log &gt; log.log
+[root@localhost test]# cat -n log.log 
+     1  2012-01
+     2  2012-02
+     3
+     4
+     5  ======
+[root@localhost test]#
+</code></pre><p>实例四：使用here doc来生成文件</p>
+<p>输出：</p>
+<pre><code>[root@localhost test]# cat &gt;log.txt &lt;&lt;EOF
+&gt; Hello
+&gt; World
+&gt; Linux
+&gt; PWD=$(pwd)
+&gt; EOF
+[root@localhost test]# ls -l log.txt 
+-rw-r--r-- 1 root root 37 10-28 17:07 log.txt
+[root@localhost test]# cat log.txt 
+Hello
+World
+Linux
+PWD=/opt/soft/test
+[root@localhost test]#
+</code></pre><p>说明：注意粗体部分，here doc可以进行字符串替换。</p>
+<h3 id="tac反向列示">tac (反向列示)</h3>
+<p>命令：</p>
+<pre><code>tac log.txt
+</code></pre><p>输出：</p>
+<pre><code>[root@localhost test]# tac log.txt 
+
+PWD=/opt/soft/test
+
+Linux
+
+World
+
+Hello
+</code></pre><p>说明：
+tac 是将 cat 反写过来，所以他的功能就跟 cat 相反， cat 是由第一行到最后一行连续显示在萤幕上，而 tac 则是由最后一行到第一行反向在萤幕上显示出来！</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

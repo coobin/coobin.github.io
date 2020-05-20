@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>expr &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>expr</h1>
+  <time datetime=2020-05-11T05:49:10Z class="post-date">Mon, May 11, 2020</time>
+  <h1 id="expr">expr</h1>
+<p><a href="https://www.runoob.com/linux/linux-command-manual.html"><img src="https://www.runoob.com/images/up.gif" alt="Linux 命令大全"> Linux 命令大全</a></p>
+<p>expr命令是一个手工命令行计数器，用于在UNIX/LINUX下求表达式变量的值，一般用于整数值，也可用于字符串。</p>
+<h3 id="语法">语法</h3>
+<p>expr 表达式</p>
+<p><strong>表达式说明:</strong></p>
+<ul>
+<li>用空格隔开每个项；</li>
+<li>用 / (反斜杠) 放在 shell 特定的字符前面；</li>
+<li>对包含空格和其他特殊字符的字符串要用引号括起来</li>
+</ul>
+<h3 id="实例">实例</h3>
+<p>1、计算字串长度</p>
+<pre><code>&gt; expr length “this is a test”  
+14
+</code></pre><p>2、抓取字串</p>
+<pre><code>&gt; expr substr “this is a test”  3  5  
+is  is
+</code></pre><p>3、抓取第一个字符数字串出现的位置</p>
+<pre><code>&gt; expr index &quot;sarasara&quot; a 
+2
+</code></pre><p>4、整数运算</p>
+<pre><code> &gt; expr 14 % 9
+ 5
+ &gt; expr 10 + 10
+ 20
+ &gt; expr 1000 + 900
+ 1900
+ &gt; expr 30 / 3 / 2
+ 5
+ &gt; expr 30 \* 3 (使用乘号时，必须用反斜线屏蔽其特定含义。因为shell可能会误解显示星号的意义)
+ 90
+ &gt; expr 30 * 3
+ expr: Syntax error
+</code></pre><h1 id="shell-expr命令进行整数计算">Shell expr命令：进行整数计算</h1>
+<p>expr 是 evaluate expressions 的缩写，译为“表达式求值”。Shell expr 是一个功能强大，并且比较复杂的命令，它除了可以实现整数计算，还可以结合一些选项对字符串进行处理，例如计算字符串长度、字符串比较、字符串匹配、字符串提取等。</p>
+<p>本节只讲解 expr 在整数计算方面的应用，并不涉及字符串处理，有兴趣的读者请自行研究。</p>
+<p>Shell expr 对于整数计算的用法为：</p>
+<p>expr 表达式</p>
+<p>expr 对<code>表达式</code>的格式有几点特殊的要求：</p>
+<ul>
+<li>出现在<code>表达式</code>中的运算符、数字、变量和小括号的左右两边至少要有一个空格，否则会报错。</li>
+<li>有些特殊符号必须用反斜杠<code>\</code>进行转义（屏蔽其特殊含义），比如乘号<code>*</code>和小括号<code>()</code>，如果不用<code>\</code>转义，那么 Shell 会把它们误解为正则表达式中的符号（<code>*</code>对应通配符，<code>()</code>对应分组）。</li>
+<li>使用变量时要加<code>$</code>前缀。</li>
+</ul>
+<p>【实例1】expr 整数计算简单举例：</p>
+<pre><code>$ expr 2 +3  #错误：加号和 3 之前没有空格
+expr: 语法错误
+$ expr 2 + 3  #这样才是正确的
+5
+$ expr 4 * 5  #错误：乘号没有转义
+expr: 语法错误
+$ expr 4 \* 5  #使用 \ 转义后才是正确的
+20
+$ expr ( 2 + 3 ) \* 4  #小括号也需要转义
+bash: 未预期的符号 \`2' 附近有语法错误
+$ expr \( 2 + 3 \) \* 4  #使用 \ 转义后才是正确的
+20
+$ n=3
+$ expr n + 2  #使用变量时要加 $
+expr: 非整数参数
+$ expr $n + 2  #加上 $ 才是正确的
+5
+$ m=7
+$ expr $m \* \( $n + 5 \)
+56
+</code></pre><p>以上是直接使用 expr 命令，计算结果会直接输出，如果你希望将计算结果赋值给变量，那么需要将整个表达式用反引号<code>``</code>（位于 Tab 键的上方）包围起来，请看下面的例子。</p>
+<p>【实例2】将 expr 的计算结果赋值给变量：</p>
+<pre><code>$ m=5
+$ n=\`expr $m + 10\`
+$ echo $n
+15
+</code></pre><p>你看，使用 expr 进行数学计算是多么的麻烦呀，需要注意各种细节，我奉劝大家还是省省心，老老实实用 (())、let 或者 $[] 吧。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

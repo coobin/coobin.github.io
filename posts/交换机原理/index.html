@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>交换机原理 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>交换机原理</h1>
+  <time datetime=2020-04-07T13:23:33Z class="post-date">Tue, Apr 7, 2020</time>
+  <h1 id="交换机原理">交换机原理</h1>
+<p>学习（Learn）：当从一个接口接收到帧时，把帧内的源MAC与该接口进行绑定，存入MAC地址表
+泛洪（Flood）：当从一个接口收到广播帧、组合帧、未知单播帧（目标MAC不存在与MAC地址表中），把该帧从所有其他接口转发出去，除了接收口。
+转发（Forward）：当从一个接口收到已知单播帧，立即从相应的接口转发出去。
+更新（Update）：</p>
+<ul>
+<li>默认每条记录保存300秒</li>
+<li>交换机重启清空所有接口学习到的记录</li>
+<li>接口关闭清空该接口学习到的记录</li>
+<li>一个源MAC出现在另外一个接口上，会删除老的记录，添加新的记录。</li>
+</ul>
+<p>一个MAC只能关联在一个交换机接口上
+一个交换机接口上可以学到多个MAC</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

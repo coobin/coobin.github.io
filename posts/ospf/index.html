@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>OSPF &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>OSPF</h1>
+  <time datetime=2020-04-13T09:50:25Z class="post-date">Mon, Apr 13, 2020</time>
+  <h1 id="ospf">OSPF</h1>
+<h2 id="概述">概述</h2>
+<p>Open Shortest Path First,开放最短路径优先</p>
+<ul>
+<li>大中型网络上使用最为广泛的IGP协议</li>
+<li>链路状态路由协议</li>
+<li>无类</li>
+<li>使用组播(224.0.0.5和224.0.0.6)</li>
+<li>收敛较快</li>
+<li>以开销(Cost)作为度量值</li>
+<li>采用的SPF算法可以有效的避免环路</li>
+<li>触发式更新(以较低的频率(每30分钟)发送定时更新,被称为链路状态泛洪)</li>
+<li>区域的设计使得OSPF能够支持更大规模的网络</li>
+<li>通过LSA的形式发布路由</li>
+<li>不支持自动汇总,支持手动汇总</li>
+</ul>
+<h3 id="ospf区域概述">OSPF区域概述</h3>
+<table>
+<thead>
+<tr>
+<th align="center">术语</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">区域(Area)</td>
+<td align="center">为了适用大型的网络,OSPF在AS内划分多个区域<!-- raw HTML omitted -->区域是以接口为单位来划分的<!-- raw HTML omitted -->每个OSPF路由器只维护所在区域的完整链路状态信息</td>
+</tr>
+<tr>
+<td align="center">区域ID(Area ID)</td>
+<td align="center">可以表示成一个十进制的数字,如:1<!-- raw HTML omitted -->也可以表示成一个IP,如:0.0.0.1</td>
+</tr>
+<tr>
+<td align="center">区域优点</td>
+<td align="center">尽量减少路由条目<!-- raw HTML omitted -->使拓扑变化仅影响本区域内部</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ospf区域类型">OSPF区域类型</h3>
+<ol>
+<li>**骨干区域:**Area 0,核心区域,也叫传输区域(负责在不同的非骨干区域之间分发路由信息)</li>
+<li>**非骨干区域:**非area 0,也称为常规区域</li>
+</ol>
+<p>PS:所有其他非骨干区域必须和骨干区域直接连接</p>
+<h3 id="ospf的路由器类型">OSPF的路由器类型</h3>
+<p><!-- raw HTML omitted -->IR:Internal Router,内部路由器.<!-- raw HTML omitted -->所有接口都属于同一区域
+<!-- raw HTML omitted -->BR:Backbone Router,骨干路由器.<!-- raw HTML omitted -->至少有一个接口属于骨干区域
+<!-- raw HTML omitted -->ABR:Area Border Router,区域边界路由器.<!-- raw HTML omitted -->连接一个或者多个区域到骨干网络,至少有一个接口属于骨干区域
+<!-- raw HTML omitted -->ASBR:Autonomous System Border Router,自治系统边界路由器.<!-- raw HTML omitted -->把从其他路由协议学到的路由以引入的方式到OSPF进程中</p>
+<p>PS:一台路由器可以同时属于多种类型
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/4f7frK.png" alt="4f7frK"></p>
+<h3 id="ospf的工作流程">OSPF的工作流程</h3>
+<ol>
+<li>发现并建立邻居</li>
+<li>传播 LSA(区别于距离矢量的路由表更新)
+a. Link State Advertisement,链路状态宣告(路况信息)
+b. 链路:路由器接口
+c. 状态:描述接口信息(地址、掩码、开销、网络类型、邻居关系等)</li>
+<li>将LSA泛洪到区域中的所有OSPF路由器,而不仅是直连的路由器</li>
+<li>收集LSA创建LSDB(链路状态数据库、地图)</li>
+<li>使用SPF算法计算到每个目标网络的最短距离,并将其置于路由表中</li>
+</ol>
+<h3 id="ospf三张表">OSPF三张表</h3>
+<p>邻居表:记录所有邻居关系
+链路状态数据库:记录所有链路状态信息
+路由表:记录最佳路由</p>
+<h3 id="router-id">Router ID</h3>
+<ul>
+<li>运行OSPF协议前,必须选取一个RID(非0.0.0.0)</li>
+<li>用来唯一标识一台OSPF路由器</li>
+<li>RID可以手动配置,也可以自动生成</li>
+</ul>
+<h4 id="生成规则">生成规则</h4>
+<p>RID选取顺序规则</p>
+<ol>
+<li>手动配置(推荐)</li>
+<li>活动回环接口上选取IP地址最高的</li>
+<li>活动物理接口上选取IP地址最高的</li>
+</ol>
+<p>PS:RID选取具有非抢占性,除非重启OSPF进程</p>
+<h3 id="ospf数据包结构和类型">OSPF数据包结构和类型</h3>
+<p>封装于IP协议之上,IP协议号89
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/UQYmW6.png" alt="UQYmW6">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/Clipboard_2020-04-11-22-28-57.png" alt="Clipboard_2020-04-11-22-28-57"></p>
+<h3 id="ospf数据包类型">OSPF数据包类型</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/Clipboard_2020-04-11-22-35-52.png" alt="Clipboard_2020-04-11-22-35-52">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/Clipboard_2020-04-11-22-36-24.png" alt="Clipboard_2020-04-11-22-36-24"></p>
+<h3 id="ospf状态机制">OSPF状态机制</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/K2YEzv.png" alt="K2YEzv">
+PS:Attempt已经被淘汰
+失效状态(Down):没有收到Hello包
+初始状态(Init):收到Hello包,但是没看到自己
+双向通讯状态(Two-Way):收到Hello包,并且看到了自己,形成邻居关系
+交换初始状态(Exstart):协商主/从关系,保证DD包能有序发送
+交换状态(ExChange):交换DD包,对比LSDB
+加载状态(Loading):正在同步LSDB,LSR和LSU交换
+完全邻居状态(Full):LSDB完成同步,形成邻接关系
+PS:只有Two-Way和FUll是稳定状态
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/oBmgvv.png" alt="oBmgvv"></p>
+<h3 id="ospf工作流程数据包和状态切换过程">OSPF工作流程(数据包和状态切换过程)</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/lZejvg.png" alt="lZejvg">
+OSPF第一阶段是使用Hello包创建双向通信的过程,成为邻居关系.
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/M16Hxe.png" alt="M16Hxe">
+主从关系选取规则:RID越大越优先
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/qtXqgD.png" alt="qtXqgD">
+OSPF第二阶段是通过交换LSA和达到LSDB同步,建立邻接关系</p>
+<h3 id="ospf邻居建立条件必须是三层直连">OSPF邻居建立条件:必须是三层直连</h3>
+<ol>
+<li>RID唯一</li>
+<li>Hello/Dead时间间隔一致(默认一般是10s/40s)</li>
+<li>认证(如果开启了认证)一致</li>
+<li>链路MTU大小一致(默认不开启检查,思科默认开启)(开启了检查后如果不一致表现为在ExChange和Exstart之间来回切换)</li>
+<li>子网掩码一致(只在以太网环境中成立)</li>
+<li>网络地址一致</li>
+<li>末梢区域设置一致(Option)
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/oFqPM1.png" alt="oFqPM1"></li>
+</ol>
+<h3 id="ospf网络类型基于接口">OSPF网络类型:基于接口</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/vDjHr9.png" alt="vDjHr9">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/ePyNly.png" alt="ePyNly">
+以下其他两种方式已被淘汰
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/RCoQA0.png" alt="RCoQA0"></p>
+<h4 id="dr和bdr">DR和BDR</h4>
+<p>只要是多路访问BMA和NBMA网络中,为了减少邻接关系的数量,从而减少数据包的交换次数,最终节省带宽,降低对路由器处理能力的压力,选举DR和BDR
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/Hw8JXd.png" alt="Hw8JXd">
+DR(Designed Router):指定路由器,类似班长、总经理
+BDR(Backup Designed Router):备用指定路由器,类似副班长、副总经理
+DROthers:类似普通学生、普通员工</p>
+<h5 id="关系">关系</h5>
+<p>DR、BDR、DROthers之间保持邻接关系(Full)
+DRothers之间保持邻居关系(Two-Way)</p>
+<h5 id="地址">地址</h5>
+<p>224.0.0.6向DR和BDR发送链路状态更新
+224.0.0.5向所有OSPF路由器发送</p>
+<h5 id="选举规则">选举规则</h5>
+<p>首先比较Hello报文中携带的优先级</p>
+<ul>
+<li>优先级范围0~255,默认=1</li>
+<li>优先级最高的被选举为DR,优先级次高的被选举为BDR</li>
+<li>优先级为0的不参与选举</li>
+</ul>
+<p>优先级一致的情况下,比较RID,越大越优先.
+选举具有非抢占性,除非当DR和BDR都失效或者重启OSPF进程.
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/wiz5Mw.png" alt="wiz5Mw"></p>
+<p>一台路由器可能有多种状态,DR、BDR等,因为OSPF网络类型是基于接口,</p>
+<h3 id="ospf度量值cost开销">OSPF度量值:Cost,开销</h3>
+<p>在每一个运行OSPF的接口上,都维护着一个接口Cost
+Cost=10^8/BW(bps) = 100Mbpd/BW = 接口带宽参考值/接口带宽
+到一个目标网络的度量值=</p>
+<ul>
+<li>从源到目标所有出站接口的Cost值累加(数据方向)</li>
+<li>从源到本路由器沿途所有入站接口的Cost值累加(路由方向)
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/Clipboard_2020-04-12-21-19-23.png" alt="Clipboard_2020-04-12-21-19-23"></li>
+</ul>
+<p>题目
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/pXI6wq.png" alt="pXI6wq">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/rhatCV.png" alt="rhatCV"></p>
+<h3 id="ospf配置">OSPF配置</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/DsuW5U.png" alt="DsuW5U">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/8tPlwT.png" alt="8tPlwT"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

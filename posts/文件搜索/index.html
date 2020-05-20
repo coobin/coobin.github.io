@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>文件搜索 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>文件搜索</h1>
+  <time datetime=2020-05-11T12:58:03Z class="post-date">Mon, May 11, 2020</time>
+  <h1 id="文件搜索">文件搜索</h1>
+<p>与搜索相关的命令常用的有 <code>whereis</code>，<code>which</code>，<code>find</code> 和 <code>locate</code>。</p>
+<ul>
+<li><strong><code>whereis</code>简单快速</strong></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ whereis who
+$ whereis find
+</code></pre></div><p><img src="https://doc.shiyanlou.com/document-uid735639labid60timestamp1532339453618.png/wm" alt="此处输入图片的描述"></p>
+<p>你会看到 <code>whereis find</code> 找到了三个路径，两个可执行文件路径和一个 man 在线帮助文件所在路径，这个搜索很快，因为它并没有从硬盘中依次查找，而是直接从数据库中查询。</p>
+<p><code>whereis</code> 只能搜索二进制文件(-b)，man 帮助文件(-m)和源代码文件(-s)。如果想要获得更全面的搜索结果可以使用 <code>locate</code> 命令。</p>
+<ul>
+<li><strong><code>locate</code>快而全</strong></li>
+</ul>
+<p>使用 <code>locate</code> 命令查找文件也不会遍历硬盘，它通过查询 <code>/var/lib/mlocate/mlocate.db</code> 数据库来检索信息。不过这个数据库也不是实时更新的，系统会使用定时任务每天自动执行 <code>updatedb</code> 命令来更新数据库。所以有时候你刚添加的文件，它可能会找不到，需要手动执行一次 <code>updatedb</code> 命令（在我们的环境中必须先执行一次该命令）。注意这个命令也不是内置的命令，例如在我们的环境中就需要手动安装，然后执行更新。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get update
+$ sudo apt-get install locate
+$ sudo updatedb
+</code></pre></div><p>它可以用来查找指定目录下的不同文件类型，如查找 /etc 下所有以 sh 开头的文件：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ locate /etc/sh
+</code></pre></div><blockquote>
+<p><strong>注意，它不只是在 /etc 目录下查找，还会自动递归子目录进行查找。</strong></p>
+</blockquote>
+<p><img src="https://doc.shiyanlou.com/courses/uid871732-20200303-1583225846911/wm" alt="图片描述"></p>
+<p>查找 /usr/share/ 下所有 jpg 文件：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ locate /usr/share/<span style="color:#ae81ff">\*</span>.jpg
+</code></pre></div><blockquote>
+<p><strong>注意要添加 <code>*</code> 号前面的反斜杠转义，否则会无法找到。</strong></p>
+</blockquote>
+<p><img src="https://doc.shiyanlou.com/courses/uid871732-20200303-1583226161762/wm" alt="图片描述"></p>
+<p>如果想只统计数目可以加上 <code>-c</code> 参数，<code>-i</code> 参数可以忽略大小写进行查找，whereis 的 <code>-b</code>、<code>-m</code>、<code>-s</code> 同样可以使用。</p>
+<ul>
+<li><strong><code>which</code>小而精</strong></li>
+</ul>
+<p><code>which</code> 本身是 Shell 内建的一个命令，我们通常使用 <code>which</code> 来确定是否安装了某个指定的程序，因为它只从 <code>PATH</code> 环境变量指定的路径中去搜索命令并且返回第一个搜索到的结果。也就是说，我们可以看到某个系统命令是否存在以及执行的到底是哪一个地方的命令。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ which man
+$ which nginx
+$ which ping
+</code></pre></div><p><img src="https://doc.shiyanlou.com/courses/uid871732-20200303-1583226577160/wm" alt="图片描述"></p>
+<ul>
+<li><strong><code>find</code>精而细</strong></li>
+</ul>
+<p><code>find</code> 应该是这几个命令中最强大的了，它不但可以通过文件类型、文件名进行查找而且可以根据文件的属性（如文件的时间戳，文件的权限等）进行搜索。<code>find</code> 命令强大到，要把它讲明白至少需要单独好几节课程才行，我们这里只介绍一些常用的内容。</p>
+<p>这条命令表示去 /etc/ 目录下面 ，搜索名字叫做 interfaces 的文件或者目录。这是 find 命令最常见的格式，千万记住 find 的第一个参数是要搜索的地方。命令前面加上 <code>sudo</code> 是因为 shiyanlou 只是普通用户，对 /etc 目录下的很多文件都没有访问的权限，如果是 root 用户则不用使用。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo find /etc/ -name interfaces
+</code></pre></div><p><img src="https://doc.shiyanlou.com/courses/uid871732-20200303-1583226847941/wm" alt="图片描述"></p>
+<blockquote>
+<p><strong>注意 find 命令的路径是作为第一个参数的， 基本命令格式为 find [path][option] [action] 。</strong></p>
+</blockquote>
+<p>与时间相关的命令参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-atime</code></td>
+<td>最后访问时间</td>
+</tr>
+<tr>
+<td><code>-ctime</code></td>
+<td>最后修改文件内容的时间</td>
+</tr>
+<tr>
+<td><code>-mtime</code></td>
+<td>最后修改文件属性的时间</td>
+</tr>
+</tbody>
+</table>
+<p>下面以 <code>-mtime</code> 参数举例：</p>
+<ul>
+<li><code>-mtime n</code>：n 为数字，表示为在 n 天之前的“一天之内”修改过的文件</li>
+<li><code>-mtime +n</code>：列出在 n 天之前（不包含 n 天本身）被修改过的文件</li>
+<li><code>-mtime -n</code>：列出在 n 天之内（包含 n 天本身）被修改过的文件</li>
+<li><code>-newer file</code>：file 为一个已存在的文件，列出比 file 还要新的文件名</li>
+</ul>
+<p><img src="https://doc.shiyanlou.com/linux_base/5-8.png/wm" alt="1"></p>
+<p>列出 home 目录中，当天（24 小时之内）有改动的文件：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ find ~ -mtime <span style="color:#ae81ff">0</span>
+</code></pre></div><p><img src="https://doc.shiyanlou.com/courses/uid871732-20200303-1583226953512/wm" alt="图片描述"></p>
+<p>列出用户家目录下比 /etc 目录新的文件：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ find ~ -newer /etc
+</code></pre></div><p><img src="https://doc.shiyanlou.com/courses/uid871732-20200303-1583227074890/wm" alt="图片描述"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

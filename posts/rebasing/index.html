@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Rebasing &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Rebasing</h1>
+  <time datetime=2020-04-18T19:25:33Z class="post-date">Sat, Apr 18, 2020</time>
+  <h1 id="rebasing">Rebasing</h1>
+<h2 id="rewriting-commit-history">Rewriting commit history</h2>
+<ul>
+<li>The topic discussed here rewrite the commit history</li>
+<li>This should be done with caution</li>
+<li>General rule: Do not rewrite history that has been shared with others</li>
+</ul>
+<h2 id="type-of-rebase">Type of rebase</h2>
+<h3 id="rebase">Rebase</h3>
+<p>Move commit to a new parent (base)</p>
+<ul>
+<li>The unique commits of the featureX branch (B and C) are reapplied to the tip of the master branch (D)</li>
+<li>Because the ancestor chain is different, each of the reapplied commits has a different commit ID (B&rsquo; and C&rsquo;)</li>
+</ul>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/2020041902175dRwjH.png" alt="2020041902175dRwjH"></p>
+<h4 id="diffs">Diffs</h4>
+<ul>
+<li>Each commit contains a snapshot of the complete project</li>
+<li>Git can calculate the difference between commits
+<ul>
+<li>This is known as a <em>diff</em> or a <em>patch</em></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190221nEZ1MZ.png" alt="202004190221nEZ1MZ"></p>
+<h4 id="rebasing-reapplies-commits">Rebasing reapplies commits</h4>
+<p>When rebasing, Git applies the diffs to the new parent commit
+- This is called &ldquo;reapplying commits&rdquo;</p>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190224J44ZcC.png" alt="202004190224J44ZcC"></p>
+<h4 id="rebasing-is-a-merge">Rebasing is a merge</h4>
+<ul>
+<li>Reapplying commits is a form of merge and is susceptible to merge conflicts</li>
+<li>For example, commits B and C can change the same file, causing a merge conflit during the rebase</li>
+</ul>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190227QIIT3s.png" alt="202004190227QIIT3s"></p>
+<h4 id="rebasing-pros-and-cons">Rebasing pros and cons</h4>
+<ul>
+<li>Pros:
+<ul>
+<li>You can incorporate changes from the parent branch
+<ul>
+<li>You can use the new features/bugfixes</li>
+<li>Tests are on more current code</li>
+<li>It makes the eventual merge into master fast-forwardable</li>
+</ul>
+</li>
+<li>Avoids &ldquo;unnecessary&rdquo; commits
+<ul>
+<li>It allows you to shape/define clean commit histories</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Cons:
+<ul>
+<li>Merge conflicts may need to be resolved</li>
+<li>It can cause problems if your commits have been shared</li>
+<li>You are not preserving the commit history</li>
+</ul>
+</li>
+</ul>
+<h3 id="executing-a-rebase">Executing a rebase</h3>
+<h4 id="git-rebase-syntax"><code>git rebase</code> syntax</h4>
+<p><code>git rebase &lt;upstream&gt;</code></p>
+<ul>
+<li>Changes the parent of the currently checked out branch to &lt;upstream&gt;
+<code>git rebase &lt;upstream&gt; &lt;branch&gt;</code></li>
+<li>Checks out &lt;branch&gt; and changes its parent &lt;upstream&gt;</li>
+<li>This is a conveience to avoid issuing two commands
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190237Xyy7J5.png" alt="202004190237Xyy7J5"></li>
+</ul>
+<blockquote>
+<p>Upstream usually refers the parent branch of the rebased branch</p>
+</blockquote>
+<h3 id="fixing-a-merge-conflit-while-rebasing">Fixing a merge conflit while rebasing</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190240336qZw.png" alt="202004190240336qZw"></p>
+<p>Files with conflicts are modified by Git in the working tree</p>
+<ul>
+<li>Run <code>git status</code> to see which files have been modified</li>
+</ul>
+<h4 id="fixing-a-merge-conflit">Fixing a merge conflit</h4>
+<ol>
+<li>
+<p>Since rebase involved a merge, there is the possibility of a merge conflict
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190243mfOm6X.png" alt="202004190243mfOm6X"></p>
+</li>
+<li>
+<p>none<br>
+<img src="@attachment/Clipboard_2020-04-19-02-43-58.png" alt=""></p>
+</li>
+<li>
+<p>Address the merge conflict. ..
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190244JJG4Cu.png" alt="202004190244JJG4Cu"></p>
+</li>
+<li>
+<p>Complete the rebase
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190246yhOifr.png" alt="202004190246yhOifr"></p>
+</li>
+</ol>
+<h3 id="aborting-a-rebase">Aborting a rebase</h3>
+<p>Use <code>git rebase --abort</code> to get back to the pre-rebase state
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190247gJFt79.png" alt="202004190247gJFt79"></p>
+<h3 id="resolving-merge-conflicts---compare-merge-to-rebase">Resolving merge conflicts - compare merge to rebase</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190248D2fUaw.png" alt="202004190248D2fUaw"></p>
+<h2 id="rewriting-history">Rewriting History</h2>
+<h3 id="amending-a-commit">Amending a commit</h3>
+<ul>
+<li>You can change the most recent commit:
+<ul>
+<li>change the commit message</li>
+<li>change the project files</li>
+</ul>
+</li>
+<li>This creates a new SHA-1 (rewrites history)
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/2020041902520MXOft.png" alt="2020041902520MXOft"></li>
+</ul>
+<h4 id="change-commits-files">Change commits files</h4>
+<ul>
+<li>You can modify the staging area and amend a commit</li>
+<li>Optionally use the <code>--no-edit</code> option to reuse the previous commit message
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190255FGPgXD.png" alt="202004190255FGPgXD"></li>
+</ul>
+<h2 id="interactive-rebase">Interactive rebase</h2>
+<ul>
+<li>Interactive rebase lets you edit commits using commands
+<ul>
+<li>The commits can belong to any branch</li>
+<li>The commit history is changed - do not use for shared commits</li>
+</ul>
+</li>
+<li><code>git rebase -i &lt;after-this-commit&gt;</code>
+<ul>
+<li>Commits in the current branch after &lt;after-this-commit&gt; are listed in an editor and can be modified
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/20200419025956HwUc.png" alt="20200419025956HwUc"></li>
+</ul>
+</li>
+</ul>
+<h3 id="interactive-rebase-options">interactive rebase options</h3>
+<ul>
+<li>Use the commit as is</li>
+<li>Edit the commit message</li>
+<li>Stop and edit the commit</li>
+<li>Drop/delete the commit</li>
+<li>Squash</li>
+<li>Fixup</li>
+<li>Reorder commits</li>
+<li>Execute shell commands</li>
+</ul>
+<h3 id="interactive-commands">Interactive commands</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190303tv5oof.png" alt="202004190303tv5oof"></p>
+<h3 id="edit-a-commit">Edit a commit</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190304vmQjhr.png" alt="202004190304vmQjhr">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190305JyXvEP.png" alt="202004190305JyXvEP">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190305HG6Gpa.png" alt="202004190305HG6Gpa">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190305zVpPcf.png" alt="202004190305zVpPcf">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190306k2o0ae.png" alt="202004190306k2o0ae">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190306xgarGN.png" alt="202004190306xgarGN"></p>
+<h3 id="delete-a-commit">Delete a commit</h3>
+<p>The commit&rsquo;s work is not used
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190308661Xmd.png" alt="202004190308661Xmd">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/2020041903085lpWwm.png" alt="2020041903085lpWwm">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190308bP5SxS.png" alt="202004190308bP5SxS"></p>
+<h3 id="squash-a-commit">Squash a commit</h3>
+<ol>
+<li>Applies the newer (squashed) commit to an older commit</li>
+<li>Combine the commit messages</li>
+<li>Removes the newer commit</li>
+</ol>
+<p>Notw:A fixup is like a squash, but the squashed commit&rsquo;s message is discarded
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190311OSvp7U.png" alt="202004190311OSvp7U">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/2020041903119acof3.png" alt="2020041903119acof3">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190311RzAfOt.png" alt="202004190311RzAfOt">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190311OfTufT.png" alt="202004190311OfTufT"></p>
+<h2 id="squash-vs-delete">Squash VS. Delete</h2>
+<p><strong>Squash</strong> - Combine this commit with the older commit. creating a single commit</p>
+<ul>
+<li>The work of both commits is included</li>
+</ul>
+<p><strong>Delete</strong> - No changes from this commit are applied</p>
+<ul>
+<li>The diff is thrown out</li>
+<li>The work of this commit is lost</li>
+<li>Greater chance of a merge conflict</li>
+</ul>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190315xpon5W.png" alt="202004190315xpon5W"></p>
+<h2 id="squash-merge">Squash merge</h2>
+<ol>
+<li>Merges the tip of the feature branch (D) onto the tip of the base branch (C)</li>
+</ol>
+<ul>
+<li>There is a chance of a merge conflict</li>
+</ul>
+<ol start="2">
+<li>Places the result in the <strong>staging area</strong></li>
+<li>The result can then be committed (E)
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190319C2Icpm.png" alt="202004190319C2Icpm"></li>
+</ol>
+<h3 id="what-happens-to-the-features-commits">What happens to the features commits?</h3>
+<ul>
+<li>After the <strong>featureX</strong> label is deleted, commits B and D are no longer part of any named branch
+<ul>
+<li>Commits B and D will eventually be garbage collected</li>
+</ul>
+</li>
+<li>A squash merge <em>rewrites the commit history</em>
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190322XVXiH2.png" alt="202004190322XVXiH2"></li>
+</ul>
+<h3 id="performing-a-squash-merge">Performing a squash merge</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190323ssVkXG.png" alt="202004190323ssVkXG">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004190323EDZoXj.png" alt="202004190323EDZoXj"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

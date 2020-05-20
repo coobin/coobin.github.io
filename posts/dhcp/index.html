@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DHCP &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>DHCP</h1>
+  <time datetime=2020-04-14T05:59:47Z class="post-date">Tue, Apr 14, 2020</time>
+  <h1 id="dhcp">DHCP</h1>
+<p>Ddynamic Host Configure Protocol,动态主机配置协议</p>
+<ul>
+<li>在BOOTP(BOOTstrap Protocol)基础上发展而来</li>
+<li>一种用于对用户IP地址进行动态管理和配置的技术</li>
+<li>动态分配TCP/IP信息(IP地址、掩码、默认网关、DNS服务器等)</li>
+<li>分配出去的信息是有租期的</li>
+</ul>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/MX2olI.png" alt="MX2olI"></p>
+<p>DHCP Client(客户端):通过DHCP协议请求获取IP地址等网络参数
+DHCP Sever(服务器):负责为DHCP客户端分配网络参数的设备
+DHCP Relay(中继):负责转发服务器和客户端之间的DHCP报文,可选.</p>
+<h2 id="dhcp工作流程">DHCP工作流程</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/2mtRqr.png" alt="2mtRqr"></p>
+<h2 id="dhcp报文">DHCP报文</h2>
+<p>传输层使用UDP,端口号(服务器=67,客户端=68)</p>
+<h3 id="结构">结构</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/JeDev7.png" alt="JeDev7">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/gVQuvP.png" alt="gVQuvP"></p>
+<h3 id="类型">类型</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/S6wwkp.png" alt="S6wwkp">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/oPjWZG.png" alt="oPjWZG"></p>
+<h2 id="dhcp租期更新">DHCP租期更新</h2>
+<table>
+<thead>
+<tr>
+<th align="center">定时器</th>
+<th align="center">取值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">租期更新</td>
+<td align="center">总租期的50%</td>
+</tr>
+<tr>
+<td align="center">重绑定</td>
+<td align="center">总租期的87.5%</td>
+</tr>
+<tr>
+<td align="center">到达租期</td>
+<td align="center">总租期,缺省为一天,可配置</td>
+</tr>
+</tbody>
+</table>
+<p>T1:当租期达到50%时,DHCP客户端会自动以单播的形式向DHCP服务器发送DHCP Request报文,请求更新IP地址租期
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/BANjCL.png" alt="BANjCL">
+T2:当租期达到87.5%时,DHCP客户端会自动以广播的方式向DHCP服务器发送DHCP Request报文,请求更新IP地址租期.
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/eJdeRW.png" alt="eJdeRW">
+T3:当租期达到100%时,还没有收到服务器的回应,客户端停止使用次IP,重新发送DHCP Discover报文请求新的IP地址.
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/mmqiEd.png" alt="mmqiEd">
+释放:如果DHCP客户端不再使用分配的IP地址,也可以主动向DHCP服务器发送DHCP Release报文,释放该IP地址.</p>
+<p>失败:
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/Buuyu2.png" alt="Buuyu2"></p>
+<h2 id="dhcp地址池pool">DHCP地址池(Pool)</h2>
+<h3 id="接口地址池">接口地址池</h3>
+<p>为连接到DHCP服务器接口同一网段的DHCP客户端分配IP地址.这种配置方式简单,即不存在中继的场景</p>
+<h3 id="全局地址池">全局地址池</h3>
+<p>为所有连接到DHCP服务器的DHCP客户端分配IP地址.
+可以分配给设备所有接口下的Client.这种配置方式适用于:</p>
+<blockquote>
+<p>DHCP服务器与客户端在不同网段,即存在中继的场景.
+DHCP服务器与客户端在同一网段,且需要给一个接口下的客户端分配IP地址或者给多个接口下的客户端分别分配IP地址.</p>
+</blockquote>
+<p>PS:</p>
+<ul>
+<li>接口地址池的优先级比全局地址池高.</li>
+<li>在X7系列交换机上,只能在VLANIF逻辑接口上配置接口地址池.</li>
+</ul>
+<h2 id="dhcp配置">DHCP配置</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/3zUnJ9.png" alt="3zUnJ9">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/FdTp5P.png" alt="FdTp5P"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

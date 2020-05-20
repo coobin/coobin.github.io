@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GO on 梦还在吗</title>
+    <link>http://example.org/tags/go/</link>
+    <description>Recent content in GO on 梦还在吗</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 05 Apr 2020 07:05:42 +0000</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ubuntu 安装Go与beego框架</title>
+      <link>http://example.org/posts/ubuntu-%E5%AE%89%E8%A3%85go%E4%B8%8Ebeego%E6%A1%86%E6%9E%B6/</link>
+      <pubDate>Sun, 05 Apr 2020 07:05:42 +0000</pubDate>
+      
+      <guid>http://example.org/posts/ubuntu-%E5%AE%89%E8%A3%85go%E4%B8%8Ebeego%E6%A1%86%E6%9E%B6/</guid>
+      <description>Ubuntu 安装Go与beego框架  安装  apt install golang-go
+设置目录结构  cd $HOME mkdir go //创建工作目录 cd go mkdir src bin pkg //src存放源代码,，pkg存放编译后存放的文件，bin存放编译后生成的可执行文件 环境变量的设置   sudo vim /etc/profile export GOPATH=$HOME/go 查看go环境变量  go env
+无法安装beego
+解决方法
+sudo apt-get purge golang* sudo rm -rf /usr/lib/go-1.6/ /usr/lib/go-1.6/src/ /usr/lib/go-1.6/src/runtime/ /usr/lib/go-1.6/src/runtime/race curl -O[https://storage.googleapis.com/golang/go1.11.1.linux-amd64.tar.gz](https://storage.googleapis.com/golang/go1.11.1.linux-amd64.tar.gz) sudo tar -C /usr/local -xzf go1.11.1.linux-amd64.tar.gz mkdir -p ~/go; echo &amp;quot;export GOPATH=$HOME/go&amp;quot; &amp;gt;&amp;gt; ~/.bashrc echo &amp;quot;export PATH=$PATH:$HOME/go/bin:/usr/local/go/bin&amp;quot; &amp;gt;&amp;gt; ~/.bashrc source ~/.bashrc go get github.</description>
+    </item>
+    
+  </channel>
+</rss>

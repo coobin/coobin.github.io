@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>常识 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>常识</h1>
+  <time datetime=2020-04-05T07:06:14Z class="post-date">Sun, Apr 5, 2020</time>
+  <h1 id="常识">常识</h1>
+<h3 id="margin塌陷">margin塌陷：</h3>
+<p>父子嵌套的元素，垂直方向的margin会去最大值。</p>
+<p>解决方法：</p>
+<ol>
+<li>给父级设置边框或内边距(不建议使用)</li>
+<li>2.触发bfc(块级格式上下文/block format context),改变父级的渲染规则</li>
+</ol>
+<p>改变父级的渲染规则有以下四种方法,给父级盒子添加</p>
+<pre><code>(1)position:absolute/fixed
+
+(2)display:inline-block;
+
+(3)float:left/right;
+
+(4)overflow:hidden;
+</code></pre><h3 id="float特性">float特性</h3>
+<p>所有产生了浮动流的元素，块级元素看不到他们
+产生了bfc的元素和文本类属性（inline）的元素以及文本都能看到浮动元素</p>
+<p>解决办法：</p>
+<ol>
+<li>给伪元素（::before/::after）添加上</li>
+</ol>
+<pre><code>content:&quot;&quot;;
+clear:both;
+display:block;
+</code></pre><p>clear只适用于块级元素，如果不是块级元素，需要添加<code>display:block;</code></p>
+<ol start="2">
+<li>其他任何不会忽略浮动流的方法</li>
+</ol>
+<p>设置了position:absolute;和float:left/right;的属性会把元素从内部变为inline-block属性</p>
+<h3 id="单行文本超出显示">单行文本超出显示</h3>
+<pre><code>white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+</code></pre><p>多行只做截断，不做打点。<code>overflow: hidden;</code></p>
+<h3 id="文字属性的图片处理方式">文字属性的图片处理方式</h3>
+<ol>
+<li></li>
+</ol>
+<pre><code>text-indent: 大于容器宽度的px;
+white-space: nowrap;
+overflow: hidden;
+</code></pre><ol start="2">
+<li></li>
+</ol>
+<p>将容器的高度改为0px后</p>
+<pre><code>padding: 容器原有的高度px;
+overflow: hidden;
+</code></pre><h3 id="嵌套原则">嵌套原则</h3>
+<p>行级元素只能嵌套行级元素
+块级元素可以嵌套任何元素，p标签除外，q标签里面不能嵌套a标签。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

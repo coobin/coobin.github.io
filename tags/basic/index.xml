@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Basic on 梦还在吗</title>
+    <link>http://example.org/tags/basic/</link>
+    <description>Recent content in Basic on 梦还在吗</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 May 2020 11:54:12 +0000</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/basic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Untitled</title>
+      <link>http://example.org/posts/untitled/</link>
+      <pubDate>Fri, 08 May 2020 11:54:12 +0000</pubDate>
+      
+      <guid>http://example.org/posts/untitled/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GCP</title>
+      <link>http://example.org/posts/gcp/</link>
+      <pubDate>Fri, 08 May 2020 11:54:05 +0000</pubDate>
+      
+      <guid>http://example.org/posts/gcp/</guid>
+      <description>GCP Google Cloud远程ssh登录方法   使用Google Cloud网页版ssh，切换到root
+sudo -i   编辑ssh配置文件
+vi /etc/ssh/sshd_config   修改以下的内容
+PermitRootLogin yes PasswordAuthentication yes 
+  重启ssh
+service sshd restart   修改当前账户和root账户的密码   设置当前账户新密码
+sudo passwd ${whoami}   设置root账户新密码
+sudo passwd root   使用Mac自带的SSH进行连接   打开终端，新建远程连接，填写ip地址以及账户名 
+  使用刚才修改的密码进行登录 
+  参考文章  Google Cloud远程ssh登录方法 Google Cloud Platform SSH 连接配置  ②方法二 CentOS和Debian通用，输入以下两条命令 sed \-i &#39;s/PermitRootLogin no/PermitRootLogin yes/g&#39; /etc/ssh/sshd\_config sed \-i &#39;s/PasswordAuthentication no/PasswordAuthentication yes/g&#39; /etc/ssh/sshd\_config Ubuntu系统，输入以下两条命令 sed \-i &#39;s/#PermitRootLogin prohibit\-password/PermitRootLogin yes/g&#39; /etc/ssh/sshd\_config sed \-i &#39;s/PasswordAuthentication no/PasswordAuthentication yes/g&#39; /etc/ssh/sshd\_config 重启服务器 reboot</description>
+    </item>
+    
+    <item>
+      <title>Wordpress</title>
+      <link>http://example.org/posts/wordpress/</link>
+      <pubDate>Fri, 17 Apr 2020 19:21:28 +0000</pubDate>
+      
+      <guid>http://example.org/posts/wordpress/</guid>
+      <description>Wordpress MySQL域名更新 UPDATE wp_options SET option_value = replace(option_value, &#39;http://old.com&#39;, &#39;http://new.com&#39;) WHERE option_name = &#39;home&#39; OR option_name = &#39;siteurl&#39;; UPDATE wp_posts SET guid = replace(guid, &#39;http://old.com&#39;,&#39;http://www.newurl&#39;); UPDATE wp_posts SET post_content = replace(post_content, &#39;http://old.com&#39;, &#39;http://new.com&#39;); UPDATE wp_postmeta SET meta_value = replace(meta_value,&#39;http://old.com&#39;,&#39;http://new.com&#39;); UPDATE wp_usermeta SET meta_value = replace(meta_value, &#39;http://old.com&#39;, &#39;http://new.com&#39;); UPDATE wp_comments SET comment_content = REPLACE (comment_content, &#39;http://old.com&#39;, &#39;http://new.com&#39;); UPDATE wp_comments SET comment_author_url = REPLACE (comment_author_url, &#39;http://old.com&#39;,&#39;http://new.com&#39;); 备案添加 添加到/var/www/html/wordpress/wp-content/themes/customizr/templates/parts/footer/footer_credits.php
+ &amp;lt;p class=&amp;quot;credits&amp;quot;&amp;gt; &amp;lt;a target=&amp;quot;_blank&amp;quot; href=&amp;quot;http://www.</description>
+    </item>
+    
+    <item>
+      <title>Aliyun</title>
+      <link>http://example.org/posts/aliyun/</link>
+      <pubDate>Fri, 17 Apr 2020 19:19:44 +0000</pubDate>
+      
+      <guid>http://example.org/posts/aliyun/</guid>
+      <description>Aliyun RDS Export 需要删除数据库开头和末尾的两个键值 SET FOREIGN_KEY_CHECKS;
+aliyun Linux Bug Fix  系统镜像备份，万事都要留一手，方能保证万无一失。在阿里云ECS列表里有创建自定义镜像。 ubuntu软件漏洞修复 执行命令：sudo apt-get update 这个命令，会访问源列表里的每个网址，并读取软件列表，然后保存在本地机器。我们在新立得软件包管理器里看到的软件列表，都是通过update命令更新的。 执行命令：sudo apt-get upgrade 这个命令，会把本地已安装的软件，与刚下载的软件列表里对应软件进行对比，如果发现已安装的软件版本太低，就会提示你更新。 ubuntu内核漏洞修复 执行命令：sudo apt update 这个命令，会看到从服务端传送回来的package信息。 执行命令：sudo apt upgrade 这个命令直接升级所有package的方法 还有一个命令直接将两件事一起做了：sudo apt full-upgrade 如果是centos系统执行：yum -y update || yum -y upgrade 命令： yum -y update 升级所有包，改变软件设置和系统设置,系统版本内核都升级。 命令：yum -y upgrade 升级所有包，不改变软件设置和系统设置，系统版本升级，内核不改变。 重启机器（很重要） 执行命令：sudo reboot 在阿里云控制台验证该每个漏洞如图二。  作者：塚虎
+链接：https://www.jianshu.com/p/f6e67cc8ee6e
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</description>
+    </item>
+    
+    <item>
+      <title>Markdown Syntax</title>
+      <link>http://example.org/posts/markdown-syntax/</link>
+      <pubDate>Fri, 17 Apr 2020 19:16:31 +0000</pubDate>
+      
+      <guid>http://example.org/posts/markdown-syntax/</guid>
+      <description>Markdown Syntax Markdown是一种纯文本格式的标记语言。通过简单的标记语法，它可以使普通文本内容具有一定的格式。
+相比WYSIWYG编辑器
+优点：
+ 因为是纯文本，所以只要支持Markdown的地方都能获得一样的编辑效果，可以让作者摆脱排版的困扰，专心写作。 操作简单。比如:WYSIWYG编辑时标记个标题，先选中内容，再点击导航栏的标题按钮，选择几级标题。要三个步骤。而Markdown只需要在标题内容前加#即可  缺点：
+ 需要记一些语法（当然，是很简单。五分钟学会）。 有些平台不支持Markdown编辑模式。  标题 在想要设置为标题的文字前面加#来表示 一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。
+注：标准语法一般在#后跟个空格再写文字，貌似简书不加空格也行。
+示例：
+这是一级标题 这是二级标题 这是三级标题 这是四级标题 这是五级标题 这是六级标题 字体 加粗 要加粗的文字左右分别用两个*号包起来
+斜体 要倾斜的文字左右分别用一个*号包起来
+斜体加粗 要倾斜和加粗的文字左右分别用三个*号包起来
+删除线 要加删除线的文字左右分别用两个~~号包起来
+示例：
+这是加粗的文字 这是倾斜的文字
+引用 在引用的文字前加&amp;gt;即可。引用也可以嵌套，如加两个&amp;raquo;三个&amp;raquo;&amp;gt; n个&amp;hellip; 貌似可以一直加下去，但没神马卵用
+示例：
+ 这是引用的内容
+ 这是引用的内容
+        这是引用的内容
+          分割线 三个或者三个以上的 - 或者 * 都可以。</description>
+    </item>
+    
+    <item>
+      <title>Sublime Text Emmet</title>
+      <link>http://example.org/posts/sublime-text-emmet/</link>
+      <pubDate>Sun, 05 Apr 2020 08:18:02 +0000</pubDate>
+      
+      <guid>http://example.org/posts/sublime-text-emmet/</guid>
+      <description>Sublime Text Emmet INSTALLATION Use one of the following methods to install Package Control:
+Command Palette Open the command palette Win/Linux: ctrl+shift+p, Mac: cmd+shift+p Type Install Package Control, press enter Menu Open the Tools menu Select Install Package Control… This will download the latest version of Package Control and verify it using public key cryptography. If an error occurs, use the manual method instead.
+emmet安装：
+1、按Ctrl+Shift+P命令板
+2、输入PCIC，回车进入Package Control：install
+3、输入Emmet和Emmet Css</description>
+    </item>
+    
+  </channel>
+</rss>

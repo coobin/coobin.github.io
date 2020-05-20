@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>分支与合并 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>分支与合并</h1>
+  <time datetime=2020-04-19T06:33:55Z class="post-date">Sun, Apr 19, 2020</time>
+  <h1 id="分支与合并">分支与合并</h1>
+<h2 id="分支">分支</h2>
+<h3 id="创建分支">创建分支</h3>
+<p><code>git branch &lt;name&gt;</code></p>
+<p><code>$ git branch experimental</code></p>
+<ul>
+<li>查看当前的分支列表以及目前的开发环境处在什么分支上:<code>git branch</code></li>
+</ul>
+<pre><code>$ git branch
+ experimental
+* master
+</code></pre><h3 id="切换分支">切换分支</h3>
+<p><code>git checkout &lt;name&gt;</code></p>
+<pre><code>$ git checkout experimental
+Switched to branch 'experimental'
+</code></pre><ul>
+<li>切换完成后，先编辑里面的一个文件，再提交（commit）改动，最后切换回 master 分支：</li>
+</ul>
+<pre><code># 修改文件file1
+$ echo &quot;update&quot; &gt;&gt; file1
+# 查看当前状态
+$ git status
+# 添加并提交file1的修改
+$ git add file1
+$ git commit -m &quot;update file1&quot;
+# 查看file1的内容
+$ cat file1
+test
+update
+# 切换到master分支
+$ git checkout master
+</code></pre><blockquote>
+<p>查看下 file1 中的内容会发现刚才做的修改已经看不到了。因为刚才的修改时在 experimental 分支下，现在切换回了 master 分支，目录下的文件都是 master 分支上的文件了。</p>
+</blockquote>
+<h3 id="合并分支">合并分支</h3>
+<p>通常，一个合并会产生一个合并提交（commit）， 把两个父分支里的每一行内容都合并进来。但是，如果当前的分支和另一个分支没有内容上的差异，就是说当前分支的每一个提交（commit）都已经存在另一个分支里了，Git 就会执行一个 快速向前（fast forward）操作；Git 不创建任何新的提交（commit），只是将当前分支指向合并进来的分支。</p>
+<ol>
+<li>修改master分支文件</li>
+</ol>
+<pre><code># 修改文件file2
+$ echo &quot;update again&quot; &gt;&gt; file2
+# 查看当前状态
+$ git status
+# 添加并提交file2的修改
+$ git add file2
+$ git commit -m &quot;update file2 on master&quot;
+# 查看file2的内容
+$ cat file2
+test
+update again
+</code></pre><ol start="2">
+<li>通过<code>git merge</code>命令合并experimental到主线分支master</li>
+</ol>
+<pre><code># 切换到master分支
+$ git checkout master
+# 将experimental分支合并到master
+$ git merge -m 'merge experimental branch' experimental
+</code></pre><ol start="3">
+<li>
+<p>解决冲突(如果有)</p>
+<ol>
+<li>修改master分支file3
+<pre><code># 切换到master分支
+$ git checkout master
+# 修改file3文件
+$ echo &quot;master: update file3&quot; &gt;&gt; file3
+# 提交到master分支
+$ git commit -a -m 'update file3 on master'
+</code></pre></li>
+<li>切换到 experimental，修改 file3 并提交
+<pre><code># 切换到experimental分支
+$ git checkout experimental
+# 修改file3文件
+$ echo &quot;experimental: update file3&quot; &gt;&gt; file3
+# 提交到experimental分支
+$ git commit -a -m 'update file3 on experimental'
+</code></pre></li>
+<li>切换到 master 进行合并</li>
+</ol>
+<pre><code>$ git checkout master
+$ git merge experimental
+Auto-merging file3
+CONFLICT （content）: Merge conflict in file3
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre><ol start="4">
+<li>合并失败后先用 git status 查看状态，会发现 file3 显示为 both modified，查看 file3内容</li>
+</ol>
+<pre><code class="language-$" data-lang="$">test
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+master: update file3
+=======
+experimental: update file3
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; experimental
+</code></pre><blockquote>
+<p>上面的内容也可以使用 git diff 查看，先前已经提到 git diff 不加参数可以显示未提交到缓存区中的修改内容。</p>
+</blockquote>
+<ol start="5">
+<li>可以看到冲突的内容都被添加到了 file3 中，我们使用 vim 编辑这个文件，去掉 Git 自动产生标志冲突的 &laquo;&laquo;&laquo; 等符号后，根据需要只保留我们需要的内容后保存，然后使用 git add file3 和 git commit 命令来提交合并后的 file3 内容，这个过程是手动解决冲突的流程。
+<pre><code># 编辑冲突文件
+$ vim file3
+# 提交修改后的文件
+$ git add file3
+$ git commit -m 'merge file3'
+</code></pre></li>
+</ol>
+</li>
+</ol>
+<h3 id="删除分支">删除分支</h3>
+<p><code>git branch -d &lt;name&gt;</code></p>
+<p><code>$ git branch -d experimental</code></p>
+<p><code>git branch -d</code>只能删除那些已经被当前分支的合并的分支. 如果你要强制删除某个分支的话就用<code>git branch –D</code></p>
+<h3 id="撤销一个合并">撤销一个合并</h3>
+<pre><code>$ git reset --hard HEAD^
+# 查看file3的内容，已经恢复到合并前的master上的文件内容
+$ cat file3
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

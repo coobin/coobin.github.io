@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ethernet &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Ethernet</h1>
+  <time datetime=2020-04-17T19:26:21Z class="post-date">Fri, Apr 17, 2020</time>
+  <h1 id="ethernet">Ethernet</h1>
+<h2 id="以太网的发展">以太网的发展</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/T5yg0G.png" alt="T5yg0G"></p>
+<h2 id="以太网的标准">以太网的标准</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/uEn4zS.png" alt="uEn4zS">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/mp6oam.png" alt="mp6oam">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/GOAVy3.png" alt="GOAVy3"></p>
+<h2 id="数据链路层的分层设计">数据链路层的分层设计</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/8ooVhI.png" alt="8ooVhI">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/fefMBH.png" alt="fefMBH"></p>
+<ul>
+<li>LLC
+<ul>
+<li>Logical Link Control,逻辑链路控制</li>
+<li>负责识别网络层的协议类型,接收上层数据包封装成帧后,向下层传递</li>
+</ul>
+</li>
+<li>MAC
+<ul>
+<li>Media Access Control,介质访问控制</li>
+<li>负责控制与连接物理层的物理介质</li>
+<li>处理硬件设备的物理寻址、定义网络拓扑及数据帧的传递顺序</li>
+</ul>
+</li>
+</ul>
+<h2 id="以太网的帧结构">以太网的帧结构</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/DMBhWQ.png" alt="DMBhWQ">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/LAwDzV.png" alt="LAwDzV"></p>
+<h3 id="术语">术语</h3>
+<ul>
+<li>协议类型:所有上层的协议,如:0x0800代表IPv4</li>
+<li>数据:所有上层协议数据</li>
+<li>MTU:最大传输单元,默认1500字节,每次发送的数据的最大值</li>
+<li>帧校验:通过一定的计算公式对数据包进行计算得出的值</li>
+<li>MAC地址:48bit,十六进制表示,代表以太网接口的物理地址,全球唯一</li>
+</ul>
+<h2 id="mac地址">MAC地址</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/cvhf8Q.png" alt="cvhf8Q">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/7ftcZ3.png" alt="7ftcZ3"></p>
+<h2 id="数据帧传输">数据帧传输</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/LCZEHm.png" alt="LCZEHm">
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/1Ge1nb.png" alt="1Ge1nb"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Markdown Syntax &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Markdown Syntax</h1>
+  <time datetime=2020-04-17T19:16:31Z class="post-date">Fri, Apr 17, 2020</time>
+  <h1 id="markdown-syntax">Markdown Syntax</h1>
+<p>Markdown是一种纯文本格式的标记语言。通过简单的标记语法，它可以使普通文本内容具有一定的格式。<br>
+相比WYSIWYG编辑器</p>
+<p>优点：</p>
+<ol>
+<li>因为是纯文本，所以只要支持Markdown的地方都能获得一样的编辑效果，可以让作者摆脱排版的困扰，专心写作。</li>
+<li>操作简单。比如:WYSIWYG编辑时标记个标题，先选中内容，再点击导航栏的标题按钮，选择几级标题。要三个步骤。而Markdown只需要在标题内容前加#即可</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>需要记一些语法（当然，是很简单。五分钟学会）。</li>
+<li>有些平台不支持Markdown编辑模式。</li>
+</ol>
+<h2 id="标题">标题</h2>
+<p>在想要设置为标题的文字前面加#来表示
+一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。</p>
+<p>注：标准语法一般在#后跟个空格再写文字，貌似简书不加空格也行。</p>
+<p>示例：</p>
+<h1 id="这是一级标题">这是一级标题</h1>
+<h2 id="这是二级标题">这是二级标题</h2>
+<h3 id="这是三级标题">这是三级标题</h3>
+<h4 id="这是四级标题">这是四级标题</h4>
+<h5 id="这是五级标题">这是五级标题</h5>
+<h6 id="这是六级标题">这是六级标题</h6>
+<h2 id="字体">字体</h2>
+<p>加粗
+要加粗的文字左右分别用两个*号包起来</p>
+<p>斜体
+要倾斜的文字左右分别用一个*号包起来</p>
+<p>斜体加粗
+要倾斜和加粗的文字左右分别用三个*号包起来</p>
+<p>删除线
+要加删除线的文字左右分别用两个~~号包起来</p>
+<p>示例：</p>
+<p><strong>这是加粗的文字</strong>
+<em>这是倾斜的文字</em></p>
+<h2 id="引用">引用</h2>
+<p>在引用的文字前加&gt;即可。引用也可以嵌套，如加两个&raquo;三个&raquo;&gt;
+n个&hellip;
+貌似可以一直加下去，但没神马卵用</p>
+<p>示例：</p>
+<blockquote>
+<p>这是引用的内容</p>
+<blockquote>
+<p>这是引用的内容</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>这是引用的内容</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="分割线">分割线</h2>
+<p>三个或者三个以上的 - 或者 * 都可以。</p>
+<p>示例：</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<h2 id="图片">图片</h2>
+<p>语法：</p>
+<p>![图片alt](图片地址 &lsquo;&lsquo;图片title&rsquo;')</p>
+<p>图片alt就是显示在图片下面的文字，相当于对图片内容的解释。
+图片title是图片的标题，当鼠标移到图片上时显示的内容。title可加可不加
+示例：
+<img src=":storage/e8e7b8cc-5d7d-47e7-9f7a-7baeafbfdc35/fdffe947.png" alt="fdffe947.png"></p>
+<p>markdown格式追求的是简单、多平台统一。那么图片的存储就是一个问题，需要用图床，提供统一的外链，这样就不用在不同的平台去处理图片的问题了。才能做到书写一次，各处使用。
+关于图床的选择我写了一篇文章，对网上存在的各种方法做了总结，需要的朋友可以看看。markdown图床</p>
+<h2 id="超链接">超链接</h2>
+<p>语法：
+<a href="%E8%B6%85%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" title="超链接title">超链接名</a>
+title可加可不加</p>
+<p>示例：
+<a href="http://jianshu.com">简书</a>
+<a href="http://baidu.com">百度</a></p>
+<p>注：Markdown本身语法不支持链接在新页面中打开，貌似简书做了处理，是可以的。别的平台可能就不行了，如果想要在新页面中打开的话可以用html语言的a标签代替。</p>
+<p><!-- raw HTML omitted -->超链接名<!-- raw HTML omitted --></p>
+<p>示例
+<!-- raw HTML omitted -->简书<!-- raw HTML omitted --></p>
+<h2 id="列表">列表</h2>
+<p>无序列表</p>
+<p>语法：
+无序列表用 - + * 任何一种都可以</p>
+<ul>
+<li>列表内容</li>
+</ul>
+<ul>
+<li>列表内容</li>
+</ul>
+<ul>
+<li>列表内容</li>
+</ul>
+<p>注意：- + * 跟内容之间都要有一个空格</p>
+<p>有序列表
+语法：
+数字加点</p>
+<ol>
+<li>列表内容</li>
+<li>列表内容</li>
+<li>列表内容</li>
+</ol>
+<p>注意：序号跟内容之间要有空格
+效果如下：</p>
+<h2 id="列表嵌套">列表嵌套</h2>
+<p>上一级和下一级之间敲三个空格即可</p>
+<ul>
+<li>
+<p>一级无序列表内容</p>
+<ul>
+<li>二级无序列表内容</li>
+<li>二级无序列表内容</li>
+<li>二级无序列表内容</li>
+</ul>
+</li>
+<li>
+<p>一级无序列表内容</p>
+<ol>
+<li>二级有序列表内容</li>
+<li>二级有序列表内容</li>
+<li>二级有序列表内容</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>
+<p>一级有序列表内容</p>
+<ul>
+<li>二级无序列表内容</li>
+<li>二级无序列表内容</li>
+<li>二级无序列表内容</li>
+</ul>
+</li>
+<li>
+<p>一级有序列表内容</p>
+<ol>
+<li>二级有序列表内容</li>
+<li>二级有序列表内容</li>
+<li>二级有序列表内容</li>
+</ol>
+</li>
+</ol>
+<h2 id="表格">表格</h2>
+<p>语法：</p>
+<table>
+<thead>
+<tr>
+<th>表头</th>
+<th align="center">表头</th>
+<th align="right">表头</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>内容</td>
+<td align="center">内容</td>
+<td align="right">内容</td>
+</tr>
+<tr>
+<td>内容</td>
+<td align="center">内容</td>
+<td align="right">内容</td>
+</tr>
+</tbody>
+</table>
+<p>第二行分割表头和内容。
+-有一个就行，为了对齐，多加了几个
+文字默认居左
+-两边加：表示文字居中
+-右边加：表示文字居右
+注：原生的语法两边都要用 | 包起来。此处省略
+-: 设置内容和标题栏居右对齐。
+:- 设置内容和标题栏居左对齐。
+:-: 设置内容和标题栏居中对齐
+示例：</p>
+<table>
+<thead>
+<tr>
+<th>姓名</th>
+<th align="center">技能</th>
+<th align="right">排行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>刘备</td>
+<td align="center">哭</td>
+<td align="right">大哥</td>
+</tr>
+<tr>
+<td>关羽</td>
+<td align="center">打</td>
+<td align="right">二哥</td>
+</tr>
+<tr>
+<td>张飞</td>
+<td align="center">骂</td>
+<td align="right">三弟</td>
+</tr>
+</tbody>
+</table>
+<h2 id="代码">代码</h2>
+<p>语法：
+单行代码：代码之间分别用一个反引号包起来</p>
+<p><code>代码内容</code></p>
+<p>代码块：代码之间分别用三个反引号包起来，且两边的反引号单独占一行</p>
+<pre><code>  代码...
+  代码...
+  代码...
+</code></pre><h2 id="流程图">流程图</h2>
+<p>flow
+st=&gt;start: 开始
+op=&gt;operation: My Operation
+cond=&gt;condition: Yes or No?
+e=&gt;end
+st-&gt;op-&gt;cond
+cond(yes)-&gt;e
+cond(no)-&gt;op</p>
+<h2 id="内嵌链接">内嵌链接</h2>
+<p>I get 10 times more traffic from <a href="http://google.com/" title="">Google</a> <a href="http://google.com/" title="Google">1</a> than from
+<a href="http://search.yahoo.com/" title="">Yahoo</a> <a href="http://search.yahoo.com/" title="Yahoo Search">2</a> or <a href="http://search.msn.com/" title="">MSN</a> <a href="http://search.msn.com/" title="MSN Search">3</a>.</p>
+<p>I get 10 times more traffic from <a href="http://google.com/" title="">Google</a> than from
+<a href="http://search.yahoo.com/" title="">Yahoo</a> or <a href="http://search.msn.com/" title="">MSN</a>.</p>
+<p>效果如下：
+简书不支持流程图，所以截了个图
+<img src="https://i.loli.net/2020/03/17/ARTnkbfwV1QqYDB.png" alt="image.png"></p>
+<p>详细教程：<a href="https://www.runoob.com/markdown/md-title.html">Markdown 标题 | 菜鸟教程</a></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

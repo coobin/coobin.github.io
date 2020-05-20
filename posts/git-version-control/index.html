@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Git Version Control &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Git Version Control</h1>
+  <time datetime=2020-04-18T09:27:45Z class="post-date">Sat, Apr 18, 2020</time>
+  <h1 id="git-version-control">Git Version Control</h1>
+<h2 id="git-syntax">Git Syntax</h2>
+<p><code>git [command] [--flags] [arguments]</code></p>
+<h2 id="install-git">Install Git</h2>
+<ul>
+<li>Windows：<a href="https://gitforwindows.org/index.html"><strong>GitForWindows</strong></a></li>
+<li>Mac：<a href="https://sourceforge.net/projects/git-osx-installer/"><strong>git-osx-installer</strong></a> or <code>brew install git</code></li>
+<li>Linux：<code>sudo apt-get update</code> <code>sudo apt-get install git</code></li>
+</ul>
+<h2 id="setting">Setting</h2>
+<h3 id="setting-user-name-and-email">Setting user name and email</h3>
+<p><code>git config [--local|--global|--system] &lt;key&gt; [&lt;value&gt;]</code></p>
+<ul>
+<li><code>git config --global user.name &quot;YourName&quot;</code></li>
+<li><code>git config --global user.email &quot;YourEmail@xxx.com&quot;</code></li>
+</ul>
+<h3 id="reading-config">Reading config</h3>
+<p><code>git config &lt;key&gt;</code></p>
+<ul>
+<li><code>git user name</code></li>
+<li><code>git user email</code></li>
+</ul>
+<h3 id="setting-gits-default-editor">Setting gits default editor</h3>
+<ul>
+<li><code>git config --golbal core.editor nano</code> ## nano is a editor</li>
+</ul>
+<h2 id="git-locations">Git Locations</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/6s5uqC.png" alt="6s5uqC"></p>
+<h3 id="creating-git-location">Creating git location</h3>
+<p><code>git init</code> - initialize(create) a repository</p>
+<h2 id="commit-to-a-local-repository">Commit to a Local Repository</h2>
+<ul>
+<li><code>git status</code> View the status of files in the working tree and staging area</li>
+<li><code>git add &lt;file or directory&gt;</code> Adds untracked or modified files to the staging area
+<ul>
+<li><code>git add .</code> Add all untracked or modified files using git add .</li>
+</ul>
+</li>
+<li><code>git commit</code> Add staged content to the local repository as a commit
+<ul>
+<li>Prevously committed files are also included</li>
+<li>Creates a snapshot of the entire project
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/%20202004185sclcG.jpg" alt="202004185sclcG"></li>
+</ul>
+</li>
+<li><code>git log</code> View the commit history
+<ul>
+<li>Limiting the size of log
+<ul>
+<li><code>git log --oneline</code> Condensed version of log</li>
+<li><code>git log -#</code>Limit the log to the most recent # commits
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/%2020200418jfYYuZ.jpg" alt="20200418jfYYuZ"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>git rm</code> 删除提交的文件并将其重新放到缓存区</li>
+</ul>
+<h2 id="create-a-remote-repository">Create a Remote Repository</h2>
+<h2 id="push-to-a-remote-repository">Push to a Remote Repository</h2>
+<h3 id="two-scienarios">Two scienarios</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Have a local repository?</th>
+<th align="center">Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">no</td>
+<td align="center">clone the remote</td>
+</tr>
+<tr>
+<td align="center">yes</td>
+<td align="center">add the remote</td>
+</tr>
+</tbody>
+</table>
+<h4 id="clone-a-remote-repository">Clone a remote repository</h4>
+<p><code>git clone</code> is used to create a local copy of a remote tepository
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/%2020200418fUGpjQ.jpg" alt="20200418fUGpjQ">
+<code>git clone &lt;url/to/projectname.git&gt; [localprojectname]</code>
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/%2020200418kedHC6.jpg" alt="20200418kedHC6">
+<code>git remote --verbose</code>Displays information about remote repositories associated with the local repository
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/%20202004183cq8CR.jpg" alt="202004183cq8CR"></p>
+<h4 id="add-a-remote-repository">Add a remote repository</h4>
+<p><code>git remote add &lt;name&gt; &lt;url&gt;</code>
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/%2020200418Zik5tQ.jpg" alt="20200418Zik5tQ"></p>
+<h3 id="push-a-commit-to-a-remote-repository">Push a commit to a remote repository</h3>
+<p><code>git push</code> writes commits for a branch to a remote repository
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/%2020200418OX64oO.png" alt="20200418OX64oO">
+<code>git push [-u] [&lt;repository&gt;] [&lt;branch&gt;]</code></p>
+<ul>
+<li><!-- raw HTML omitted --> can be a name(shortcut) or URL</li>
+<li>-u trackt this branch (&ndash;set-upstream)
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/%20202004186rwx1c.jpg" alt="202004186rwx1c"></li>
+</ul>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/syvCwO.jpg" alt="syvCwO"></p>
+<h4 id="adding-commits---starting-with-no-local-repository">Adding commits - Starting with no local repository</h4>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/%2020200418UGY2IT.jpg" alt="20200418UGY2IT"></p>
+<h4 id="adding-commits---existing-local-repository">Adding commits - Existing local repository</h4>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/%2020200418IK2uNQ.jpg" alt="20200418IK2uNQ"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

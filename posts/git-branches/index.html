@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Git Branches &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Git Branches</h1>
+  <time datetime=2020-04-18T09:57:47Z class="post-date">Sat, Apr 18, 2020</time>
+  <h1 id="git-branches">Git Branches</h1>
+<p>The set of commits that trace back to the project&rsquo;s first commit
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/EAyE16.png" alt="EAyE16"></p>
+<h2 id="benefits">Benefits</h2>
+<ul>
+<li>Fast and easy to create</li>
+<li>Enable experimentation</li>
+<li>Enable team development</li>
+<li>Support multiple project versions</li>
+</ul>
+<h2 id="topic-and-long-running-branches">Topic and long-running branches</h2>
+<ul>
+<li>Topic
+<ul>
+<li>A feature, a bug fix, a hotfix, a configuration change, etc</li>
+</ul>
+</li>
+<li>Long-lived
+<ul>
+<li>master, develop, release, etc
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/mxiT9o.png" alt="mxiT9o"></li>
+</ul>
+</li>
+</ul>
+<h2 id="view-branches">View branches</h2>
+<p>Use <code>git branch</code> to see a list of branches
+PS: <code>git branch -a</code> can be uesd to see local and remote tracking branches</p>
+<h2 id="creating-a-branch">Creating a branch</h2>
+<p><code>git branch &lt;name&gt;</code>
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/azhc1b.png" alt="azhc1b"></p>
+<h2 id="checkout">Checkout</h2>
+<ol>
+<li>Updates the HEAD reference</li>
+<li>Updates the working tree with the commit&rsquo;s files
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/s0a9cK.png" alt="s0a9cK"></li>
+</ol>
+<ul>
+<li>Use <code>git checkout &lt;branch_or_commit&gt;</code> to checkout a branch or commit</li>
+</ul>
+<h2 id="creating-and-checking-out-a-branch">Creating and checking out a branch</h2>
+<ul>
+<li>Two commands
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/Eq0bq5.png" alt="Eq0bq5"></li>
+<li>single command
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/JACfp1.png" alt="JACfp1"></li>
+</ul>
+<h4 id="the-next-commit-on-a-branch">The next commit on a branch</h4>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/Es70N8.png" alt="Es70N8"></p>
+<h4 id="the-next-commit-on-master">The next commit on master</h4>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/ir5sIe.png" alt="ir5sIe"></p>
+<h2 id="detached-head">Detached HEAD</h2>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/HOLkET.png" alt="HOLkET"></p>
+<h3 id="fixing-a-detached-head">Fixing a detached HEAD</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/6lnBDG.png" alt="6lnBDG"></p>
+<h2 id="deleting-a-branch-label">Deleting a branch label</h2>
+<p><code>git branch -d &lt;branch&gt;</code>
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/uPic/wooSXq.png" alt="wooSXq"></p>
+<h3 id="dangling-commits">Dangling commits</h3>
+<p><img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004181754JV08Sx.png" alt="202004181754JV08Sx"></p>
+<h3 id="undoing-an-accidental-branch-delete">Undoing an accidental branch delete</h3>
+<p><code>git reflog</code> returns a <em>local</em> list of recent HEAD commits
+<img src="https://kxpic.oss-cn-shenzhen.aliyuncs.com/Notable/202004181757loHyyZ.png" alt="202004181757loHyyZ"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>习题 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>习题</h1>
+  <time datetime=2020-04-24T10:25:08Z class="post-date">Fri, Apr 24, 2020</time>
+  <h1 id="习题">习题</h1>
+<h2 id="浮点运算比如实现求圆的面积和周长">浮点运算，比如实现求圆的面积和周长。</h2>
+<blockquote>
+<p><code>expr</code> 只能用于整数计算，可以使用 <code>bc</code> 或者 <code>awk</code> 进行浮点数运算。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+<span style="color:#75715e">#!/bin/bash</span>
+
+raduis<span style="color:#f92672">=</span>2.4
+
+pi<span style="color:#f92672">=</span>3.14159
+
+girth<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo <span style="color:#e6db74">&#34;scale=4; 3.14 * 2 * </span>$raduis<span style="color:#e6db74">&#34;</span> | bc<span style="color:#66d9ef">)</span>
+
+area<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo <span style="color:#e6db74">&#34;scale=4; 3.14 * </span>$raduis<span style="color:#e6db74"> * </span>$raduis<span style="color:#e6db74">&#34;</span> | bc<span style="color:#66d9ef">)</span>
+
+echo <span style="color:#e6db74">&#34;girth=</span>$girth<span style="color:#e6db74">&#34;</span>
+
+echo <span style="color:#e6db74">&#34;area=</span>$area<span style="color:#e6db74">&#34;</span>
+</code></pre></div><blockquote>
+<p>以上代码如果想在环境中运行，需要先安装 <code>bc</code>。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get update
+$ sudo apt-get install bc
+</code></pre></div><h2 id="bash挑战-矩形的面积和周长">bash挑战-矩形的面积和周长</h2>
+<h4 id="已知条件">已知条件</h4>
+<p>矩形的长 a=3，宽 b=2</p>
+<h4 id="目标">目标</h4>
+<p>创建一个 Area.sh，能够计算此矩形的面积，输出面积的值</p>
+<p>创建一个 Cum.sh,能够计算此矩形的周长，输出周长的值</p>
+<h4 id="注意">注意</h4>
+<ul>
+<li>文件名一定要一致，以便于验证结果</li>
+<li>文件创建在 <code>/home/shiyanlou/</code> 下</li>
+</ul>
+<h4 id="参考代码">参考代码</h4>
+<p><strong>注意：请务必先独立思考获得 PASS 之后再查看参考代码，直接拷贝代码收获不大</strong></p>
+<p>此题解法不唯一，这里只是给出其中一种作为参考。</p>
+<p><code>/home/shiyanlou/Area.sh</code> 的参考代码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>a<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>
+b<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+echo <span style="color:#e6db74">`</span>expr $a <span style="color:#ae81ff">\*</span> $b<span style="color:#e6db74">`</span>
+</code></pre></div><p><code>/home/shiyanlou/Cum.sh</code> 的参考代码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>a<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>
+b<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+c<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>expr $a + $b<span style="color:#e6db74">`</span>
+echo <span style="color:#e6db74">`</span>expr $c <span style="color:#ae81ff">\*</span> 2<span style="color:#e6db74">`</span>
+</code></pre></div><h4 id="题目一">题目一</h4>
+<p>写一个脚本</p>
+<p>(1) 提示用户输入一个字符串；</p>
+<p>(2) 判断：</p>
+<p>如果输入的是quit，则退出脚本；</p>
+<p>否则，则显示其输入的字符串内容；</p>
+<pre><code>#!/bin/bash
+
+read -t 10 -p &quot;Please enter string: &quot; inputStr
+case $inputStr in
+quit)
+  exit 1
+  ;;
+*)
+  echo &quot;$inputStr&quot;
+  ;;
+esac
+</code></pre><h4 id="题目二">题目二</h4>
+<p>有一个８升的瓶子装满水，还有一个５升的空瓶子和一个３升的空瓶子。要求将水分成两个４升。</p>
+<p>运行脚本之后要生产类似这样的解决方案：</p>
+<pre><code>Your containers: 8     5     3
+
+Solution1 step0: 8--&gt;0--&gt;0
+Solution1 step1: 3--&gt;5--&gt;0
+Solution1 step2: 3--&gt;2--&gt;3
+Solution1 step3: 6--&gt;2--&gt;0
+Solution1 step4: 6--&gt;0--&gt;2
+Solution1 step5: 1--&gt;5--&gt;2
+Solution1 step6: 1--&gt;4--&gt;3
+Solution1 step7: 4--&gt;4--&gt;0
+</code></pre><blockquote>
+<p>提示：上述题目的解法不唯一，你只需要通过流程控制来实现其中的一种就可以了。（注意题中所给的解法，它其实是重复进行的。只有 step3 -&gt; step4 是需要单独注意的。）</p>
+</blockquote>
+<h4 id="题目三">题目三</h4>
+<p>三角输出</p>
+<p>编写bash脚本输出如图的三角</p>
+<p><img src="https://doc.shiyanlou.com/document-uid8797labid3563timestamp1505359604667.png/wm" alt="6-10-1"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span><span style="color:#f92672">((</span>i<span style="color:#f92672">=</span>1;i&lt;<span style="color:#f92672">=</span>5;i++<span style="color:#f92672">))</span>
+<span style="color:#66d9ef">do</span>
+
+  spaceNum<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span><span style="color:#ae81ff">5</span><span style="color:#f92672">-</span>$i<span style="color:#66d9ef">))</span>
+  num<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>$i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#66d9ef">))</span>
+
+  <span style="color:#66d9ef">for</span> <span style="color:#f92672">((</span>j<span style="color:#f92672">=</span>1; j&lt;<span style="color:#f92672">=</span>$spaceNum; j++<span style="color:#f92672">))</span>
+  <span style="color:#66d9ef">do</span>
+    echo -n <span style="color:#e6db74">&#39; &#39;</span>
+  <span style="color:#66d9ef">done</span>
+
+  <span style="color:#66d9ef">for</span> <span style="color:#f92672">((</span>k<span style="color:#f92672">=</span>1; k&lt;<span style="color:#f92672">=</span>$num; k++<span style="color:#f92672">))</span>
+  <span style="color:#66d9ef">do</span>
+    echo -n <span style="color:#e6db74">&#39;*&#39;</span>
+  <span style="color:#66d9ef">done</span>
+
+  <span style="color:#66d9ef">for</span> <span style="color:#f92672">((</span>l<span style="color:#f92672">=</span>1; j&lt;<span style="color:#f92672">=</span>$spaceNum; l++<span style="color:#f92672">))</span>
+  <span style="color:#66d9ef">do</span>
+    echo -n <span style="color:#e6db74">&#39; &#39;</span>
+  <span style="color:#66d9ef">done</span>
+
+  echo <span style="color:#e6db74">&#39;&#39;</span>
+
+<span style="color:#66d9ef">done</span>
+</code></pre></div><h2 id="bash挑战-最大值">bash挑战-最大值</h2>
+<h3 id="目标-1">目标</h3>
+<p>新建一个 test.sh，判断 8 4 5 三个数字的最大值</p>
+<h3 id="输出">输出</h3>
+<p>最大值</p>
+<h3 id="提示">提示</h3>
+<ul>
+<li>文件创建在<code>/home/shiyanlou/</code>下</li>
+</ul>
+<h3 id="参考代码-1">参考代码</h3>
+<p><strong>注意：请务必先独立思考获得 PASS 之后再查看参考代码，直接拷贝代码收获不大</strong></p>
+<p>此题解法不唯一，这里只是给出其中一种作为参考。</p>
+<p><code>/home/shiyanlou/test.sh</code> 参考代码：</p>
+<pre><code>#!/bin/bash
+max=0
+a=8
+b=4
+c=5
+for i in $a $b $c
+do
+  if [ $i -gt $max ]
+  then
+    max=$i
+  fi
+done
+echo $max
+</code></pre><h2 id="bash挑战-偶数之和">bash挑战-偶数之和</h2>
+<h3 id="目标-2">目标</h3>
+<p>新建 test.sh 求 100 以内所有偶数之和</p>
+<h3 id="输出-1">输出</h3>
+<p>和的值</p>
+<h3 id="提示-1">提示</h3>
+<p>文件创建在 <code>/home/shiyanlou/</code> 下</p>
+<h3 id="参考代码-2">参考代码</h3>
+<p><strong>注意：请务必先独立思考获得 PASS 之后再查看参考代码，直接拷贝代码收获不大</strong></p>
+<p>此题解法不唯一，这里只是给出其中一种作为参考。</p>
+<p><code>/home/shiyanlou/test.sh</code> 的参考代码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>cnt<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> cnt in <span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> 100<span style="color:#e6db74">`</span>
+<span style="color:#66d9ef">do</span>
+  sum<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>cnt+sum<span style="color:#66d9ef">))</span>
+<span style="color:#66d9ef">done</span>
+
+echo $sum
+</code></pre></div><p><code>seq 2 2 100</code> 表示列出 1 到 100 的所有偶数</p>
+<h2 id="猜数字游戏">猜数字游戏：</h2>
+<p>首先让系统随机生成一个数字，给这个数字一个范围，让用户猜数字，对输入作出判断，并且给出提示。</p>
+<p>请用while语句实现。</p>
+<pre><code>#!/bin/bash
+
+function randNum(){
+  while :
+  do
+    read aNum
+    if test $aNum -eq $1
+    then
+      echo &quot;right&quot;
+      break 1
+    else
+      if [ $aNum -gt $1 ]
+        then
+           echo &quot;The answer is smaller than yours.&quot;
+         else
+           echo &quot;The answer is bigger than yours.&quot;
+         fi
+      fi
+  done
+}
+
+randNum $(($RANDOM%100+1))
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

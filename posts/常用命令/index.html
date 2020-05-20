@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>常用命令 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>常用命令</h1>
+  <time datetime=2020-04-20T10:42:58Z class="post-date">Mon, Apr 20, 2020</time>
+  <h1 id="常用命令">常用命令</h1>
+<h3 id="1-基础命令">1. 基础命令</h3>
+<ul>
+<li>
+<p><code>git init</code> 将一个目录初始化为 Git 仓库
+- <a href="https://git-scm.com/docs/git-init">文档地址</a></p>
+</li>
+<li>
+<p><code>git clone</code> 复制一个 Git 仓库，以上下其手
+- <a href="https://git-scm.com/docs/git-init">文档地址</a></p>
+</li>
+<li>
+<p><code>git add</code> 添加文件到缓存</p>
+<ul>
+<li><code>git add .</code> / <code>git add *</code> 添加所有文件
+<ul>
+<li><a href="https://git-scm.com/docs/git-add">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git status</code> 查看你的文件在工作目录与缓存的状态</p>
+<ul>
+<li><code>git status -s</code> 简短的结果输出
+<ul>
+<li><a href="https://git-scm.com/docs/git-status">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git diff</code> 显示已写入缓存与已修改但尚未写入缓存的改动的区别</p>
+<ul>
+<li><code>git diff --cached</code> #查看已缓存的改动</li>
+<li><code>git diff HEAD</code> 查看已缓存的与未缓存的所有改动</li>
+<li><code>git diff --stat</code> 显示摘要而非整个 diff
+<ul>
+<li><a href="https://git-scm.com/docs/git-diff">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git commit</code> 记录缓存内容的快照</p>
+<ul>
+<li><code>git commit -m 'my hola mundo changes'</code> 在命令行中提供提交注释</li>
+<li><code>git commit -a</code> 自动将在提交前将已记录、修改的文件放入缓存区
+<ul>
+<li><a href="https://git-scm.com/docs/git-commit">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git reset HEAD</code> 取消缓存已缓存的内容</p>
+<ul>
+<li><a href="https://git-scm.com/docs/git-reset">文档地址</a></li>
+</ul>
+</li>
+<li>
+<p><code>git rm</code> 将文件从缓存区移除</p>
+<ul>
+<li><code>git rm --cached</code> 在工作目录中留着该文件
+<ul>
+<li><a href="https://git-scm.com/docs/git-rm">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git branch</code> 列出、创建与管理工作上下文</p>
+<ul>
+<li><code>git branch -avv</code> 查看全部分支信息</li>
+<li><code>git branch &lt;branchname&gt;</code> 创建新分支</li>
+<li><code>git branch -d &lt;branchname&gt;</code> 删除分支</li>
+<li><code>git branch -m [原分支名] [新分支名]</code>给本地分支改名，若修改当前所在分支的名字，原分支名可以省略不写</li>
+<li><code>git branch -u [主机名/远程分支名] [本地分支名]</code>将本地分支与远程分支关联，或者说使本地分支跟踪远程分支。如果是设置当前所在分支跟踪远程分支，最后一个参数本地分支名可以省略不写.</li>
+<li><code>git branch --unset-upstream [分支名]</code>撤销该分支对远程分支的跟踪
+<ul>
+<li><a href="https://git-scm.com/docs/git-branch">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git checkout</code> 切换到新的分支上下文</p>
+<ul>
+<li><code>git checkout -b &lt;branchname&gt;</code> 创建新分支，并立即切换到它
+<ul>
+<li><a href="https://git-scm.com/docs/git-checkout">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git merge</code> 将分支合并到你的当前分支</p>
+<ul>
+<li><a href="https://git-scm.com/docs/git-merge">文档地址</a></li>
+</ul>
+</li>
+<li>
+<p><code>git log</code> 显示一个分支中提交的更改记录</p>
+<ul>
+<li><code>git log --oneline</code> 查看历史记录的紧凑简洁的版本</li>
+<li><code>git log --oneline --graph</code> 查看历史中什么时候出现了分支、合并，开启了拓扑图
+<ul>
+<li><a href="https://git-scm.com/docs/git-log">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git tag</code> 给历史记录中的某个重要的一点打上标签</p>
+<ul>
+<li><code>git tag -a v1.0</code> 给最新一次提交打上（HEAD）“v1.0”的标签。<code>-a</code> 选项意为“创建一个带注解的标签”，从而使你为标签添加注解。绝大部分时候都会这么做的。 不用 <code>-a</code> 选项也可以执行的，但它不会记录这标签是啥时候打的，谁打的，也不会让你添加个标签的注解。</li>
+<li><code>git tag [标签名] -m [备注信息] [提交版本号] </code></li>
+<li><code>git tag -d [标签名]</code> 删除本地标签，标签文件也会被删除
+<ul>
+<li><a href="https://git-scm.com/docs/git-tag">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git remote</code> 罗列、添加和删除远端仓库别名</p>
+<ul>
+<li><code>git remote -v</code> 显示每个别名的实际链接地址</li>
+<li><code>git remote add [alias] [url]</code> 为你的项目添加一个新的远端仓库,将 [url] 以 [alias] 的别名添加为本地的远端仓库</li>
+<li><code>git remote rm [alias]</code> 删除现存的某个别名
+<ul>
+<li><a href="https://git-scm.com/docs/git-remote">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git fetch</code> 从远端仓库下载新分支与数据</p>
+<ul>
+<li><code>git fetch [alias]</code>本地仓库与远端仓库同步</li>
+<li><code>git fetch --all</code>同步所有的远端仓库
+<ul>
+<li><a href="https://git-scm.com/docs/git-fetch">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git pull</code> 从远端仓库提取数据并尝试合并到当前分支</p>
+<ul>
+<li><a href="https://git-scm.com/docs/git-pull">文档地址</a></li>
+</ul>
+</li>
+<li>
+<p><code>git push</code> 推送你的新分支与数据到某个远端仓库</p>
+<ul>
+<li><code>git push [alias] [branch]</code>将本地[branch]分支推送成为[alias]远端上的[branch]分支</li>
+<li><code>git push [主机名] :[远程分支名]</code> / <code>git push [主机名] --delete [远程分支名]</code> 删除远程分支</li>
+<li><code>git push origin [标签名]</code>推送标签到远程仓库</li>
+<li><code>git push origin :refs/tags/[标签名]</code> 删除远程仓库的标签
+<ul>
+<li><a href="https://git-scm.com/docs/git-push">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git log</code> 过滤你的提交历史记录</p>
+<ul>
+<li><code>git log --author</code> 只寻找某个特定作者的提交</li>
+<li><code>git log --since --before</code> / <code>git log --until --after</code> 根据日期过滤提交记录</li>
+<li><code>git log --grep</code> 根据提交注释过滤提交记录</li>
+<li><code>git log -S</code> 依据所引入的差值过滤</li>
+<li><code>git log -p</code> 显示每个提交引入的补丁</li>
+<li><code>git log --reverse</code> 查看时间正序排列的信息</li>
+<li><code>git log --stat</code> 显示每个提交引入的改动的差值统计
+<ul>
+<li><a href="https://git-scm.com/docs/git-log">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>git diff</code> 查看两个提交快照的绝对改动</p>
+<ul>
+<li><code>git diff [version]</code> 查看该发布版本之后的改动
+<ul>
+<li><a href="https://git-scm.com/docs/git-diff">文档地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><a href="http://gitref.justjavac.com/index.html">Git参考手册</a></p>
+<h3 id="2配置全局用户name和e-mail">2.配置全局用户Name和E-mail</h3>
+<pre><code>$ git config --global user.name &quot;Your Name&quot;$ git config --global user.email &quot;email@example.com&quot;
+</code></pre><h3 id="3初始化仓库">3.初始化仓库</h3>
+<pre><code>git init
+</code></pre><h3 id="4添加文件到git仓库">4.添加文件到Git仓库</h3>
+<pre><code>git add &lt;file&gt;
+</code></pre><p>提示：可反复多次使用，添加多个文件；</p>
+<h3 id="5提交添加的文件到git仓库">5.提交添加的文件到Git仓库</h3>
+<pre><code>git commit
+</code></pre><p>然后会弹出一个Vim编辑器输入本次提交的内容；</p>
+<p>或者</p>
+<pre><code>git commit -m &quot;提交说明&quot;
+</code></pre><h3 id="6查看仓库当前的状态">6.查看仓库当前的状态</h3>
+<pre><code>git status
+</code></pre><h3 id="7比较当前文件的修改">7.比较当前文件的修改</h3>
+<pre><code>$ git diff &lt;file&gt;
+</code></pre><h3 id="8查看历史提交记录">8.查看历史提交记录</h3>
+<pre><code>git log
+</code></pre><p>或者加上参数查看就比较清晰了</p>
+<pre><code>$ git log --pretty=oneline
+</code></pre><h3 id="9回退版本">9.回退版本</h3>
+<pre><code>$ git reset --hard HEAD^
+</code></pre><p>说明：在Git中，用HEAD表示当前版本，上一个版本就是HEAD^，上上一个版本就是HEAD^^，以此类推，如果需要回退几十个版本，写几十个^容易数不过来，所以可以写，例如回退30个版本为：HEAD~30。</p>
+<p>如果你回退完版本又后悔了，想回来，一般情况下是回不来的，但是如果你可以找到你之前的commit id的话，也是可以的，使用如下即可：</p>
+<pre><code>$ git reset --hard + commit id
+</code></pre><p>提示：commit id不需要写全，Git会自动查找；</p>
+<p>补充说明：Git中，commit id是一个使用SHA1计算出来的一个非常大的数字，用十六进制表示，你提交时看到的一大串类似3628164&hellip;882e1e0的就是commit id（版本号）；</p>
+<p>在Git中，版本回退速度非常快，因为Git在内部有个指向当前版本的HEAD指针，当你回退版本的时候，Git仅仅是把HEAD从指向回退的版本，然后顺便刷新工作区文件；</p>
+<h3 id="10查看操作的历史命令记录">10.查看操作的历史命令记录</h3>
+<pre><code>$ git reflog
+</code></pre><p>结果会将你之前的操作的commit id和具体的操作类型及相关的信息打印出来，这个命令还有一个作用就是，当你过了几天，你想回退之前的某次提交，但是你不知道commit id了，通过这个你可查找出commit id,就可以轻松回退了，用一句话总结：穿越未来，回到过去，so easy！</p>
+<h3 id="11diff文件">11.diff文件</h3>
+<pre><code>git diff HEAD -- &lt;file&gt;
+</code></pre><p>说明：查看工作区和版本库里面最新版本文件的区别，也可以不加HEAD参数；</p>
+<h3 id="12丢弃工作区的修改">12.丢弃工作区的修改</h3>
+<pre><code>$ git checkout -- &lt;file&gt;
+</code></pre><p>说明：适用于工作区修改没有add的文件</p>
+<h3 id="13丢弃暂存区的文件">13.丢弃暂存区的文件</h3>
+<pre><code>$ git reset HEAD &lt;file&gt;
+</code></pre><p>说明：适用于暂存区已经add的文件，注意执行完此命令，他会将暂存区的修改放回到工作区中，如果要想工作区的修改也丢弃，就执行第12条命令即可；</p>
+<h3 id="14删除文件">14.删除文件</h3>
+<pre><code>$ rm &lt;file&gt;
+</code></pre><p>然后提交即可；</p>
+<p>如果不小心删错了，如果还没有提交的话使用下面命令即可恢复删除，注意的是它只能恢复最近版本提交的修改，你工作区的修改是不能被恢复的！</p>
+<pre><code>$ git checkout -- &lt;file&gt;
+</code></pre><h3 id="15创建ssh-key">15.创建SSH key</h3>
+<pre><code>$ ssh-keygen -t rsa -C &quot;youremail@example.com&quot;
+</code></pre><p>一般本地Git仓库和远程Git仓库之间的传输是通过SSH加密的，所以我们可以将其生成的公钥添加到Git服务端的设置中即可，这样Git就可以知道是你提交的了；</p>
+<h3 id="16与远程仓库协作">16.与远程仓库协作</h3>
+<pre><code>$ git remote add origin git@github.com:xinpengfei520/IM.git
+</code></pre><p>删除本地库与远程库的关联：</p>
+<pre><code>$ git remote rm origin
+</code></pre><p>作用：有时候我们需要关联其他远程库，需要先删除旧的关联，再添加新的关联，因为如果你已经关联过了就不能在关联了，不过想关联多个远程库也是可以的，前提是你的本地库没有关联任何远程库，操作如下：</p>
+<p>先关联Github远程库：</p>
+<pre><code>$ git remote add github git@github.com:xinpengfei520/IM.git
+</code></pre><p>接着关联码云远程库：</p>
+<pre><code>$ git remote add gitee git@gitee.com:xinpengfei521/IM.git
+</code></pre><p>现在，我们用<code>git remote -v</code>查看远程库的关联信息，如果看到两组关联信息就说明关联成功了；</p>
+<p>ok,现在我们的本地库可以和多个远程库协作了</p>
+<p>如果要推送到GitHub，使用命令：</p>
+<pre><code>$ git push github master
+</code></pre><p>如果要推送到码云，使用命令：</p>
+<pre><code>$ git push gitee master
+</code></pre><h3 id="17推送到远程仓库">17.推送到远程仓库</h3>
+<pre><code>$ git push -u origin master
+</code></pre><p>注意：第一次提交需要加一个参数-u,以后不需要</p>
+<h3 id="18克隆一个远程库">18.克隆一个远程库</h3>
+<pre><code>$ git clone git@github.com:xinpengfei520/IM.git
+</code></pre><h3 id="19git分支管理">19.Git分支管理</h3>
+<p>创建一个分支branch1</p>
+<pre><code>$ git branch branch1
+</code></pre><p>切换到branch1分支：</p>
+<pre><code>$ git checkout branch1
+</code></pre><p>创建并切换到branch1分支：</p>
+<pre><code>$ git checkout -b branch1
+</code></pre><p>查看分支：</p>
+<pre><code>$ git branch
+</code></pre><p>提示：显示的结果中，其中有一个分支前有个*号，表示的是当前所在的分支；</p>
+<p>合并branch1分支到master：</p>
+<pre><code>$ git merge branch1
+</code></pre><p>删除分支：</p>
+<pre><code>$ git branch -d branch1
+</code></pre><h3 id="20查看提交的历史记录">20.查看提交的历史记录</h3>
+<pre><code>$ git log
+</code></pre><p>命令可以看到分支合并图</p>
+<pre><code>git log --graph
+</code></pre><h3 id="21合并分支">21.合并分支</h3>
+<p>禁用Fast forward模式合并分支</p>
+<pre><code>$ git merge --no-ff -m &quot;merge&quot; branch1
+</code></pre><p>说明：默认Git合并分支时使用的是Fast forward模式，这种模式合并，删除分支后，会丢掉分支信息，所以我们需要强制禁用此模式来合并；</p>
+<p>补充内容：实际开发中分支管理的策略</p>
+<ul>
+<li>master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面提交；</li>
+<li>我们可以新开一个dev分支，也就是说dev分支是不稳定的，到版本发布时，再把dev分支合并到master上，在master分支发布新版本；</li>
+<li>你和你的协作者平时都在dev分支上提交，每个人都有自己的分支，时不时地往dev分支上合并就可以了；</li>
+</ul>
+<h3 id="22保存工作现场">22.保存工作现场</h3>
+<pre><code>$ git stash
+</code></pre><p>作用：当你需要去修改其他内容时，这时候你的工作还没有做完，先临时保存起来，等干完其他事之后，再回来回复现场，再继续干活；为什么？因为暂存区是公用的，如果不通过stash命令隐藏，会带到其它分支去；</p>
+<p>查看已经保存的工作现场列表：</p>
+<pre><code>$ git stash list
+</code></pre><p>恢复工作现场(恢复并从stash list删除)：</p>
+<pre><code>$ git stash pop
+</code></pre><p>或者：</p>
+<pre><code>git stash apply
+</code></pre><p>恢复工作现场，但stash内容并不删除，如果你需要删除执行如下命令：</p>
+<pre><code>$ git stash drop
+</code></pre><p>恢复指定的stash:</p>
+<pre><code>$ git stash apply stash@{0}
+</code></pre><p>说明：其中stash@{0}为<code>git stash list</code>中的一种编号</p>
+<h3 id="23丢弃一个没有被合并过的分支">23.丢弃一个没有被合并过的分支</h3>
+<p>强行删除即可：</p>
+<pre><code>$ git branch -D &lt;name&gt;
+</code></pre><p>作用：实际开发中，添加一个新feature，最好新建一个分支，如果要丢弃这个没有被合并过的分支，可以通过上面的命令强行删除；</p>
+<h3 id="24查看远程库的信息">24.查看远程库的信息</h3>
+<pre><code>$ git remote
+</code></pre><p>显示更详细的信息：</p>
+<pre><code>$ git remote -v
+</code></pre><h3 id="25推送分支">25.推送分支</h3>
+<p>推送master到远程库</p>
+<pre><code>$ git push origin master
+</code></pre><p>推送branch1到远程库</p>
+<pre><code>$ git push origin branch1
+</code></pre><h3 id="26创建本地分支">26.创建本地分支</h3>
+<pre><code>$ git checkout -b branch1 origin/branch1
+</code></pre><p>说明：如果远程库中有分支，clone之后默认只有master分支的，所以需要执行如上命令来创建本地分支才能与远程的分支关联起来；</p>
+<h3 id="27指定本地branch1分支与远程originbranch1分支的链接">27.指定本地branch1分支与远程origin/branch1分支的链接</h3>
+<pre><code>$ git branch --set-upstream branch1 origin/branch1
+</code></pre><p>作用：如果你本地新建的branch1分支，远程库中也有一个branch1分支(别人创建的)，而刚好你也没有提交过到这个分支，即没有关联过，会报一个<code>no tracking information</code>信息，通过上面命令关联即可；</p>
+<h3 id="28创建标签">28.创建标签</h3>
+<pre><code>$ git tag &lt;name&gt;
+</code></pre><p>例如：<code>git tag v1.0</code></p>
+<p>查看所有标签：</p>
+<pre><code>$ git tag
+</code></pre><p>对历史提交打tag</p>
+<p>先使用<code>$ git log --pretty=oneline --abbrev-commit</code>命令找到历史提交的commit id</p>
+<p>例如对commit id 为123456的提交打一个tag:</p>
+<pre><code>$ git tag v0.9 123456
+</code></pre><p>查看标签信息：</p>
+<pre><code>$ git show &lt;tagname&gt;
+</code></pre><p>eg:<code>git show v1.0</code></p>
+<p>创建带有说明的标签，用-a指定标签名，-m指定说明文字，123456为commit id：</p>
+<pre><code>$ git tag -a v1.0 -m &quot;V1.0 released&quot; 123456
+</code></pre><p>用私钥签名一个标签：</p>
+<pre><code>$ git tag -s v2.0 -m &quot;signed V2.0 released&quot; 345678
+</code></pre><p>说明：签名采用PGP签名，因此，必须先要安装gpg（GnuPG），如果没有找到gpg，或者没有gpg密钥对，就会报错，具体请参考GnuPG帮助文档配置Key；</p>
+<p>作用：用PGP签名的标签是不可伪造的，因为可以验证PGP签名；</p>
+<p>删除标签：</p>
+<pre><code>$ git tag -d &lt;tagname&gt;
+</code></pre><p>删除远程库中的标签：</p>
+<p>比如要删除远程库中的 <strong>V1.0</strong> 标签，分两步：</p>
+<p>[1] 先删除本地标签：<code>$ git tag -d V1.0</code></p>
+<p>[2] 再推送删除即可：<code>$ git push origin :refs/tags/V1.0</code></p>
+<p>推送标签到远程库：</p>
+<pre><code>$ git push origin &lt;tagname&gt;
+</code></pre><p>推送所有标签到远程库：</p>
+<pre><code>$ git push origin --tags
+</code></pre><h3 id="29自定义git设置">29.自定义Git设置</h3>
+<p>Git显示颜色，会让命令输出看起来更清晰、醒目：</p>
+<pre><code>$ git config --global color.ui true
+</code></pre><p>设置命令别名：</p>
+<pre><code>$ git config --global alias.st status
+</code></pre><p>说明：--global表示全局，即设置完之后全局生效，st表示别名，status表示原始名</p>
+<p>好了，现在敲<code>git st</code>就相当于是<code>git status</code>命令了，是不是方便？</p>
+<p>当然还有其他命令可以简写，这里举几个：很多人都用co表示checkout，ci表示commit，br表示branch&hellip;
+根据自己的喜好可以设置即可，个人觉得不是很推荐使用别名的方式；</p>
+<p>推荐一个比较丧心病狂的别名设置：</p>
+<pre><code>git config --global alias.lg &quot;log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit&quot;
+</code></pre><p>效果自己去体会&hellip;</p>
+<p>其他说明：配置的时候加上--global是针对当前用户起作用的，如果不加只对当前的仓库起作用；每个仓库的Git配置文件都放在 <strong>.git/config</strong> 文件中，我们可以打开对其中的配置作修改，可以删除设置的别名；而当前用户的Git配置文件放在用户主目录下的一个隐藏文件.gitconfig中，我们也可以对其进行配置和修改。</p>
+<h3 id="30忽略文件规则">30.忽略文件规则</h3>
+<p>原则：</p>
+<ul>
+<li>忽略系统自动生成的文件等；</li>
+<li>忽略编译生成的中间文件、可执行文件等，比如Java编译产生的.class文件，自动生成的文件就没必要提交；</li>
+<li>忽略你自己的带有敏感信息的配置文件，个人相关配置文件；</li>
+<li>忽略与自己相关开发环境相关的配置文件；</li>
+<li>&hellip;</li>
+</ul>
+<p>使用：在Git工作区的根目录下创建一个特殊的 <strong>.gitignore</strong> 文件，然后把要忽略的文件名或者相关规则填进去，Git就会自动忽略这些文件，不知道怎么写的可参考：<a href="https://github.com/github/gitignore">github.com/github/giti…</a>,这里提供了一些忽略的规则，可供参考；</p>
+<p>如果你想添加一个被 <strong>.gitignore</strong> 忽略的文件到Git中，但发现是添加不了的，所以我们可以使用强制添加<code>$ git add -f &lt;file&gt;</code></p>
+<p>或者我们可以检查及修改 <strong>.gitignore</strong> 文件的忽略规则：</p>
+<pre><code>$ git check-ignore -v &lt;file&gt;
+</code></pre><p>Git会告诉我们具体的 <strong>.gitignore</strong> 文件中的第几行规则忽略了该文件，这样我们就知道应该修改哪个规则了；</p>
+<p>如何忽略已经提交到远程库中的文件？
+如果你已经将一些文件提交到远程库中了，然后你想忽略掉此文件，然后在 <strong>.gitignore</strong> 文件中添加忽略，然而你会发现并没有生效，因为Git添加忽略时只有对没有跟踪的文件才生效，也就是说你没有add过和提交过的文件才生效，按如下命令：</p>
+<p>比如说：我们要忽略.idea目录，先删除已经提交到本地库的文件目录</p>
+<pre><code>git rm --cached .idea
+</code></pre><p>格式：git rm --cached + 路径</p>
+<p>如果提示：fatal: not removing &lsquo;.idea&rsquo; recursively without -r</p>
+<p>加个参数 -r 即可强制删除</p>
+<pre><code>$ git rm -r --cached .idea
+</code></pre><p>然后，执行<code>git status</code>会提示你已经删除.idea目录了，然后执行commit再push就可以了，此时的.idea目录是没有被跟踪的，将.idea目录添加到 <strong>.gitignore</strong> 文件中就可以忽略了。</p>
+<p>附图：
+<img src="https://user-gold-cdn.xitu.io/2018/1/4/160c049ccf1e2bd9?imageslim" alt=""></p>
+<p><a href="https://juejin.im/post/5a4de5d8f265da432c2444b9">原文地址</a></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

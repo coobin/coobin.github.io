@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SELECT 详解 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>SELECT 详解</h1>
+  <time datetime=2020-04-23T14:29:47Z class="post-date">Thu, Apr 23, 2020</time>
+  <h1 id="select-详解">SELECT 详解</h1>
+<h2 id="where">Where</h2>
+<p><code>SELECT 要查询的列名 FROM 表名字 WHERE 限制条件;</code></p>
+<h3 id="heading">=,&lt;,&gt;,&gt;=,&lt;=</h3>
+<pre><code># 筛选出 age 大于25的
+SELECT name,age FROM employee WHERE age&gt;25;
+</code></pre><pre><code># 查找一个名字为 Mary 的员工的 name,age 和 phone：
+SELECT name,age,phone FROM employee WHERE name='Mary';
+</code></pre><h3 id="andor">AND,OR</h3>
+<pre><code># 筛选出 age 小于 25，或 age 大于 30
+SELECT name,age FROM employee WHERE age&lt;25 OR age&gt;30;
+</code></pre><pre><code>#筛选出 age 大于 25，且 age 小于 30
+SELECT name,age FROM employee WHERE age&gt;25 AND age&lt;30;
+</code></pre><pre><code># 筛选出 age 在25到30之间的
+SELECT name,age FROM employee WHERE age BETWEEN 25 AND 30
+</code></pre><h3 id="innot-in">IN,NOT IN</h3>
+<pre><code># 要查询在 dpt3 或 dpt4 的人
+SELECT name,age,phone,in_dpt FROM employee WHERE in_dpt IN ('dpt3','dpt4');
+</code></pre><pre><code># 查询出了不在 dpt1 也不在 dpt3 的人
+SELECT name,age,phone,in_dpt FROM employee WHERE in_dpt NOT IN ('dpt1','dpt3');
+</code></pre><h3 id="通配符">通配符</h3>
+<p>关键字 <strong>LIKE</strong> 可用于实现模糊查询，常见于搜索功能中。</p>
+<p>和 LIKE 联用的通常还有通配符，代表未知字符。SQL中的通配符是 <code>_</code> 和 <code>%</code> 。其中 <code>_</code> 代表一个未指定字符，<code>%</code> 代表<strong>不定个</strong>未指定字符</p>
+<p>比如，要只记得电话号码前四位数为1101，而后两位忘记了，则可以用两个 <code>_</code> 通配符代替：</p>
+<pre><code>SELECT name,age,phone FROM employee WHERE phone LIKE '1101__';
+</code></pre><p>这样就查找出了 <strong>1101开头的6位数电话号码</strong>：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-04-09.png/wm" alt="09"></p>
+<p>另一种情况，比如只记名字的首字母，又不知道名字长度，则用 <code>%</code> 通配符代替不定个字符：</p>
+<pre><code>SELECT name,age,phone FROM employee WHERE name LIKE 'J%';
+</code></pre><p>这样就查找出了首字母为 <strong>J</strong> 的人：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-04-10.png/wm" alt="10"></p>
+<h2 id="order-by-排序">ORDER BY 排序</h2>
+<p>为了使查询结果看起来更顺眼，我们可能需要对结果按某一列来排序，这就要用到 ORDER BY 排序关键词。默认情况下，ORDER BY 的结果是升序排列，而使用关键词 ASC 和 DESC 可指定升序或降序排序。 比如，我们按 salary 降序排列，SQL语句为：</p>
+<p>SELECT name,age,salary,phone FROM employee ORDER BY salary DESC;
+copy
+11</p>
+<p>如果后面不加 DESC 或 ASC 将默认按照升序排列。应用场景：博客系统中按时间先后顺序显示博文。</p>
+<h2 id="sql-内置函数和计算">SQL 内置函数和计算</h2>
+<p>SQL 允许对表中的数据进行计算。对此，SQL 有 5 个内置函数，这些函数都对 SELECT 的结果做操作：</p>
+<table>
+<thead>
+<tr>
+<th>函数名：</th>
+<th>COUNT</th>
+<th>SUM</th>
+<th>AVG</th>
+<th>MAX</th>
+<th>MIN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用：</td>
+<td>计数</td>
+<td>求和</td>
+<td>求平均值</td>
+<td>最大值</td>
+<td>最小值</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>其中 COUNT 函数可用于任何数据类型(因为它只是计数)，而 SUM 、AVG 函数都只能对数字类数据类型做计算，MAX 和 MIN 可用于数值、字符串或是日期时间数据类型。</p>
+</blockquote>
+<p>具体举例，比如计算出 salary 的最大、最小值，用这样的一条语句：</p>
+<pre><code>SELECT MAX(salary) AS max_salary,MIN(salary) FROM employee;
+</code></pre><p>有一个细节你或许注意到了，<strong>使用 AS 关键词可以给值重命名</strong>，比如最大值被命名为了 max_salary：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-04-12.png/wm" alt="12"></p>
+<h2 id="子查询">子查询</h2>
+<p>上面讨论的 SELECT 语句都仅涉及一个表中的数据，然而有时必须处理多个表才能获得所需的信息。例如：想要知道名为 &ldquo;Tom&rdquo; 的员工所在部门做了几个工程。员工信息储存在 employee 表中，但工程信息储存在 project 表中。</p>
+<p>对于这样的情况，我们可以用子查询：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">SELECT of_dpt,COUNT<span style="color:#f92672">(</span>proj_name<span style="color:#f92672">)</span> AS count_project FROM project GROUP BY of_dpt
+HAVING of_dpt IN
+<span style="color:#f92672">(</span>SELECT in_dpt FROM employee WHERE name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Tom&#39;</span><span style="color:#f92672">)</span>;
+</code></pre></div><p>上面代码包含两个 SELECT 语句，第二个 SELECT 语句将返回一个集合的数据形式，然后被第一个 SELECT 语句用 <strong>in</strong> 进行判断。</p>
+<p>HAVING 关键字可以的作用和 WHERE 是一样的，都是说明接下来要进行条件筛选操作。</p>
+<p>区别在于 HAVING 用于对分组后的数据进行筛选</p>
+<p><img src="https://doc.shiyanlou.com/document-uid600404labid74timestamp1529491223362.png/wm" alt="13"></p>
+<blockquote>
+<p>子查询还可以扩展到 3 层、4 层或更多层。</p>
+</blockquote>
+<h2 id="连接查询">连接查询</h2>
+<p>在处理多个表时，子查询只有在结果来自一个表时才有用。但如果需要显示两个表或多个表中的数据，这时就必须使用连接 <strong>(join)</strong> 操作。 连接的基本思想是把两个或多个表当作一个新的表来操作，如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">SELECT id,name,people_num
+FROM employee,department
+WHERE employee.in_dpt <span style="color:#f92672">=</span> department.dpt_name
+ORDER BY id;
+</code></pre></div><p>这条语句查询出的是，各员工所在部门的人数，其中员工的 id 和 name 来自 employee 表，people_num 来自 department 表：</p>
+<p><img src="https://doc.shiyanlou.com/MySQL/sql-04-14.png/wm" alt="14"></p>
+<p>另一个连接语句格式是使用 JOIN ON 语法，刚才的语句等同于：</p>
+<pre><code>SELECT id,name,people_num
+FROM employee JOIN department
+ON employee.in_dpt = department.dpt_name
+ORDER BY id;
+</code></pre><p>结果也与刚才的语句相同。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

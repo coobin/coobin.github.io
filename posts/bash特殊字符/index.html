@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.70.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bash特殊字符 &middot; 梦还在吗</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://example.org/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0d ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://example.org/"><h1>梦还在吗</h1></a>
+      <p class="lead">
+       随便记录悲惨世界 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://example.org/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Bash特殊字符</h1>
+  <time datetime=2020-04-24T09:59:52Z class="post-date">Fri, Apr 24, 2020</time>
+  <h1 id="bash特殊字符">Bash特殊字符</h1>
+<h2 id="注释">注释#</h2>
+<p>行首以 <code>#</code> 开头(除<code>#!</code>之外)的是注释。<code>#!</code>是用于指定当前脚本的解释器，我们这里为bash，且应该指明完整路径，所以为<code>/bin/bash</code></p>
+<h2 id="分号">分号;</h2>
+<h4 id="1命令分隔符">1.命令分隔符</h4>
+<p>使用分号（;）可以在同一行上写两个或两个以上的命令。</p>
+<pre><code>$ vim test2.sh
+</code></pre><p>输入如下代码，并保存。</p>
+<pre><code> #!/bin/bash
+ echo hello; echo there
+ filename=ttt.sh
+ if [ -e &quot;$filename&quot; ]; then    # 注意: &quot;if&quot;和&quot;then&quot;需要分隔，-e用于判断文件是否存在
+     echo &quot;File $filename exists.&quot;; cp $filename $filename.bak
+ else
+     echo &quot;File $filename not found.&quot;; touch $filename
+ fi; echo &quot;File test complete.&quot;
+</code></pre><h4 id="2终止case选项双分号">2.终止case选项（双分号）</h4>
+<p>使用双分号（;;）可以终止case选项。</p>
+<pre><code>$ vim test3.sh
+</code></pre><p>输入如下代码，并保存。</p>
+<pre><code>#!/bin/bash
+
+varname=b
+
+case &quot;$varname&quot; in
+    [a-z]) echo &quot;abc&quot;;;
+    [0-9]) echo &quot;123&quot;;;
+esac
+</code></pre><h2 id="点号">点号.</h2>
+<h4 id="等价于-source-命令">等价于 source 命令</h4>
+<p>bash 中的 source 命令用于在当前 bash 环境下读取并执行 FileName.sh 中的命令。</p>
+<pre><code>$ source test.sh
+Hello World
+$ . test.sh
+Hello World
+</code></pre><h2 id="引号">引号</h2>
+<h4 id="1双引号">1.双引号（&quot;)</h4>
+<p>&ldquo;STRING&rdquo; 将会阻止（解释）STRING中大部分特殊的字符。后面的实验会详细说明。</p>
+<h4 id="2单引号">2.单引号（'）</h4>
+<p>&lsquo;STRING&rsquo; 将会阻止STRING中所有特殊字符的解释，这是一种比使用&quot;更强烈的形式。后面的实验会详细说明。</p>
+<h4 id="3-区别">3. 区别</h4>
+<p>这里举一个例子，能够更加生动的说明</p>
+<p><img src="https://dn-simplecloud.shiyanlou.com/87971506680766895-wm" alt="2-4-1"></p>
+<p>同样是<code>$HOME</code>,单引号会直接认为是字符，而双引号认为是一个变量</p>
+<h2 id="斜线和反斜线">斜线和反斜线</h2>
+<h4 id="1斜线">1.斜线（/）</h4>
+<p>文件名路径分隔符。分隔文件名不同的部分（如<code>/home/bozo/projects/Makefile</code>）。也可以用来作为除法算术操作符。注意在linux中表示路径的时候，许多个<code>/</code>跟一个<code>/</code>是一样的。<code>/home/shiyanlou</code>等同于<code>////home///shiyanlou</code></p>
+<h4 id="2反斜线">2.反斜线（\）</h4>
+<p>一种对单字符的引用机制。\X 将会“转义”字符X。这等价于&quot;X&rdquo;，也等价于&rsquo;X&rsquo;。\ 通常用来转义双引号（&quot;）和单引号（'），这样双引号和单引号就不会被解释成特殊含义了。</p>
+<ul>
+<li>符号 说明</li>
+<li>\n 表示新的一行</li>
+<li>\r 表示回车</li>
+<li>\t 表示水平制表符</li>
+<li>\v 表示垂直制表符</li>
+<li>\b 表示后退符</li>
+<li>\a 表示&quot;alert&rdquo;(蜂鸣或者闪烁)</li>
+<li>\0xx 转换为八进制的ASCII码, 等价于0xx</li>
+<li>&quot; 表示引号字面的意思</li>
+</ul>
+<p>转义符也提供续行功能，也就是编写多行命令的功能。</p>
+<p>每一个单独行都包含一个不同的命令，但是每行结尾的转义符都会转义换行符，这样下一行会与上一行一起形成一个命令序列。</p>
+<h2 id="反引号">反引号`</h2>
+<h4 id="命令替换">命令替换</h4>
+<p>反引号中的命令会优先执行，如：</p>
+<pre><code>$ cp `mkdir back` test.sh back
+$ ls
+</code></pre><p>先创建了 back 目录，然后复制 test.sh 到 back 目录</p>
+<h2 id="冒号">冒号:</h2>
+<h4 id="1空命令">1.空命令</h4>
+<p>等价于“NOP”（no op，一个什么也不干的命令）。也可以被认为与shell的内建命令true作用相同。“:”命令是一个bash的内建命令，它的退出码（exit status）是（0）。</p>
+<p>如：</p>
+<pre><code>#!/bin/bash
+
+while :
+do
+    echo &quot;endless loop&quot;
+done
+</code></pre><p>等价于</p>
+<pre><code>#!/bin/bash
+
+while true
+do
+    echo &quot;endless loop&quot;
+done
+</code></pre><p>可以在 if/then 中作占位符：</p>
+<pre><code>#!/bin/bash
+
+condition=5
+
+if [ $condition -gt 0 ] #gt表示greater than，也就是大于，同样有-lt（小于），-eq（等于）
+then :   # 什么都不做，退出分支
+else
+    echo &quot;$condition&quot;
+fi
+</code></pre><h4 id="2变量扩展子串替换">2.变量扩展/子串替换</h4>
+<p>在与<code>&gt;</code>重定向操作符结合使用时，将会把一个文件清空，但是并不会修改这个文件的权限。如果之前这个文件并不存在，那么就创建这个文件。</p>
+<pre><code>$ : &gt; test.sh   # 文件“test.sh”现在被清空了
+# 与 cat /dev/null &gt; test.sh 的作用相同
+# 然而,这并不会产生一个新的进程, 因为“:”是一个内建命令
+</code></pre><p>在与<code>&gt;&gt;</code>重定向操作符结合使用时，将不会对预先存在的目标文件 (: &raquo; target_file)产生任何影响。如果这个文件之前并不存在，那么就创建它。</p>
+<p>也可能用来作为注释行，但不推荐这么做。使用 # 来注释的话，将关闭剩余行的错误检查，所以可以在注释行中写任何东西。然而，使用 : 的话将不会这样。如：</p>
+<pre><code>$ : This is a comment that generates an error,( if [ $x -eq 3] )
+</code></pre><p>&ldquo;:&ldquo;还用来在 <code>/etc/passwd</code> 和 <code>$PATH</code> 变量中做分隔符，如：</p>
+<pre><code>$ echo $PATH
+/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:/sbin:/usr/sbin:/usr/games
+</code></pre><h2 id="问号">问号?</h2>
+<h4 id="测试操作符">测试操作符</h4>
+<p>在一个双括号结构中，? 就是C语言的三元操作符，如：</p>
+<pre><code>$ vim test.sh
+</code></pre><p>输入如下代码，并保存：</p>
+<pre><code> #!/bin/bash
+
+ a=10
+ (( t=a&lt;50?8:9 ))
+ echo $t
+</code></pre><p>运行测试</p>
+<pre><code>$ bash test.sh
+8
+</code></pre><h2 id="美元符号">美元符号$</h2>
+<h4 id="变量替换">变量替换</h4>
+<p>前面已经用到了</p>
+<pre><code>$ vim test.sh
+</code></pre><pre><code>#!/bin/bash
+
+var1=5
+var2=23skidoo
+
+echo $var1     # 5
+echo $var2     # 23skidoo
+</code></pre><p>运行测试</p>
+<pre><code>$ bash test.sh
+5
+23skidoo
+</code></pre><h2 id="小括号">小括号()</h2>
+<h4 id="1命令组">1.命令组</h4>
+<p>在括号中的命令列表，将会作为一个子 shell 来运行。</p>
+<p>在括号中的变量，由于是在子shell中，所以对于脚本剩下的部分是不可用的。父进程，也就是脚本本身，将不能够读取在子进程中创建的变量，也就是在子shell 中创建的变量。如：</p>
+<pre><code>$ vim test20.sh
+</code></pre><p>输入代码：</p>
+<pre><code>#!/bin/bash
+
+a=123
+( a=321; )
+
+echo &quot;$a&quot; #a的值为123而不是321，因为括号将判断为局部变量
+</code></pre><p>运行代码：</p>
+<pre><code>$ bash test20.sh
+a = 123
+</code></pre><p>在圆括号中 a 变量，更像是一个局部变量。</p>
+<p>[{&ldquo;name&rdquo;:&ldquo;check file&rdquo;,&ldquo;script&rdquo;:&quot;#!/bin/bash\nls /home/shiyanlou/test20.sh\n&rdquo;,&ldquo;error&rdquo;:&quot;/home/shiyanlou 目录下没有 test20.sh 文件&rdquo;},{&ldquo;name&rdquo;:&ldquo;check result&rdquo;,&ldquo;script&rdquo;:&quot;#!/bin/bash\nbash /home/shiyanlou/test20.sh|grep 123\n&rdquo;,&ldquo;error&rdquo;:&ldquo;test20.sh 执行结果不对&rdquo;}]</p>
+<h4 id="2初始化数组">2.初始化数组</h4>
+<p>创建数组</p>
+<pre><code>$ vim test21.sh
+</code></pre><p>输入代码：</p>
+<pre><code>#!/bin/bash
+
+arr=(1 4 5 7 9 21)
+echo ${arr[3]} # get a value of arr
+</code></pre><p>运行代码：</p>
+<pre><code>$ bash test21.sh
+7
+</code></pre><h2 id="大括号">大括号</h2>
+<h4 id="1文件名扩展">1.文件名扩展</h4>
+<p>复制 t.txt 的内容到 t.back 中</p>
+<pre><code>$ vim test22.sh
+</code></pre><p>输入代码：</p>
+<pre><code>#!/bin/bash
+
+if [ ! -w 't.txt' ];
+then
+    touch t.txt
+fi
+echo 'test text' &gt;&gt; t.txt
+cp t.{txt,back}
+</code></pre><p>运行代码：</p>
+<pre><code>$ bash test22.sh
+</code></pre><p>查看运行结果：</p>
+<pre><code>$ ls
+$ cat t.txt
+$ cat t.back
+</code></pre><p>注意： 在大括号中，不允许有空白，除非这个空白被引用或转义。</p>
+<p>[{&ldquo;name&rdquo;:&ldquo;check file&rdquo;,&ldquo;script&rdquo;:&quot;#!/bin/bash\nls /home/shiyanlou/test22.sh\n&rdquo;,&ldquo;error&rdquo;:&quot;/home/shiyanlou 目录下没有 test22.sh 文件&rdquo;},{&ldquo;name&rdquo;:&ldquo;check result&rdquo;,&ldquo;script&rdquo;:&quot;#!/bin/bash\nls /home/shiyanlou | grep -e \&ldquo;t.txt\&rdquo; -e \&ldquo;t.back\&quot;\n&rdquo;,&ldquo;error&rdquo;:&ldquo;test22.sh 执行结果不对&rdquo;}]</p>
+<h4 id="2代码块">2.代码块</h4>
+<p>代码块，又被称为内部组，这个结构事实上创建了一个匿名函数（一个没有名字的函数）。然而，与“标准”函数不同的是，在其中声明的变量，对于脚本其他部分的代码来说还是可见的。</p>
+<pre><code>$ vim test23.sh
+</code></pre><p>输入代码：</p>
+<pre><code>#!/bin/bash
+
+a=123
+{ a=321; }
+echo &quot;a = $a&quot;
+</code></pre><p>运行代码：</p>
+<pre><code>$ bash test23.sh
+a = 321
+</code></pre><p>变量 a 的值被更改了。</p>
+<h2 id="中括号">中括号[]</h2>
+<h4 id="1条件测试">1.条件测试</h4>
+<p>条件测试表达式放在[ ]中。下列练习中的-lt (less than)表示小于号。</p>
+<pre><code>$ vim test24.sh
+</code></pre><p>输入代码：</p>
+<pre><code>#!/bin/bash
+
+a=5
+if [ $a -lt 10 ]
+then
+    echo &quot;a: $a&quot;
+else
+    echo 'a&gt;=10'
+fi
+</code></pre><p>运行代码：</p>
+<pre><code>$ bash test24.sh
+a: 5
+</code></pre><p>双中括号（[[ ]]）也用作条件测试（判断），后面的实验会详细讲解。</p>
+<p>[{&ldquo;name&rdquo;:&ldquo;check file&rdquo;,&ldquo;script&rdquo;:&quot;#!/bin/bash\nls /home/shiyanlou/test24.sh\n&rdquo;,&ldquo;error&rdquo;:&quot;/home/shiyanlou 目录下没有 test24.sh 文件&rdquo;},{&ldquo;name&rdquo;:&ldquo;check result&rdquo;,&ldquo;script&rdquo;:&quot;#!/bin/bash\nbash /home/shiyanlou/test24.sh|grep 5\n&rdquo;,&ldquo;error&rdquo;:&ldquo;test24.sh 执行结果不对&rdquo;}]</p>
+<h4 id="2数组元素">2.数组元素</h4>
+<p>在一个array结构的上下文中，中括号用来引用数组中每个元素的编号。</p>
+<pre><code>$ vim test25.sh
+</code></pre><p>输入代码：</p>
+<pre><code>#!/bin/bash
+
+arr=(12 22 32)
+arr[0]=10
+echo ${arr[0]}
+</code></pre><p>运行代码：</p>
+<pre><code>$ bash test25.sh
+10
+</code></pre><h2 id="尖括号">尖括号&lt;&gt;</h2>
+<h4 id="重定向">重定向</h4>
+<p>test.sh &gt; filename：重定向test.sh的输出到文件 filename 中。如果 filename 存在的话，那么将会被覆盖。</p>
+<p>test.sh &amp;&gt; filename：重定向 test.sh 的 stdout（标准输出）和 stderr（标准错误）到 filename 中。</p>
+<p>test.sh &gt;&amp;2：重定向 test.sh 的 stdout 到 stderr 中。</p>
+<p>test.sh &raquo; filename：把 test.sh 的输出追加到文件 filename 中。如果filename 不存在的话，将会被创建。</p>
+<h2 id="竖线">竖线|</h2>
+<h4 id="管道">管道</h4>
+<p>分析前边命令的输出，并将输出作为后边命令的输入。这是一种产生命令链的好方法。</p>
+<pre><code>$ vim test26.sh
+</code></pre><p>输入代码：</p>
+<pre><code>#!/bin/bash
+
+tr 'a-z' 'A-Z'
+exit 0
+</code></pre><p>现在让我们输送ls -l的输出到一个脚本中：</p>
+<pre><code>$ chmod 755 test26.sh
+$ ls -l | ./test26.sh
+</code></pre><p>输出的内容均变为了大写字母。</p>
+<h2 id="破折号-">破折号-</h2>
+<h4 id="1选项前缀">1.选项，前缀</h4>
+<p>在所有的命令内如果想使用选项参数的话,前边都要加上“-”。</p>
+<pre><code>$ vim test27.sh
+</code></pre><p>输入代码：</p>
+<pre><code>#!/bin/bash
+
+a=5
+b=5
+if [ &quot;$a&quot; -eq &quot;$b&quot; ]
+then
+    echo &quot;a is equal to b.&quot;
+fi
+</code></pre><p>运行代码：</p>
+<pre><code>$ bash test27.sh
+a is equal to b.
+</code></pre><p>[{&ldquo;name&rdquo;:&ldquo;check file&rdquo;,&ldquo;script&rdquo;:&quot;#!/bin/bash\nls /home/shiyanlou/test27.sh\n&rdquo;,&ldquo;error&rdquo;:&quot;/home/shiyanlou 目录下没有 test27.sh 文件&rdquo;},{&ldquo;name&rdquo;:&ldquo;check result&rdquo;,&ldquo;script&rdquo;:&quot;#!/bin/bash\nbash /home/shiyanlou/test27.sh|grep \&ldquo;is\&quot;\n&rdquo;,&ldquo;error&rdquo;:&ldquo;test27.sh 运行结果不对&rdquo;}]</p>
+<h4 id="2用于重定向stdin或stdout">2.用于重定向stdin或stdout</h4>
+<p>下面脚本用于备份最后24小时当前目录下所有修改的文件.</p>
+<pre><code>$ vim test28.sh
+</code></pre><p>输入代码：</p>
+<pre><code>#!/bin/bash
+
+BACKUPFILE=backup-$(date +%m-%d-%Y)
+# 在备份文件中嵌入时间.
+archive=${1:-$BACKUPFILE}
+#  如果在命令行中没有指定备份文件的文件名,
+#  那么将默认使用&quot;backup-MM-DD-YYYY.tar.gz&quot;.
+
+tar cvf - `find . -mtime -1 -type f -print` &gt; $archive.tar
+gzip $archive.tar
+echo &quot;Directory $PWD backed up in archive file \&quot;$archive.tar.gz\&quot;.&quot;
+
+exit 0
+</code></pre><p>运行代码：</p>
+<pre><code>$ bash test28.sh
+$ ls
+</code></pre><h2 id="波浪号">波浪号~</h2>
+<h4 id="目录">目录</h4>
+<p>~ 表示 home 目录。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

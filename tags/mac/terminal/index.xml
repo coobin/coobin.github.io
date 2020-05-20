@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MAC/Terminal on 梦还在吗</title>
+    <link>http://example.org/tags/mac/terminal/</link>
+    <description>Recent content in MAC/Terminal on 梦还在吗</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="http://example.org/tags/mac/terminal/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Homebrew更换源</title>
+      <link>http://example.org/posts/homebrew%E6%9B%B4%E6%8D%A2%E6%BA%90/</link>
+      <pubDate>Wed, 13 May 2020 07:28:52 +0000</pubDate>
+      
+      <guid>http://example.org/posts/homebrew%E6%9B%B4%E6%8D%A2%E6%BA%90/</guid>
+      <description>Homebrew更换源 1. 修改源镜像 鄙人用的是清华大学镜像站
+1.1 替换 git -C &amp;quot;$(brew --repo)&amp;quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git git -C &amp;quot;$(brew --repo homebrew/core)&amp;quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git git -C &amp;quot;$(brew --repo homebrew/cask)&amp;quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.git brew update 复制代码 1.2 还原（如果还是喜欢 github 更新的话） git -C &amp;quot;$(brew --repo)&amp;quot; remote set-url origin https://github.com/Homebrew/brew.git git -C &amp;quot;$(brew --repo homebrew/core)&amp;quot; remote set-url origin https://github.com/Homebrew/homebrew-core.git git -C &amp;quot;$(brew --repo homebrew/cask)&amp;quot; remote set-url origin https://github.com/Homebrew/homebrew-cask.git brew update 复制代码 2. 修改bottles 打开你正在使用的shell配置文件，例如：.</description>
+    </item>
+    
+  </channel>
+</rss>

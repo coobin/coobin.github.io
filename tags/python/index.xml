@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on 梦还在吗</title>
+    <link>http://example.org/tags/python/</link>
+    <description>Recent content in Python on 梦还在吗</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 05 Apr 2020 07:03:18 +0000</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>List</title>
+      <link>http://example.org/posts/list/</link>
+      <pubDate>Sun, 05 Apr 2020 07:03:18 +0000</pubDate>
+      
+      <guid>http://example.org/posts/list/</guid>
+      <description>List List（列表）是Python中使用最频繁的数据类型。 列表可以完成大多数集合类的数据结构实现。列表中元素的类型可以不相同，它支持数字，字符串甚至可以包含列表（所谓嵌套）。 列表是写在方括号*([])*之间、用逗号分隔开的元素列表。 和字符串一样，列表同样可以被索引和截取，列表被截取后返回一个包含所需元素的新列表。 列表截取的语法格式如下： 变量[头下标:尾下标] 索引值以*0*为开始值，*-1*为从末尾的开始位置。 加号（*+*）是列表连接运算符，星号（***）是重复操作。如下实例： 实例 *#!/usr/bin/python3*
+list = [ ‘abcd’, 786 , 2.23, ‘runoob’, 70.2 ] tinylist = [123, ‘runoob’]
+*print (list) *print (list[0]) print (list[1:3]) print (list[2:]) print (tinylist * 2) print (list + tinylist) 以上实例输出结果： [‘abcd’, 786, 2.23, ‘runoob’, 70.2] abcd [786, 2.23] [2.23, ‘runoob’, 70.2] [123, ‘runoob’, 123, ‘runoob’] [‘abcd’, 786, 2.23, ‘runoob’, 70.2, 123, ‘runoob’] 与Python字符串不一样的是，列表中的元素是可以改变的： 实例 &amp;raquo;&amp;gt;a = [1, 2, 3, 4, 5, 6] &amp;raquo;&amp;gt; a[0] = 9 &amp;raquo;&amp;gt; a[2:5] = [13, 14, 15] &amp;raquo;&amp;gt; a [9, 2, 13, 14, 15, 6] &amp;raquo;&amp;gt; a[2:5] = [] ] &amp;raquo;&amp;gt; a [9, 2, 6] List内置了有很多方法，例如append()、*pop()*等等，这在后面会讲到。 注意：</description>
+    </item>
+    
+    <item>
+      <title>list 的格式 a=[‘a’,’b’,’c’]</title>
+      <link>http://example.org/posts/list-%E7%9A%84%E6%A0%BC%E5%BC%8F-aabc/</link>
+      <pubDate>Sun, 05 Apr 2020 07:03:18 +0000</pubDate>
+      
+      <guid>http://example.org/posts/list-%E7%9A%84%E6%A0%BC%E5%BC%8F-aabc/</guid>
+      <description>list 的格式 a=[‘a’,’b’,’c’] tuple 的格式 a=(‘a’,’b’,’c’) dict 的格式 a={a:b}&amp;ndash;b可以省略 a不能为list set 的格式 a=set((a))&amp;ndash;a不能为list a=(1,2,3) b=(1, [2, 3]) c={a} {(1, 2, 3)} 这里(1,2,3)应该是一个整体的key值 d={b} Traceback (most recent call last): File “”, line 1, in TypeError: unhashable type: ‘list’ Dict 的key必须为不可变对象。而 b中的[2,3]可变所以报错。 e={a:b} {(1, 2, 3): (1, [2, 3])} e[a] (1, [2, 3]) Dict 的key必须为不可变对象。这里将key变成了不可变对象。value是否可变无影响。 b[1][0]=3 e {(1, 2, 3): (1, [3, 3])} f=set(a) {1, 2, 3} 这里1,2,3表示有这三个元素，即使是显示结果排序了，也不表示set是有序的。 g=set(b) Traceback (most recent call last): File “”, line 1, in TypeError: unhashable type: ‘list’ Set 的key必须为不可变对象。而 b中的[2,3]可变所以报错。</description>
+    </item>
+    
+    <item>
+      <title>Math</title>
+      <link>http://example.org/posts/math/</link>
+      <pubDate>Sun, 05 Apr 2020 07:03:18 +0000</pubDate>
+      
+      <guid>http://example.org/posts/math/</guid>
+      <description>Math    函数 数学表示 含义     圆周率pi      </description>
+    </item>
+    
+    <item>
+      <title>Random</title>
+      <link>http://example.org/posts/random/</link>
+      <pubDate>Sun, 05 Apr 2020 07:03:18 +0000</pubDate>
+      
+      <guid>http://example.org/posts/random/</guid>
+      <description>Random    函数 含义     seed(x) 给随机数一个种子值   random() 生成[0,0.1]之间的随机小数   uniform(a,b) 生成一个a到b之间的随机小数   randint(a,b) 生成一个a到b之间的随机整数   randrange(a,b,c) 生成一个从a开始到b以c递增的数   choice() 从列表中随机返回一个元素   shuffle() 将列表中元素随机打乱   sample(,k) 从指定列表随机获取k个元素    </description>
+    </item>
+    
+    <item>
+      <title>Set （集合）</title>
+      <link>http://example.org/posts/set-%E9%9B%86%E5%90%88/</link>
+      <pubDate>Sun, 05 Apr 2020 07:03:18 +0000</pubDate>
+      
+      <guid>http://example.org/posts/set-%E9%9B%86%E5%90%88/</guid>
+      <description>Set （集合） 集合（set）是一个无序不重复元素的序列。 基本功能是进行成员关系测试和删除重复元素。 可以使用大括号*{ }*或者*set()*函数创建集合，注意：创建一个空集合必须用*set()*而不是*{ }*，因为*{ }*是用来创建一个空字典。 创建格式： parame = {value01,value02,…} 或者 set(value) 实例 *#!/usr/bin/python3*
+student = {‘Tom’, ‘Jim’, ‘Mary’, ‘Tom’, ‘Jack’, ‘Rose’}
+*print(student) *#*输出集合，重复的元素被自动去掉
+#成员测试 if(‘Rose’ in student) : print(‘Rose在集合中’) else : print(‘Rose不在集合中*’)*
+# set可以进行集合运算 a = set(‘abracadabra’) b = set(‘alacazam’)
+print(a)
+print(a - b) # a和b的差集
+print(a | b) # a和b的并集
+print(a &amp;amp; b) # a和b的交集
+print(a ^ b) # a和b中不同时存在的元素 以上实例输出结果： {‘Mary’, ‘Jim’, ‘Rose’, ‘Jack’, ‘Tom’} Rose 在集合中 {‘b’, ‘a’, ‘c’, ‘r’, ‘d’} {‘b’, ‘d’, ‘r’} {‘l’, ‘r’, ‘a’, ‘c’, ‘z’, ‘m’, ‘b’, ‘d’} {‘a’, ‘c’} {‘l’, ‘r’, ‘z’, ‘m’, ‘b’, ‘d’}</description>
+    </item>
+    
+    <item>
+      <title>Tuple 实例</title>
+      <link>http://example.org/posts/tuple-%E5%AE%9E%E4%BE%8B/</link>
+      <pubDate>Sun, 05 Apr 2020 07:03:18 +0000</pubDate>
+      
+      <guid>http://example.org/posts/tuple-%E5%AE%9E%E4%BE%8B/</guid>
+      <description>Tuple 实例    tup = (1, 2, 3, 4, 5, 6) print(tup[0]) 1 print(tup[1:5]) (2, 3, 4, 5) tup[0] = 11 # 修改元组元素的操作是非法的 Traceback (most recent call last): File “”, line 1, in TypeError: ‘tuple’ object does not support item assignment
+   虽然tuple的元素不可改变，但它可以包含可变的对象，比如list列表。 构造包含 0 个或 1 个元素的元组比较特殊，所以有一些额外的语法规则： Tup1 = () # 空元组 Tup2 = (20,) # 一个元素，需要在元素后添加逗号 string、list和tuple都属于sequence（序列）。 注意：
+ 1、与字符串一样，元组的元素不能修改。 2、元组也可以被索引和切片，方法一样。 3、注意构造包含0或1个元素的元组的特殊语法规则。 4、元组也可以使用+操作符进行拼接。  #Python</description>
+    </item>
+    
+    <item>
+      <title>字符串</title>
+      <link>http://example.org/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Sun, 05 Apr 2020 07:03:18 +0000</pubDate>
+      
+      <guid>http://example.org/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <description>字符串 字符串是以单引号’或双引号”括起来的任意文本，比如’abc’，”xyz”等等。请注意，’’或””本身只是一种表示方式，不是字符串的一部分，因此，字符串’abc’只有a，b，c这3个字符。如果’本身也是一个字符，那就可以用””括起来，比如”I’m OK”包含的字符是I，’，m，空格，O，K这6个字符。 如果字符串内部既包含’又包含”怎么办？可以用转义字符\来标识，比如： ‘I\’m \”OK\”!’ 表示的字符串内容是： I’m “OK”! 转义字符\可以转义很多字符，比如\n表示换行，\t表示制表符，字符\本身也要转义，所以\表示的字符就是\，可以在Python的交互式命令行用print()打印字符串看看：
+   print(‘I\’m ok.’) I’m ok. print(‘I\’m learning\nPython.’) I’m learning Python. print(‘\\n\’) 如果字符串里面有很多字符都需要转义，就需要加很多\，为了简化，Python还允许用r’’表示’’内部的字符串默认不转义，可以自己试试： print(‘\\t\’) \ print(r’\\t\’) \\t\
+如果字符串内部有很多换行，用\n写在一行里不好阅读，为了简化，Python允许用’’’…’’’的格式表示多行内容，可以自己试试： print(‘’’line1 … line2 … line3’’’) line1 line2 line3 上面是在交互式命令行内输入，注意在输入多行内容时，提示符由&amp;raquo;&amp;gt;变为…，提示你可以接着上一行输入，注意…是提示符，不是代码的一部分： ┌────────────────────────────────────────────────────────┐ │Command Prompt - python _ □ x │ ├────────────────────────────────────────────────────────┤ │&amp;raquo;&amp;gt; print(‘’’line1 │ │… line2 │ │… line3’’’) │ │line1 │ │line2 │ │line3 │ │ │ │&amp;raquo;&amp;gt; _ │ │ │ │ │ │ │ └────────────────────────────────────────────────────────┘ 当输入完结束符``` 和括号)后，执行该语句并打印结果。    #Python</description>
+    </item>
+    
+    <item>
+      <title>引用 tuple 与 list</title>
+      <link>http://example.org/posts/%E5%BC%95%E7%94%A8-tuple-%E4%B8%8E-list/</link>
+      <pubDate>Sun, 05 Apr 2020 07:03:18 +0000</pubDate>
+      
+      <guid>http://example.org/posts/%E5%BC%95%E7%94%A8-tuple-%E4%B8%8E-list/</guid>
+      <description>引用 tuple 与 list 下标：Index，从0开始，一个元素为0位置 范围引用：序列名[下限:上限:步长]，默认步长为1。 尾部引用：
+   example_tuple[-1] ##序列最后一个元素 example_tuple[-3] ##序列倒数第三个元素 example_tuple[1:-1] ##序列的第二个到倒数第二个元素
+   #Python</description>
+    </item>
+    
+    <item>
+      <title>数值运算</title>
+      <link>http://example.org/posts/%E6%95%B0%E5%80%BC%E8%BF%90%E7%AE%97/</link>
+      <pubDate>Sun, 05 Apr 2020 07:03:18 +0000</pubDate>
+      
+      <guid>http://example.org/posts/%E6%95%B0%E5%80%BC%E8%BF%90%E7%AE%97/</guid>
+      <description>数值运算 实例
+   5 + 4 # 加法 9 4.3 - 2 # 减法 2.3 3 * 7 # 乘法 21 2 / 4 # 除法，得到一个浮点数 0.5 2 // 4 # 除法，得到一个整数 0 17 % 3 # 取余 2 2 ** 5 # 乘方 32
+   #Python</description>
+    </item>
+    
+    <item>
+      <title>标准数据类型</title>
+      <link>http://example.org/posts/%E6%A0%87%E5%87%86%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Sun, 05 Apr 2020 07:03:18 +0000</pubDate>
+      
+      <guid>http://example.org/posts/%E6%A0%87%E5%87%86%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+      <description>标准数据类型 Python3 中有六个标准的数据类型：
+ Number（数字） String（字符串） List（列表） Tuple（元组） Sets（集合） Dictionary（字典）  #Python</description>
+    </item>
+    
+  </channel>
+</rss>

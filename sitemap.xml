@@ -3,14 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-<<<<<<< HEAD
-    <loc>https://coobin.men/tags/git/</loc>
-    <lastmod>2020-04-19T05:58:54+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://coobin.men/posts/git-reference/</loc>
-=======
     <loc>https://coobin.men/</loc>
     <lastmod>2020-06-14T22:52:21+08:00</lastmod>
   </url>
@@ -27,16 +19,11 @@
   
   <url>
     <loc>https://coobin.men/tags/git/</loc>
->>>>>>> 42afb65... imac
     <lastmod>2020-04-19T05:58:54+00:00</lastmod>
   </url>
   
   <url>
-<<<<<<< HEAD
-    <loc>https://coobin.men/</loc>
-=======
     <loc>https://coobin.men/posts/git-reference/</loc>
->>>>>>> 42afb65... imac
     <lastmod>2020-04-19T05:58:54+00:00</lastmod>
   </url>
   

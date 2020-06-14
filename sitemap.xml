@@ -3,17 +3,40 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+<<<<<<< HEAD
     <loc>https://coobin.men/tags/git/</loc>
     <lastmod>2020-04-19T05:58:54+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://coobin.men/posts/git-reference/</loc>
+=======
+    <loc>https://coobin.men/</loc>
+    <lastmod>2020-06-14T22:52:21+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://coobin.men/linux%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2020-06-14T22:52:21+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://coobin.men/%E6%9C%BA%E6%88%BF%E9%97%A8%E7%A6%81%E6%96%B9%E6%A1%88/</loc>
+    <lastmod>2020-06-14T22:50:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://coobin.men/tags/git/</loc>
+>>>>>>> 42afb65... imac
     <lastmod>2020-04-19T05:58:54+00:00</lastmod>
   </url>
   
   <url>
+<<<<<<< HEAD
     <loc>https://coobin.men/</loc>
+=======
+    <loc>https://coobin.men/posts/git-reference/</loc>
+>>>>>>> 42afb65... imac
     <lastmod>2020-04-19T05:58:54+00:00</lastmod>
   </url>
   

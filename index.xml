@@ -1,17 +1,67 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
+<<<<<<< HEAD
     <title>Is there still have dreams?</title>
     <link>https://coobin.men/</link>
     <description>Recent content on Is there still have dreams?</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 19 Apr 2020 05:58:54 +0000</lastBuildDate>
+=======
+    <title>Kay&#39;s Blog</title>
+    <link>https://coobin.men/</link>
+    <description>Recent content on Kay&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 14 Jun 2020 22:52:21 +0800</lastBuildDate>
+>>>>>>> 42afb65... imac
     
 	<atom:link href="https://coobin.men/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+<<<<<<< HEAD
+=======
+      <title>Linux系统目录结构</title>
+      <link>https://coobin.men/linux%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Sun, 14 Jun 2020 22:52:21 +0800</pubDate>
+      
+      <guid>https://coobin.men/linux%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/</guid>
+      <description>登录系统后，在当前命令窗口下输入命令：
+ls /
+你会看到如下图所示:
+树状目录结构：
+以下是对这些目录的解释：
+  /bin： bin是Binary的缩写, 这个目录存放着最经常使用的命令。
+  /boot： 这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件。
+  /dev ： dev是Device(设备)的缩写, 该目录下存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的。
+  /etc： 这个目录用来存放所有的系统管理所需要的配置文件和子目录。
+  /home： 用户的主目录，在Linux中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。
+  /lib： 这个目录里存放着系统最基本的动态连接共享库，其作用类似于Windows里的DLL文件。几乎所有的应用程序都需要用到这些共享库。
+  /lost+found： 这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件。
+  /media： linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下。
+  /mnt： 系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在/mnt/上，然后进入该目录就可以查看光驱里的内容了。
+  /opt： 这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。
+  /proc： 这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。 这个目录的内容不在硬盘上而是在内存里，我们也可以直接修改里面的某些文件，比如可以通过下面的命令来屏蔽主机的ping命令，使别人无法ping你的机器：
+echo 1 &amp;gt; /proc/sys/net/ipv4/icmp_echo_ignore_all
+  /root： 该目录为系统管理员，也称作超级权限者的用户主目录。
+  /sbin： s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。
+  /selinux： 这个目录是Redhat/CentOS所特有的目录，Selinux是一个安全机制，类似于windows的防火墙，但是这套机制比较复杂，这个目录就是存放selinux相关的文件的。</description>
+    </item>
+    
+    <item>
+      <title>机房门禁方案</title>
+      <link>https://coobin.men/%E6%9C%BA%E6%88%BF%E9%97%A8%E7%A6%81%E6%96%B9%E6%A1%88/</link>
+      <pubDate>Sun, 14 Jun 2020 22:50:30 +0800</pubDate>
+      
+      <guid>https://coobin.men/%E6%9C%BA%E6%88%BF%E9%97%A8%E7%A6%81%E6%96%B9%E6%A1%88/</guid>
+      <description>需求 目前机房采用传统机械钥匙来管理，钥匙需要专人保管，并且每次借用钥匙都需要登记，流程繁琐且低效，权限管理不灵活。
+优点  安全性：  实时查看门禁状态； 临时授权； 异常开门警报 开门自动记录   易用性：  随时随地可授权 操作简单    身份识别模式  指纹识别：管理员拥有最高权限，可以操作临时授权等。 密码识别：需要进入机房的人员可以找管理员申请临时授权或者永久授权。  设备 预算1000，含安装；</description>
+    </item>
+    
+    <item>
+>>>>>>> 42afb65... imac
       <title>Git Reference</title>
       <link>https://coobin.men/posts/git-reference/</link>
       <pubDate>Sun, 19 Apr 2020 05:58:54 +0000</pubDate>
